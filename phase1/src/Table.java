@@ -16,9 +16,9 @@ public class Table
     return billPrice;
   }
 
-  public void addToBill()
+  public void addToBill(Order order)
   {
-
+    myBill.addOrder(order);
   }
 
   public String printBill()
