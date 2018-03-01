@@ -1,2 +1,30 @@
-public class Table {
+public class Table
+{
+  private int tableID;
+  private Bill myBill;
+
+  public Table(int tableNum)
+  {
+    this.tableID = tableNum;
+  }
+
+  //Removes the Table's bill and returns the price of the bill
+  public int payBill()
+  {
+    int billPrice = myBill.billTotal();
+    myBill = null;
+    return billPrice;
+  }
+
+  public void addToBill()
+  {
+
+  }
+
+  public String printBill()
+  {
+    return myBill.toString();
+  }
+
+
 }
