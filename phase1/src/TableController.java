@@ -10,22 +10,22 @@ public class TableController
 
   private void createTables()
   {
-    int tableNumber = 1;
-    for (Table table: tableList)
+    for (int i = 1; i <= tableList.length; i++)
     {
-      table = new Table(tableNumber);
-      tableNumber ++;
+      tableList[i] = new Table(i);
     }
   }
 
-  public void addToBill(Order order)
+  public void addToBill(int tableNumber, Order order)
   {
-
+    Table myTable = tableList[tableNumber - 1];
+    myTable.addToBill(order);
   }
 
-  public String printBill(Table table)
+  public String printBill(int tableNumber)
   {
-    return "";
+    Bill myBill = tableList[tableNumber - 1].getBill();
+    return myBill.toString();
   }
 
 
