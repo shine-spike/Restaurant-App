@@ -1,19 +1,19 @@
 import java.util.ArrayList;
 
 public class Menu {
-    ArrayList<MenuItem> menuItems;
+    private ArrayList<MenuItem> menuItems;
 
     public Menu(){
-        menuItems = new ArrayList<MenuItem>();
+        menuItems = new ArrayList<>();
     }
 
-    public addMenuItem(ArrayList<MenuItem> menuItems){
+    public void addMenuItem(ArrayList<MenuItem> menuItems){
         this.menuItems = menuItems;
     }
 
     public MenuItem getMenuItem(String itemName){
         for(MenuItem i : menuItems){
-            if(menuItems.name = itemName){
+            if(i.getName().equals(itemName)){
                 return i;
             }
         }

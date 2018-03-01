@@ -1,4 +1,4 @@
-import java.util.ArrayList
+import java.util.ArrayList;
 
 public class Ingredient{
   private String name;
@@ -7,7 +7,7 @@ public class Ingredient{
   
   Ingredient(String name, int threshold, int quantity){
     this.name = name;
-    this.theshold = threshold;
+    this.threshold = threshold;
     this.quantity = quantity;
   }
   

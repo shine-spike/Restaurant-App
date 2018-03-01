@@ -9,26 +9,33 @@ public class Order {
   private int tableNum;
   private int serverId;
   private MenuItem menuItem;
-  private List<Ingredient> additions;
-  private List<Ingredient> subtractions;
+  private ArrayList<Ingredient> ingredients;
+  private ArrayList<Ingredient> additions;
+  private ArrayList<Ingredient> removals;
   private boolean seen;
 
-  public Order(
-      int serverId,
-      int tableNum,
-      MenuItem menuItem,
-      Ingredient[] additions,
-      Ingredient[] subtractions) {
+  public Order(int serverId, int tableNum, MenuItem menuItem) {
     this.orderNum = currentOrderNum;
-    currentOrderNum ++;
+    currentOrderNum++;
 
     this.serverId = serverId;
     this.tableNum = tableNum;
     this.menuItem = menuItem;
-    this.additions = Arrays.asList(additions);
-    this.subtractions = Arrays.asList(subtractions);
+    this.ingredients = new ArrayList<>(Arrays.asList(menuItem.getIngredients()));
+    this.additions = new ArrayList<>();
+    this.removals = new ArrayList<>();
     this.seen = false;
   }
+
+  public void addAddition(Ingredient toAdd){
+    ingredients.remove(toAdd);
+  }
+
+  public void addRemoval(Ingredient toRemove){
+    ingredients.add(toRemove);
+  }
+
+  public int getServerId() { return serverId; }
 
   public int getTableNum() {
     return tableNum;
@@ -42,18 +49,16 @@ public class Order {
     return menuItem.getPrice();
   }
 
+  public int getOrderNum() {
+    return orderNum;
+  }
+
   public boolean isSeen() {
     return seen;
   }
 
-  public ArrayList<Ingredient> getIngredientsList() {
-    Ingredient[] ingredients = menuItem.getIngredients();
-    ArrayList<Ingredient> ingredientsList = new ArrayList<Ingredient>(Arrays.asList(ingredients));
-
-    ingredientsList.removeAll(subtractions);
-    ingredientsList.addAll(additions);
-
-    return ingredientsList;
+  public ArrayList<Ingredient> getIngredients() {
+    return ingredients;
   }
 
   public void orderSeen() {
