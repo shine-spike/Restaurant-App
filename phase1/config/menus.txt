@@ -2,12 +2,34 @@
 % The format of one menu is as follows:
 % START <MENU>
 %   <MENU_ITEM_NAME_1>
-%   NO <INGREDIENT_NAME_1> ... NO <INGREDIENT_NAME_N>
-%   ADD <INGREDIENT_NAME_N+1> ... ADD <INGREDIENT_NAME_K>
+%   ITEM <INGREDIENT_NAME_1> ... ITEM <INGREDIENT_NAME_N>
+%   NO <SUBTRACTION_NAME_1> ... NO <SUBTRACTION_NAME_N>
+%   ADD <ADDITION_NAME_N+1> ... ADD <ADDITION_NAME_K>
 %
 %   <MENU_ITEM_NAME_2>
-%   NO <INGREDIENT_NAME_1> ... NO <INGREDIENT_NAME_N>
-%   ADD <INGREDIENT_NAME_N+1> ... ADD <INGREDIENT_NAME_K>
+%   ITEM <INGREDIENT_NAME_1> ... ITEM <INGREDIENT_NAME_N>
+%   NO <SUBTRACTION_NAME_1> ... NO <SUBTRACTION_NAME_N>
+%   ADD <ADDITION_NAME_N+1> ... ADD <ADDITION_NAME_K>
 %
 %   ...
 % END
+
+START <Menu>
+    <Burger>
+    ITEM <Burger> ITEM <Bun> ITEM <Pickles> ITEM <Onions> ITEM <Tomatoes>
+    NO <Pickles> NO <Onions> NO <Tomatoes>
+    ADD <Ketchup> ADD <Mustard> ADD <Mayonnaise>
+
+    <Veggie Burger>
+    ITEM <Veggie Burger> ITEM <Bun> ITEM <Pickles> ITEM <Onions> ITEM <Tomatoes>
+    NO <Pickles> NO <Onions> NO <Tomatoes>
+    ADD <Ketchup> ADD <Mustard> ADD <Mayonnaise>
+
+    <Hot Dog>
+    ITEM <Hot Dog> ITEM <Bun>
+    ADD <Ketchup> ADD <Mustard>
+
+    <Veggie Dog>
+    ITEM <Veggie Dog> ITEM <Bun>
+    ADD <Ketchup> ADD <Mustard>
+END
