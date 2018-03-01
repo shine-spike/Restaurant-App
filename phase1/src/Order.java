@@ -1,30 +1,50 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Order {
-    static private int current_order_number = 0;
+  private static int current_order_number = 0;
 
-    private int tableNum;
-    private int serverId;
-    private MenuItem menuItem;
-    private Ingredient[] additions;
-    private Ingredient[] subtractions;
-    private boolean seen;
+  private int tableNum;
+  private int serverId;
+  private MenuItem menuItem;
+  private List<Ingredient> additions;
+  private List<Ingredient> subtractions;
+  private boolean seen;
 
-    public int getTableNum() {
-        return tableNum;
-    }
+  public Order(int serverId, int tableNum, MenuItem menuItem, Ingredient[] additions, Ingredient[] subtractions){
+    this.serverId = serverId;
+    this.tableNum = tableNum;
+    this.menuItem = menuItem;
+    this.additions = Arrays.asList(additions);
+    this.subtractions = Arrays.asList(subtractions);
+  }
 
-    public MenuItem getMenuItem() {
-        return menuItem;
-    }
+  public int getTableNum() {
+    return tableNum;
+  }
 
-    public int getPrice(){
-        return menuItem.getPrice();
-    }
+  public MenuItem getMenuItem() {
+    return menuItem;
+  }
 
-    public String toString(){
-        menuItem.toString();
-    }
+  public int getPrice() {
+    return menuItem.getPrice();
+  }
 
-    public Ingredient[] getIngredientsList(){
-        return null;
-    }
+  public ArrayList<Ingredient> getIngredientsList() {
+    Ingredient[] ingredients = menuItem.getIngredients();
+    ArrayList<Ingredient> ingredientsList = new ArrayList<Ingredient>(Arrays.asList(ingredients));
+
+    ingredientsList.removeAll(subtractions);
+    ingredientsList.addAll(additions);
+
+    return ingredientsList;
+  }
+
+  public String toString() {
+    // TODO May need to add information depending on menuItem.toString()
+    // TODO Need to add information about additions, and subtractions
+    return menuItem.toString();
+  }
 }
