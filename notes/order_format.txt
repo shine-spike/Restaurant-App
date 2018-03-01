@@ -1,13 +1,12 @@
-ID,	Argument1, Argument2, Argument3...
-ORD,	Table #, Menu_item, substitution1, substitution2...
-SEEN,	Order_number
-READY,Order_number 
-REC,	Ingredient, num_received
-CON,	Order_number
-RET,	Order_number, reason
-REDO,	Order_number, reason
-BILL,	Table #
-PAID,	Table #
+ORD,	ID, Table #, Menu_item, substitution1, substitution2...
+SEEN,	ID, Order_number
+READY,ID, Order_number 
+REC,	ID, Ingredient, num_received
+CON,	ID, Order_number
+RET,	ID, Order_number, reason
+REDO,	ID, Order_number, reason
+BILL,	ID, Table #
+PAID,	ID, Table #
 
 The order is as follows:
 ORD -> SEEN
