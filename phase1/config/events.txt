@@ -31,3 +31,5 @@
 %
 %   RECEIVE: <INGREDIENT_NAME> <AMOUNT>
 %   E.g. "RECEIVE meat 100"
+%
+% Orders are automatically assigned zero-indexed incrementing numbers.
