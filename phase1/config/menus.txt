@@ -1,7 +1,7 @@
 % Lines starting with a percentage sign are not read.
 % The format of one menu is as follows:
 % START <MENU>
-%   <MENU_ITEM_NAME_1>
+%   <MENU_ITEM_NAME_1> <Price>
 %   ITEM <INGREDIENT_NAME_1> ... ITEM <INGREDIENT_NAME_N>
 %   ADD <ADDITION_NAME_N+1> ... ADD <ADDITION_NAME_K>
 %
@@ -13,19 +13,19 @@
 % END
 
 START Menu
-    burger
+    burger 1000
     burger_bun pickles onions tomatoes
     ketchup mustard mayonnaise
 
-    veggie_burger
+    veggie_burger 1200
     veggie_burger burger_bun pickles onions tomatoes
     ketchup mustard mayonnaise
 
-    hot_dog
+    hot_dog 300
     hot_dog hot_dog_bun
     ketchup mustard
 
-    veggie_dog
+    veggie_dog 500
     veggie_dog hot_dog_bun
     ketchup mustard
 END
