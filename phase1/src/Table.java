@@ -26,5 +26,10 @@ public class Table
     return myBill.toString();
   }
 
+  public Bill getBill()
+  {
+    return myBill;
+  }
+
 
 }
