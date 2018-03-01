@@ -11,8 +11,12 @@ public class Ingredient{
     this.quantity = quantity;
   }
   
-  public boolean equals(Ingredient associate){
-    return this.name.equals(associate.name);
+  public boolean equals(Object associate){
+    if(associate instanceof Ingredient) {
+      return this.name.equals(((Ingredient)associate).getName());
+    } else {
+      return false;
+    }
   }
 
   public String getName(){
