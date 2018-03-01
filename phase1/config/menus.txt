@@ -3,33 +3,29 @@
 % START <MENU>
 %   <MENU_ITEM_NAME_1>
 %   ITEM <INGREDIENT_NAME_1> ... ITEM <INGREDIENT_NAME_N>
-%   NO <SUBTRACTION_NAME_1> ... NO <SUBTRACTION_NAME_N>
 %   ADD <ADDITION_NAME_N+1> ... ADD <ADDITION_NAME_K>
 %
 %   <MENU_ITEM_NAME_2>
 %   ITEM <INGREDIENT_NAME_1> ... ITEM <INGREDIENT_NAME_N>
-%   NO <SUBTRACTION_NAME_1> ... NO <SUBTRACTION_NAME_N>
 %   ADD <ADDITION_NAME_N+1> ... ADD <ADDITION_NAME_K>
 %
 %   ...
 % END
 
-START <Menu>
-    <Burger>
-    ITEM <Burger> ITEM <Bun> ITEM <Pickles> ITEM <Onions> ITEM <Tomatoes>
-    NO <Pickles> NO <Onions> NO <Tomatoes>
-    ADD <Ketchup> ADD <Mustard> ADD <Mayonnaise>
+START Menu
+    burger
+    burger_bun pickles onions tomatoes
+    ketchup mustard mayonnaise
 
-    <Veggie Burger>
-    ITEM <Veggie Burger> ITEM <Bun> ITEM <Pickles> ITEM <Onions> ITEM <Tomatoes>
-    NO <Pickles> NO <Onions> NO <Tomatoes>
-    ADD <Ketchup> ADD <Mustard> ADD <Mayonnaise>
+    veggie_burger
+    veggie_burger burger_bun pickles onions tomatoes
+    ketchup mustard mayonnaise
 
-    <Hot Dog>
-    ITEM <Hot Dog> ITEM <Bun>
-    ADD <Ketchup> ADD <Mustard>
+    hot_dog
+    hot_dog hot_dog_bun
+    ketchup mustard
 
-    <Veggie Dog>
-    ITEM <Veggie Dog> ITEM <Bun>
-    ADD <Ketchup> ADD <Mustard>
+    veggie_dog
+    veggie_dog hot_dog_bun
+    ketchup mustard
 END
