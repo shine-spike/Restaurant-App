@@ -1,0 +1,3 @@
+% Lines starting with a percentage sign are not read.
+% The format of an event is as follows:
+% <INGREDIENT_NAME>

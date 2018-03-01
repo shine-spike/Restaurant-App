@@ -1,0 +1,13 @@
+% Lines starting with a percentage sign are not read.
+% The format of one menu is as follows:
+% START <MENU>
+%   <MENU_ITEM_NAME_1>
+%   NO <INGREDIENT_NAME_1> ... NO <INGREDIENT_NAME_N>
+%   ADD <INGREDIENT_NAME_N+1> ... ADD <INGREDIENT_NAME_K>
+%
+%   <MENU_ITEM_NAME_2>
+%   NO <INGREDIENT_NAME_1> ... NO <INGREDIENT_NAME_N>
+%   ADD <INGREDIENT_NAME_N+1> ... ADD <INGREDIENT_NAME_K>
+%
+%   ...
+% END
