@@ -24,9 +24,7 @@ public class TableController
 
   public String printBill(int tableNumber)
   {
-    Bill myBill = tableList[tableNumber - 1].getBill();
-    return myBill.toString();
+    return tableList[tableNumber - 1].printBill();
   }
-
 
 }
