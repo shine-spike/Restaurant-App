@@ -3,8 +3,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Order {
-  private static int current_order_number = 0;
+  private static int currentOrderNum = 0;
 
+  private int orderNum;
   private int tableNum;
   private int serverId;
   private MenuItem menuItem;
@@ -12,12 +13,21 @@ public class Order {
   private List<Ingredient> subtractions;
   private boolean seen;
 
-  public Order(int serverId, int tableNum, MenuItem menuItem, Ingredient[] additions, Ingredient[] subtractions){
+  public Order(
+      int serverId,
+      int tableNum,
+      MenuItem menuItem,
+      Ingredient[] additions,
+      Ingredient[] subtractions) {
+    this.orderNum = currentOrderNum;
+    currentOrderNum ++;
+
     this.serverId = serverId;
     this.tableNum = tableNum;
     this.menuItem = menuItem;
     this.additions = Arrays.asList(additions);
     this.subtractions = Arrays.asList(subtractions);
+    this.seen = false;
   }
 
   public int getTableNum() {
@@ -32,6 +42,10 @@ public class Order {
     return menuItem.getPrice();
   }
 
+  public boolean isSeen() {
+    return seen;
+  }
+
   public ArrayList<Ingredient> getIngredientsList() {
     Ingredient[] ingredients = menuItem.getIngredients();
     ArrayList<Ingredient> ingredientsList = new ArrayList<Ingredient>(Arrays.asList(ingredients));
@@ -40,6 +54,10 @@ public class Order {
     ingredientsList.addAll(additions);
 
     return ingredientsList;
+  }
+
+  public void orderSeen() {
+    seen = true;
   }
 
   public String toString() {
