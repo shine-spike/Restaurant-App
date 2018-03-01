@@ -1,3 +1,23 @@
 % Lines starting with a percentage sign are not read.
 % The format of an event is as follows:
 % <INGREDIENT_NAME> <ORDERING_THRESHOLD> <INITIAL_AMOUNT>
+
+% Bread
+burger_bun 10 50
+hot_dog_bun 10 50
+
+% Meat
+hot_dog 10 40
+veggie_dog 5 10
+burger 10 40
+veggie_burger 5 10
+
+% Sauces
+ketchup 6 12
+mustard 6 12
+mayonnaise 6 11
+
+% Toppings
+pickles 5 18
+onions 8 16
+tomatoes 14 27
