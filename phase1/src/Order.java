@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Order {
   private static int currentOrderNum = 0;
@@ -11,7 +10,7 @@ public class Order {
   private MenuItem menuItem;
   private ArrayList<Ingredient> ingredients;
   private ArrayList<Ingredient> additions;
-  private ArrayList<Ingredient> removals;
+  private ArrayList<Ingredient> subtractions;
   private boolean seen;
 
   public Order(int serverId, int tableNum, MenuItem menuItem) {
@@ -23,16 +22,18 @@ public class Order {
     this.menuItem = menuItem;
     this.ingredients = new ArrayList<>(Arrays.asList(menuItem.getIngredients()));
     this.additions = new ArrayList<>();
-    this.removals = new ArrayList<>();
+    this.subtractions = new ArrayList<>();
     this.seen = false;
   }
 
   public void addAddition(Ingredient toAdd){
-    ingredients.remove(toAdd);
+    ingredients.add(toAdd);
+    additions.add(toAdd);
   }
 
-  public void addRemoval(Ingredient toRemove){
-    ingredients.add(toRemove);
+  public void addSubtraction(Ingredient toRemove){
+    ingredients.remove(toRemove);
+    subtractions.add(toRemove);
   }
 
   public int getServerId() { return serverId; }
