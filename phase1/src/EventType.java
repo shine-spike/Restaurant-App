@@ -2,9 +2,9 @@ public enum EventType {
     ORD,
     SEEN,
     READY,
-    REC,
-    CON,
-    RET,
+    RECEIVE,
+    ACCEPT,
+    REJECT,
     REDO,
     BILL,
     PAID;
@@ -17,11 +17,11 @@ public enum EventType {
                 break;
             case READY:
                 break;
-            case REC:
+            case RECEIVE:
                 break;
-            case CON:
+            case ACCEPT:
                 break;
-            case RET:
+            case REJECT:
                 break;
             case REDO:
                 break;
