@@ -6,30 +6,30 @@
 %   ORDER: <TABLE_NUMBER> <MENU_NAME> <MENU_ITEM_NAME>
 %          NO <INGREDIENT_NAME_1> ... <INGREDIENT_NAME_N>
 %          ADD <INGREDIENT_NAME_N+1> ... <INGREDIENT_NAME_K>
-%   E.g. "ORDER 10 lunch burger NO lettuce ketchup ADD mustard"
+%   E.g. "ORDER 0 10 lunch burger NO lettuce ketchup ADD mustard"
 %
 %   SEEN: <ORDER_NUMBER>
-%   E.g. "SEEN 0"
+%   E.g. "SEEN 0 0"
 %
 %   READY: <ORDER_NUMBER>
-%   E.g. "READY 0"
+%   E.g. "READY 0 0"
 %
 %   ACCEPT: <ORDER_NUMBER>
-%   E.g. "ACCEPT 0"
+%   E.g. "ACCEPT 0 0"
 %
 %   REJECT: <ORDER_NUMBER> <REASON>
-%   E.g. "REJECT 0 Wrong order"
+%   E.g. "REJECT 0 0 Wrong order"
 %
 %   REDO: <ORDER_NUMBER>
-%   E.g. "REDO 0 Cold food"
+%   E.g. "REDO 0 0 Cold food"
 %
 %   BILL: <TABLE_NUMBER>
-%   E.g. "BILL 6"
+%   E.g. "BILL 0 6"
 %
 %   PAID: <TABLE_NUMBER>
-%   E.g. "PAID 6"
+%   E.g. "PAID 0 6"
 %
 %   RECEIVE: <INGREDIENT_NAME> <AMOUNT>
-%   E.g. "RECEIVE meat 100"
+%   E.g. "RECEIVE 0 meat 100"
 %
 % Orders are automatically assigned zero-indexed incrementing numbers.
