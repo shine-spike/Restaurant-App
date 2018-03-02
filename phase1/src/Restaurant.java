@@ -1,6 +1,5 @@
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.util.ArrayList;
+
 
 public class Restaurant {
   private final int NUM_TABLES = 100;
@@ -10,14 +9,14 @@ public class Restaurant {
   public Inventory inventory = new Inventory();
   public MenuController menuController = new MenuController();
 
-  private ArrayList<Order> pendingOrders = new ArrayList<>();
+  public ArrayList<Order> pendingOrders = new ArrayList<>();
 
 
   Restaurant() {
 
   }
 
-  public void parseConfiguration() {
-    Parser.parse(this);
+  public void readFiles() {
+    Parser.parseFiles(this);
   }
 }
