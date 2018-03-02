@@ -1,34 +1,28 @@
 public enum EventType {
-    ORD,
-    SEEN,
-    READY,
-    REC,
-    CON,
-    RET,
-    REDO,
-    BILL,
-    PAID;
+  ORDER("ORDER"),
+  SEEN("SEEN"),
+  READY("READY"),
+  ACCEPT("ACCEPT"),
+  REJECT("REJECT"),
+  REDO("REDO"),
+  BILL("BILL"),
+  PAID("PAID"),
+  RECEIVE("RECEIVE");
 
-    public void process(){
-        switch(this){
-            case ORD:
-                break;
-            case SEEN:
-                break;
-            case READY:
-                break;
-            case REC:
-                break;
-            case CON:
-                break;
-            case RET:
-                break;
-            case REDO:
-                break;
-            case BILL:
-                break;
-            case PAID:
-                break;
-        }
+  private String keyword;
+
+
+  EventType(String keyword) {
+    this.keyword = keyword;
+  }
+
+  public static EventType getEventType(String keyword) {
+    for(EventType e : EventType.values()){
+      if(keyword.equals(e.keyword)) {
+        return e;
+      }
     }
+
+    return null;
+  }
 }

@@ -124,7 +124,57 @@ public class Parser {
   private static void parseEvents(BufferedReader reader, Restaurant restaurant) throws IOException {
     String[] symbols;
     while ((symbols = preParse(reader)) != null) {
-      // TODO: parse event
+      EventType eventType = EventType.getEventType(symbols[0]);
+      if (eventType == null) {
+        continue;
+      }
+
+      switch (eventType) {
+        // An order is placed by a server
+        case ORDER:
+          // TODO: create the order and add it to pending orders
+          break;
+
+        // A placed order is seen by a cook
+        case SEEN:
+          // TODO: set the seen flag on the order
+          break;
+
+        // A seen order is ready to be served
+        case READY:
+          // TODO: remove the order from pending orders and notify server
+          break;
+
+        // A ready order is successfully delivered
+        case ACCEPT:
+          // TODO: add the order to the bill
+          break;
+
+        // A ready order is rejected by the table
+        case REJECT:
+          // TODO: discard the order
+          break;
+
+        // A ready order is sent back to be recooked
+        case REDO:
+          // TODO: copy the order, requeue it, and discard the original
+          break;
+
+        // A bill is requested by a server
+        case BILL:
+          // TODO: display the bill
+          break;
+
+        // A table paid off the bill
+        case PAID:
+          // TODO: clear the table's bill
+          break;
+
+        // An ingredient is received by an employee
+        case RECEIVE:
+          // TODO: add the amount of ingredient to the inventory
+          break;
+      }
     }
   }
 }
