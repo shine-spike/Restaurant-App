@@ -4,9 +4,9 @@
 %
 % The available commands with their required arguments followed by an example is as follows:
 %   ORDER: <TABLE_NUMBER> <MENU_NAME> <MENU_ITEM_NAME>
-%          NO <INGREDIENT_NAME_1> ... NO <INGREDIENT_NAME_N>
-%          ADD <INGREDIENT_NAME_N+1> ... ADD <INGREDIENT_NAME_K>
-%   E.g. "ORDER 10 lunch burger NO lettuce ADD mustard"
+%          NO <INGREDIENT_NAME_1> ... <INGREDIENT_NAME_N>
+%          ADD <INGREDIENT_NAME_N+1> ... <INGREDIENT_NAME_K>
+%   E.g. "ORDER 10 lunch burger NO lettuce ketchup ADD mustard"
 %
 %   SEEN: <ORDER_NUMBER>
 %   E.g. "SEEN 0"
