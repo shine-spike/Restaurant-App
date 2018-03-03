@@ -20,7 +20,7 @@ public class EventParser {
 
       // A seen order is ready to be served
       case READY:
-        // TODO: remove the order from pending orders and notify server
+        parseReadyEvent(restaurant, symbols);
         break;
 
       // A ready order is successfully delivered
@@ -87,8 +87,13 @@ public class EventParser {
     boolean result = restaurant.orderSeen(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
     if (!result) {
       System.out.println("Order with the given number is not pending.");
-    } else {
-      System.out.println("Order has been seen.");
+    }
+  }
+
+  private static void parseReadyEvent(Restaurant restaurant, String[] symbols) {
+    boolean result = restaurant.orderReady(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
+    if (!result) {
+      System.out.println("Order with the given number is not pending.");
     }
   }
 }

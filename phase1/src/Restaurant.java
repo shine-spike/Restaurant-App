@@ -20,6 +20,15 @@ public class Restaurant {
     Parser.parseFiles(this);
   }
 
+  private Order getPendingOrderFromNumber(int orderNumber) {
+    for (Order pendingOrder : pendingOrders) {
+      if (pendingOrder.getOrderNumber() == orderNumber) {
+        return pendingOrder;
+      }
+    }
+    return null;
+  }
+
   public boolean placeOrder(int employeeNumber, int tableNumber, String menuNameString, String menuItemString,
                             ArrayList<String> subtractionStrings, ArrayList<String> additionStrings) {
 
@@ -45,16 +54,21 @@ public class Restaurant {
   }
 
   public boolean orderSeen(int employeeNumber, int orderNumber) {
-    Order order = null;
-    for (Order pendingOrder : pendingOrders) {
-      if (pendingOrder.getOrderNumber() == orderNumber) {
-        order = pendingOrder;
-        break;
-      }
-    }
+    Order order = getPendingOrderFromNumber(orderNumber);
 
     if (order != null) {
       order.orderSeen();
+      return true;
+    }
+    return false;
+  }
+
+  public boolean orderReady(int employeeNumber, int orderNumber) {
+    Order order = getPendingOrderFromNumber(orderNumber);
+
+    if (order != null) {
+      // TODO: broadcast that the order is ready
+      pendingOrders.remove(order);
       return true;
     }
     return false;
