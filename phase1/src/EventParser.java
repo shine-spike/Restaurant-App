@@ -40,12 +40,12 @@ public class EventParser {
 
       // A bill is requested by a server
       case BILL:
-        // TODO: display the bill
+        parseBillEvent(restaurant, symbols);
         break;
 
       // A table paid off the bill
       case PAID:
-        // TODO: clear the table's bill
+        parsePaidEvent(restaurant, symbols);
         break;
 
       // An ingredient is received by an employee
@@ -115,6 +115,20 @@ public class EventParser {
     boolean result = restaurant.orderRedo(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]), symbols[3]);
     if (!result) {
       System.out.println("Order with the given number is not ready or the order cannot be fulfilled.");
+    }
+  }
+
+  private static void parseBillEvent(Restaurant restaurant, String[] symbols) {
+    boolean result = restaurant.printBill(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
+    if (!result) {
+      System.out.println("Bill was not able to be printed.");
+    }
+  }
+
+  private static void parsePaidEvent(Restaurant restaurant, String[] symbols) {
+    boolean result = restaurant.payBill(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
+    if (!result) {
+      System.out.println("Bill was not able to be paid.");
     }
   }
 }

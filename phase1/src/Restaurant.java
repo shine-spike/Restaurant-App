@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Restaurant {
   private final int NUM_TABLES = 100;
-  public TableController tableController = new TableController(NUM_TABLES);
+  private TableController tableController = new TableController(NUM_TABLES);
 
   public EmployeeController employeeController = new EmployeeController();
   public Inventory inventory = new Inventory();
@@ -109,5 +109,15 @@ public class Restaurant {
       return placeOrder(redoOrder);
     }
     return false;
+  }
+
+  public boolean printBill(int employeeNumber, int tableNumber) {
+    System.out.println(tableController.printBill(tableNumber));
+    return true;
+  }
+
+  public boolean payBill(int employeeNumber, int tableNumber) {
+    tableController.clearBill(tableNumber);
+    return true;
   }
 }
