@@ -120,4 +120,10 @@ public class Restaurant {
     tableController.clearBill(tableNumber);
     return true;
   }
+
+  public boolean receiveIngredient(int employeeNumber, String ingredientName, int ingredientAmount) {
+    Ingredient ingredient = inventory.getIngredient(ingredientName);
+    inventory.restockIngredient(ingredient, ingredientAmount);
+    return true;
+  }
 }

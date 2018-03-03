@@ -50,7 +50,7 @@ public class EventParser {
 
       // An ingredient is received by an employee
       case RECEIVE:
-        // TODO: add the amount of ingredient to the inventory
+        parseReceiveEvent(restaurant, symbols);
         break;
     }
   }
@@ -129,6 +129,13 @@ public class EventParser {
     boolean result = restaurant.payBill(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
     if (!result) {
       System.out.println("Bill was not able to be paid.");
+    }
+  }
+
+  private static void parseReceiveEvent(Restaurant restaurant, String[] symbols) {
+    boolean result = restaurant.receiveIngredient(Integer.parseInt(symbols[1]), symbols[2], Integer.parseInt(symbols[3]));
+    if (!result) {
+      System.out.println("Ingredient was not able to be received.");
     }
   }
 }
