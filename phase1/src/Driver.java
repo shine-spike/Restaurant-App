@@ -1,6 +1,12 @@
+/**
+ * Entry point to the program.
+ *
+ * Manages starting up a {@link Restaurant} and {@link Parser}.
+ */
 public class Driver {
-  private static final int DEFAULT_NUM_TABLES = 100;
-
+  /**
+   * Low-level flags to determine whether or not to read in information from files.
+   */
   private static final boolean READ_CONFIGURATION = true;
   private static final boolean READ_EVENTS = true;
 
@@ -8,32 +14,52 @@ public class Driver {
   private Parser parser;
 
 
-  Driver(int numTables) {
-    restaurant = new Restaurant(numTables);
+  /**
+   * Constructs a driver with a default {@link Restaurant} and {@link Parser}.
+   */
+  Driver() {
+    restaurant = new Restaurant();
     parser = new Parser(restaurant);
   }
 
-  Driver() {
-    this(DEFAULT_NUM_TABLES);
-  }
-
+  /**
+   * Returns the {@link Restaurant} that this Driver is managing.
+   *
+   * @return the managed {@link Restaurant}.
+   */
   public Restaurant getRestaurant() {
     return restaurant;
   }
 
+  /**
+   * Returns the {@link Parser} associated with this Driver.
+   *
+   * @return the associated {@link Parser}.
+   */
   public Parser getParser() {
     return parser;
   }
 
+  /**
+   * Changes the location of the configuration and event files.
+   *
+   * @param location the new location of the files.
+   */
   public void setFilesLocation(String location) {
     parser.setFilesLocation(location);
   }
 
-  private void readConfiguration() {
+  /**
+   * Reads and parses configuration files.
+   */
+  public void readConfiguration() {
     parser.parseConfiguration();
   }
 
-  private void readEvents() {
+  /**
+   * Reads and parses events.
+   */
+  public void readEvents() {
     parser.parseEvents();
   }
 

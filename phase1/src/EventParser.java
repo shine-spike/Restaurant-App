@@ -85,7 +85,7 @@ public class EventParser {
       }
     }
 
-    boolean result = restaurant.orderPlace(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]),
+    boolean result = restaurant.placeOrder(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]),
             symbols[3], symbols[4], subtractions, additions);
     if (!result) {
       System.out.println("Order could not be placed.");
@@ -93,7 +93,7 @@ public class EventParser {
   }
 
   private void parseSeenEvent(String[] symbols) {
-    boolean result = restaurant.orderSee(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
+    boolean result = restaurant.orderSeen(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
     if (!result) {
       System.out.println("Order with the given number is not pending.");
     }
@@ -107,21 +107,21 @@ public class EventParser {
   }
 
   private void parseAcceptEvent(String[] symbols) {
-    boolean result = restaurant.orderAccept(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
+    boolean result = restaurant.orderAccepted(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
     if (!result) {
       System.out.println("Order with the given number is not ready.");
     }
   }
 
   private void parseRejectEvent(String[] symbols) {
-    boolean result = restaurant.orderReject(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]), symbols[3]);
+    boolean result = restaurant.orderRejected(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]), symbols[3]);
     if (!result) {
       System.out.println("Order with the given number is not ready.");
     }
   }
 
   private void parseRedoEvent(String[] symbols) {
-    boolean result = restaurant.orderRedo(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]), symbols[3]);
+    boolean result = restaurant.redoOrder(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]), symbols[3]);
     if (!result) {
       System.out.println("Order with the given number is not ready or the order cannot be fulfilled.");
     }
@@ -135,14 +135,14 @@ public class EventParser {
   }
 
   private void parsePaidEvent(String[] symbols) {
-    boolean result = restaurant.payBill(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
+    boolean result = restaurant.billPaid(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
     if (!result) {
       System.out.println("Bill was not able to be paid.");
     }
   }
 
   private void parseReceiveEvent(String[] symbols) {
-    boolean result = restaurant.receiveIngredient(Integer.parseInt(symbols[1]), symbols[2], Integer.parseInt(symbols[3]));
+    boolean result = restaurant.ingredientsReceived(Integer.parseInt(symbols[1]), symbols[2], Integer.parseInt(symbols[3]));
     if (!result) {
       System.out.println("Ingredient was not able to be received.");
     }
