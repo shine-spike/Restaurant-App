@@ -1,6 +1,11 @@
 import java.util.ArrayList;
 
 
+/**
+ * Restaurant in the system. Manages all interactions.
+ *
+ * Contains all functional parts of a restaurant and provides an interface for interaction.
+ */
 public class Restaurant {
   /**
    * Default number of tables in a Restaurant.
