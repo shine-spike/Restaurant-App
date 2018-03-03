@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class Parser {
@@ -132,7 +133,7 @@ public class Parser {
       switch (eventType) {
         // An order is placed by a server
         case ORDER:
-          // TODO: create the order and add it to pending orders
+          parseOrderEvent(restaurant, symbols);
           break;
 
         // A placed order is seen by a cook
@@ -175,6 +176,35 @@ public class Parser {
           // TODO: add the amount of ingredient to the inventory
           break;
       }
+    }
+  }
+
+  private static void parseOrderEvent(Restaurant restaurant, String[] symbols) {
+    ArrayList<String> subtractions = new ArrayList<>();
+    ArrayList<String> additions = new ArrayList<>();
+
+    boolean isAddition = false;
+    for (int i = 5; i < symbols.length; i++) {
+      if (symbols[i].equals("NO")) {
+        isAddition = false;
+        continue;
+      } else if (symbols[i].equals("ADD")) {
+        isAddition = true;
+        continue;
+      }
+
+      if (isAddition) {
+        additions.add(symbols[i]);
+      } else {
+        subtractions.add(symbols[i]);
+      }
+    }
+
+    boolean result = restaurant.placeOrder(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]),
+            symbols[3], symbols[4], subtractions, additions);
+
+    if (!result) {
+      System.out.println("Order could not be placed.");
     }
   }
 }

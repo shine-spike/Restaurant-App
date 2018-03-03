@@ -9,7 +9,7 @@ public class Restaurant {
   public Inventory inventory = new Inventory();
   public MenuController menuController = new MenuController();
 
-  public ArrayList<Order> pendingOrders = new ArrayList<>();
+  private ArrayList<Order> pendingOrders = new ArrayList<>();
 
 
   Restaurant() {
@@ -18,5 +18,29 @@ public class Restaurant {
 
   public void readFiles() {
     Parser.parseFiles(this);
+  }
+
+  public boolean placeOrder(int employeeNumber, int tableNumber, String menuNameString, String menuItemString,
+                            ArrayList<String> subtractionStrings, ArrayList<String> additionStrings) {
+
+    MenuItem menuItem = menuController.getItemFromMenu(menuNameString, menuItemString);
+    Order order = new Order(employeeNumber, tableNumber, menuItem);
+
+    for (String subtraction : subtractionStrings) {
+      Ingredient ingredient = inventory.getIngredient(subtraction);
+      order.addSubtraction(ingredient);
+    }
+
+    for (String addition : additionStrings) {
+      Ingredient ingredient = inventory.getIngredient(addition);
+      order.addAddition(ingredient);
+    }
+
+    if (inventory.confirm(order)) {
+      return false;
+    }
+
+    pendingOrders.add(order);
+    return true;
   }
 }
