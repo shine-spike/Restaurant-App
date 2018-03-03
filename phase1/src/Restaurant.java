@@ -117,7 +117,7 @@ public class Restaurant {
   }
 
   public boolean payBill(int employeeNumber, int tableNumber) {
-    tableController.clearBill(tableNumber);
+    tableController.payBill(tableNumber);
     return true;
   }
 
