@@ -23,13 +23,11 @@ public class Restaurant {
     Order order = new Order(employeeNumber, tableNumber, menuItem);
 
     for (String subtraction : subtractionStrings) {
-      Ingredient ingredient = inventory.getIngredient(subtraction);
-      order.addSubtraction(ingredient);
+      order.addSubtraction(subtraction);
     }
 
     for (String addition : additionStrings) {
-      Ingredient ingredient = inventory.getIngredient(addition);
-      order.addAddition(ingredient);
+      order.addAddition(addition);
     }
 
     return placeOrder(order);
@@ -100,8 +98,7 @@ public class Restaurant {
   }
 
   public boolean receiveIngredient(int employeeNumber, String ingredientName, int ingredientAmount) {
-    Ingredient ingredient = inventory.getIngredient(ingredientName);
-    inventory.restockIngredient(ingredient, ingredientAmount);
+    inventory.restockIngredient(ingredientName, ingredientAmount);
     return true;
   }
 
