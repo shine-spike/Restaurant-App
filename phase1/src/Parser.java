@@ -6,31 +6,40 @@ import java.util.ArrayList;
 
 
 public class Parser {
-  private static final String CONFIG_LOCATION = "phase1/config/";
   private static final String EMPLOYEE_FILE_NAME = "employees.txt";
   private static final String INGREDIENTS_FILE_NAME = "ingredients.txt";
   private static final String MENUS_FILE_NAME = "menus.txt";
   private static final String EVENTS_FILE_NAME = "events.txt";
 
+  private String filesLocation = "phase1/config/";
+  private Restaurant restaurant;
 
-  public static void parseFiles(Restaurant restaurant) {
+
+  Parser(Restaurant restaurant) {
+    this.restaurant = restaurant;
+  }
+
+  public void setFilesLocation(String filesLocation) {
+    this.filesLocation = filesLocation;
+  }
+
+  public void parseConfiguration() {
     // Make sure that the configuration file location exists and
     // notify if it was created right now
-    Boolean madeNew = new File(CONFIG_LOCATION).mkdir();
+    Boolean madeNew = new File(filesLocation).mkdir();
     if (madeNew) {
       System.out.println("Created a configuration folder.");
     }
 
-    // Generate the readers for each type of configuration file and the events file
+    // Generate the readers for each type of configuration file.
     BufferedReader employeeReader;
     BufferedReader ingredientReader;
     BufferedReader menuReader;
-    BufferedReader eventReader;
+
     try {
       employeeReader = getConfigurationReader(EMPLOYEE_FILE_NAME);
       ingredientReader = getConfigurationReader(INGREDIENTS_FILE_NAME);
       menuReader = getConfigurationReader(MENUS_FILE_NAME);
-      eventReader = getConfigurationReader(EVENTS_FILE_NAME);
     } catch (IOException e) {
       // TODO: be more delicate
       System.out.println("Finding configuration files failed.");
@@ -40,10 +49,9 @@ public class Parser {
 
     // Parse each type of configuration file and the events file
     try {
-      parseEmployeeConfiguration(employeeReader, restaurant.employeeController);
-      parseIngredientConfiguration(ingredientReader, restaurant.inventory);
-      parseMenuConfiguration(menuReader, restaurant.menuController);
-      parseEvents(eventReader, restaurant);
+      parseEmployeeConfiguration(employeeReader);
+      parseIngredientConfiguration(ingredientReader);
+      parseMenuConfiguration(menuReader);
     } catch (IOException e) {
       // TODO: be more delicate
       System.out.println("Parsing of configuration files was not successful.");
@@ -51,8 +59,28 @@ public class Parser {
     }
   }
 
-  private static BufferedReader getConfigurationReader(String fileName) throws IOException {
-    File file = new File(CONFIG_LOCATION + fileName);
+  public void parseEvents() {
+    BufferedReader eventReader;
+    try {
+      eventReader = getConfigurationReader(EVENTS_FILE_NAME);
+    } catch (IOException e) {
+      // TODO: be more delicate
+      System.out.println("Finding configuration files failed.");
+      System.exit(1);
+      return;
+    }
+
+    try {
+      parseEventsFile(eventReader);
+    } catch (IOException e) {
+      // TODO: be more delicate
+      System.out.println("Parsing of configuration files was not successful.");
+      System.exit(1);
+    }
+  }
+
+  private BufferedReader getConfigurationReader(String fileName) throws IOException {
+    File file = new File(filesLocation + fileName);
 
     Boolean madeNew = file.createNewFile();
     if (madeNew) {
@@ -61,7 +89,7 @@ public class Parser {
     return new BufferedReader(new FileReader(file));
   }
 
-  private static String[] preParse(BufferedReader reader) throws IOException {
+  private String[] preParse(BufferedReader reader) throws IOException {
     String[] symbols;
 
     do {
@@ -80,21 +108,21 @@ public class Parser {
     return symbols;
   }
 
-  private static void parseEmployeeConfiguration(BufferedReader reader, EmployeeController employeeController) throws IOException {
+  private void parseEmployeeConfiguration(BufferedReader reader) throws IOException {
     String[] symbols;
     while ((symbols = preParse(reader)) != null) {
-      employeeController.addEmployee(symbols[0] + symbols[1]);
+      restaurant.employeeController.addEmployee(symbols[0] + symbols[1]);
     }
   }
 
-  private static void parseIngredientConfiguration(BufferedReader reader, Inventory inventory) throws IOException {
+  private void parseIngredientConfiguration(BufferedReader reader) throws IOException {
     String[] symbols;
     while ((symbols = preParse(reader)) != null) {
-      inventory.addIngredient(symbols[0], Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
+      restaurant.inventory.addIngredient(symbols[0], Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
     }
   }
 
-  private static void parseMenuConfiguration(BufferedReader reader, MenuController menuController) throws IOException {
+  private void parseMenuConfiguration(BufferedReader reader) throws IOException {
     String currentMenu = null;
 
     String[] symbols;
@@ -106,26 +134,27 @@ public class Parser {
         }
 
         String currentItem = symbols[0];
-        menuController.addItemToMenu(currentMenu, currentItem, Integer.parseInt(symbols[1]));
+        restaurant.menuController.addItemToMenu(currentMenu, currentItem, Integer.parseInt(symbols[1]));
 
         for (String ingredient : preParse(reader)) {
-          menuController.addIngredientToMenuItem(currentMenu, currentItem, ingredient);
+          restaurant.menuController.addIngredientToMenuItem(currentMenu, currentItem, ingredient);
         }
 
         for (String addition : preParse(reader)) {
-          menuController.addAdditionToMenuItem(currentMenu, currentItem, addition);
+          restaurant.menuController.addAdditionToMenuItem(currentMenu, currentItem, addition);
         }
       } else {
         currentMenu = symbols[1];
-        menuController.addMenu(currentMenu);
+        restaurant.menuController.addMenu(currentMenu);
       }
     }
   }
 
-  private static void parseEvents(BufferedReader reader, Restaurant restaurant) throws IOException {
+  private void parseEventsFile(BufferedReader reader) throws IOException {
     String[] symbols;
     while ((symbols = preParse(reader)) != null) {
-      EventParser.parseEvent(restaurant, symbols);
+      EventParser eventParser = new EventParser(restaurant);
+      eventParser.parseEvent(symbols);
     }
   }
 }

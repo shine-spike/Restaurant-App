@@ -2,8 +2,7 @@ import java.util.ArrayList;
 
 
 public class Restaurant {
-  private final int NUM_TABLES = 100;
-  private TableController tableController = new TableController(NUM_TABLES);
+  private TableController tableController;
 
   public EmployeeController employeeController = new EmployeeController();
   public Inventory inventory = new Inventory();
@@ -13,29 +12,8 @@ public class Restaurant {
   private ArrayList<Order> readyOrders = new ArrayList<>();
 
 
-  Restaurant() {
-
-  }
-
-  public void readFiles() {
-    Parser.parseFiles(this);
-  }
-
-  private static Order getOrderFromNumber(ArrayList<Order> orders, int orderNumber) {
-    for (Order order : orders) {
-      if (order.getOrderNumber() == orderNumber) {
-        return order;
-      }
-    }
-    return null;
-  }
-
-  private boolean placeOrder(Order order) {
-    if (inventory.confirmOrder(order)) {
-      pendingOrders.add(order);
-      return true;
-    }
-    return false;
+  Restaurant(int numTables) {
+    tableController = new TableController(numTables);
   }
 
   public boolean orderPlace(int employeeNumber, int tableNumber, String menuNameString, String menuItemString,
@@ -126,4 +104,22 @@ public class Restaurant {
     inventory.restockIngredient(ingredient, ingredientAmount);
     return true;
   }
+
+  private static Order getOrderFromNumber(ArrayList<Order> orders, int orderNumber) {
+    for (Order order : orders) {
+      if (order.getOrderNumber() == orderNumber) {
+        return order;
+      }
+    }
+    return null;
+  }
+
+  private boolean placeOrder(Order order) {
+    if (inventory.confirmOrder(order)) {
+      pendingOrders.add(order);
+      return true;
+    }
+    return false;
+  }
+
 }
