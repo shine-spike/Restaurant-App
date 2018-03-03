@@ -31,7 +31,7 @@ public class Restaurant {
   }
 
   private boolean placeOrder(Order order) {
-    if (inventory.confirm(order)) {
+    if (inventory.confirmOrder(order)) {
       pendingOrders.add(order);
       return true;
     }
