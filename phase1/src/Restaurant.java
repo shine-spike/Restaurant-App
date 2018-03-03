@@ -43,4 +43,20 @@ public class Restaurant {
     pendingOrders.add(order);
     return true;
   }
+
+  public boolean orderSeen(int employeeNumber, int orderNumber) {
+    Order order = null;
+    for (Order pendingOrder : pendingOrders) {
+      if (pendingOrder.getOrderNumber() == orderNumber) {
+        order = pendingOrder;
+        break;
+      }
+    }
+
+    if (order != null) {
+      order.orderSeen();
+      return true;
+    }
+    return false;
+  }
 }

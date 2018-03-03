@@ -4,21 +4,21 @@ import java.util.Arrays;
 public class Order {
   private static int currentOrderNum = 0;
 
-  private int orderNum;
-  private int tableNum;
-  private int serverId;
+  private int orderNumber;
+  private int tableNumber;
+  private int employeeNumber;
   private MenuItem menuItem;
   private ArrayList<Ingredient> ingredients;
   private ArrayList<Ingredient> additions;
   private ArrayList<Ingredient> subtractions;
   private boolean seen;
 
-  public Order(int serverId, int tableNum, MenuItem menuItem) {
-    this.orderNum = currentOrderNum;
+  public Order(int serverNumber, int tableNumber, MenuItem menuItem) {
+    this.orderNumber = currentOrderNum;
     currentOrderNum++;
 
-    this.serverId = serverId;
-    this.tableNum = tableNum;
+    this.employeeNumber = serverNumber;
+    this.tableNumber = tableNumber;
     this.menuItem = menuItem;
     this.ingredients = new ArrayList<>(Arrays.asList(menuItem.getIngredients()));
     this.additions = new ArrayList<>();
@@ -36,10 +36,10 @@ public class Order {
     subtractions.add(toRemove);
   }
 
-  public int getServerId() { return serverId; }
+  public int getEmployeeNumber() { return employeeNumber; }
 
-  public int getTableNum() {
-    return tableNum;
+  public int getTableNumber() {
+    return tableNumber;
   }
 
   public MenuItem getMenuItem() {
@@ -50,8 +50,8 @@ public class Order {
     return menuItem.getPrice();
   }
 
-  public int getOrderNum() {
-    return orderNum;
+  public int getOrderNumber() {
+    return orderNumber;
   }
 
   public boolean isSeen() {
