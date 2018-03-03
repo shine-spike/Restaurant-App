@@ -12,6 +12,11 @@ public class TableController {
     }
   }
 
+  public int payBill(int tableNumber)
+  {
+    return tableList[tableNumber].payBill();
+  }
+
   public void addToBill(Order order) {
     Table myTable = tableList[order.getTableNumber()];
     myTable.addToBill(order);
