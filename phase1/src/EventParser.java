@@ -25,17 +25,17 @@ public class EventParser {
 
       // A ready order is successfully delivered
       case ACCEPT:
-        // TODO: add the order to the bill
+        parseAcceptEvent(restaurant, symbols);
         break;
 
       // A ready order is rejected by the table
       case REJECT:
-        // TODO: discard the order
+        parseRejectEvent(restaurant, symbols);
         break;
 
       // A ready order is sent back to be recooked
       case REDO:
-        // TODO: copy the order, requeue it, and discard the original
+        parseRedoEvent(restaurant, symbols);
         break;
 
       // A bill is requested by a server
@@ -76,7 +76,7 @@ public class EventParser {
       }
     }
 
-    boolean result = restaurant.placeOrder(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]),
+    boolean result = restaurant.orderPlace(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]),
             symbols[3], symbols[4], subtractions, additions);
     if (!result) {
       System.out.println("Order could not be placed.");
@@ -84,7 +84,7 @@ public class EventParser {
   }
 
   private static void parseSeenEvent(Restaurant restaurant, String[] symbols) {
-    boolean result = restaurant.orderSeen(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
+    boolean result = restaurant.orderSee(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
     if (!result) {
       System.out.println("Order with the given number is not pending.");
     }
@@ -94,6 +94,27 @@ public class EventParser {
     boolean result = restaurant.orderReady(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
     if (!result) {
       System.out.println("Order with the given number is not pending.");
+    }
+  }
+
+  private static void parseAcceptEvent(Restaurant restaurant, String[] symbols) {
+    boolean result = restaurant.orderAccept(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
+    if (!result) {
+      System.out.println("Order with the given number is not ready.");
+    }
+  }
+
+  private static void parseRejectEvent(Restaurant restaurant, String[] symbols) {
+    boolean result = restaurant.orderReject(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]), symbols[3]);
+    if (!result) {
+      System.out.println("Order with the given number is not ready.");
+    }
+  }
+
+  private static void parseRedoEvent(Restaurant restaurant, String[] symbols) {
+    boolean result = restaurant.orderRedo(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]), symbols[3]);
+    if (!result) {
+      System.out.println("Order with the given number is not ready or the order cannot be fulfilled.");
     }
   }
 }

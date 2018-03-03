@@ -10,6 +10,7 @@ public class Restaurant {
   public MenuController menuController = new MenuController();
 
   private ArrayList<Order> pendingOrders = new ArrayList<>();
+  private ArrayList<Order> readyOrders = new ArrayList<>();
 
 
   Restaurant() {
@@ -20,16 +21,24 @@ public class Restaurant {
     Parser.parseFiles(this);
   }
 
-  private Order getPendingOrderFromNumber(int orderNumber) {
-    for (Order pendingOrder : pendingOrders) {
-      if (pendingOrder.getOrderNumber() == orderNumber) {
-        return pendingOrder;
+  private static Order getOrderFromNumber(ArrayList<Order> orders, int orderNumber) {
+    for (Order order : orders) {
+      if (order.getOrderNumber() == orderNumber) {
+        return order;
       }
     }
     return null;
   }
 
-  public boolean placeOrder(int employeeNumber, int tableNumber, String menuNameString, String menuItemString,
+  private boolean placeOrder(Order order) {
+    if (inventory.confirm(order)) {
+      pendingOrders.add(order);
+      return true;
+    }
+    return false;
+  }
+
+  public boolean orderPlace(int employeeNumber, int tableNumber, String menuNameString, String menuItemString,
                             ArrayList<String> subtractionStrings, ArrayList<String> additionStrings) {
 
     MenuItem menuItem = menuController.getItemFromMenu(menuNameString, menuItemString);
@@ -45,16 +54,11 @@ public class Restaurant {
       order.addAddition(ingredient);
     }
 
-    if (inventory.confirm(order)) {
-      return false;
-    }
-
-    pendingOrders.add(order);
-    return true;
+    return placeOrder(order);
   }
 
-  public boolean orderSeen(int employeeNumber, int orderNumber) {
-    Order order = getPendingOrderFromNumber(orderNumber);
+  public boolean orderSee(int employeeNumber, int orderNumber) {
+    Order order = getOrderFromNumber(pendingOrders, orderNumber);
 
     if (order != null) {
       order.orderSeen();
@@ -64,12 +68,45 @@ public class Restaurant {
   }
 
   public boolean orderReady(int employeeNumber, int orderNumber) {
-    Order order = getPendingOrderFromNumber(orderNumber);
+    Order order = getOrderFromNumber(pendingOrders, orderNumber);
 
     if (order != null) {
-      // TODO: broadcast that the order is ready
+      System.out.println("Order " + orderNumber + " is ready for delivery!");
       pendingOrders.remove(order);
+      readyOrders.add(order);
       return true;
+    }
+    return false;
+  }
+
+  public boolean orderAccept(int employeeNumber, int orderNumber) {
+    Order order = getOrderFromNumber(readyOrders, orderNumber);
+
+    if (order != null) {
+      readyOrders.remove(order);
+      tableController.addToBill(order);
+      return true;
+    }
+    return false;
+  }
+
+  public boolean orderReject(int employeeNumber, int orderNumber, String reason) {
+    Order order = getOrderFromNumber(readyOrders, orderNumber);
+
+    if (order != null) {
+      readyOrders.remove(order);
+      return true;
+    }
+    return false;
+  }
+
+  public boolean orderRedo(int employeeNumber, int orderNumber, String reason) {
+    Order order = getOrderFromNumber(readyOrders, orderNumber);
+
+    if (order != null) {
+      readyOrders.remove(order);
+      Order redoOrder = new Order(order.getEmployeeNumber(), order.getTableNumber(), order.getMenuItem());
+      return placeOrder(redoOrder);
     }
     return false;
   }

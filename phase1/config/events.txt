@@ -24,10 +24,10 @@
 %   E.g. "REDO 0 0 Cold food"
 %
 %   BILL: <TABLE_NUMBER>
-%   E.g. "BILL 0 6"
+%   E.g. "BILL 0 0"
 %
 %   PAID: <TABLE_NUMBER>
-%   E.g. "PAID 0 6"
+%   E.g. "PAID 0 0"
 %
 %   RECEIVE: <INGREDIENT_NAME> <AMOUNT>
 %   E.g. "RECEIVE 0 meat 100"
