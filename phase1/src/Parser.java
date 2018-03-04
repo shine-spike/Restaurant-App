@@ -2,10 +2,20 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 
 
+/**
+ * Controls all file input parsing from configuration files and provides an interface for parsing event files.
+ *
+ * Passes on the parsed information to the respective Restaurant.
+ */
 public class Parser {
+  /**
+   * Flags that a line in a file should be ignored.
+   */
+  private static final char COMMENT_SYMBOL = '%';
+
+  // The names of all the files we need to access.
   private static final String EMPLOYEE_FILE_NAME = "employees.txt";
   private static final String INGREDIENTS_FILE_NAME = "ingredients.txt";
   private static final String MENUS_FILE_NAME = "menus.txt";
@@ -15,14 +25,27 @@ public class Parser {
   private Restaurant restaurant;
 
 
+  /**
+   * Constructs a Parser for a given restaurant.
+   *
+   * @param restaurant the Restaurant to pass in the information to.
+   */
   Parser(Restaurant restaurant) {
     this.restaurant = restaurant;
   }
 
+  /**
+   * Changes the location of the files that need to be parsed.
+   *
+   * @param filesLocation the new location of the files.
+   */
   public void setFilesLocation(String filesLocation) {
     this.filesLocation = filesLocation;
   }
 
+  /**
+   * Parses all the configuration files needed.
+   */
   public void parseConfiguration() {
     // Make sure that the configuration file location exists and
     // notify if it was created right now
@@ -59,6 +82,9 @@ public class Parser {
     }
   }
 
+  /**
+   * Parses the event file and passes on the information.
+   */
   public void parseEvents() {
     BufferedReader eventReader;
     try {
@@ -79,6 +105,13 @@ public class Parser {
     }
   }
 
+  /**
+   * Helper method for generating a reader for each file, and creating it if it does not exist.
+   *
+   * @param fileName the name of the file to generate a reader for.
+   * @return the reader generated.
+   * @throws IOException if something went horribly wrong in creating files.
+   */
   private BufferedReader getConfigurationReader(String fileName) throws IOException {
     File file = new File(filesLocation + fileName);
 
@@ -89,13 +122,21 @@ public class Parser {
     return new BufferedReader(new FileReader(file));
   }
 
+  /**
+   * Helper method for pre-parsing a given reader, splitting it up into parts and discarding any lines that
+   * have no impact such as comments.
+   *
+   * @param reader the reader to generate the symbols from.
+   * @return the array of symbols representing the different parts of the line read.
+   * @throws IOException if something went horribly wrong in reading files.
+   */
   private String[] preParse(BufferedReader reader) throws IOException {
     String[] symbols;
 
     do {
       String line = reader.readLine();
       if (line != null) {
-        if (line.equals("") || line.charAt(0) == '%') {
+        if (line.equals("") || line.charAt(0) == COMMENT_SYMBOL) {
           symbols = null;
         } else {
           symbols = line.split("\\s+");
@@ -108,6 +149,12 @@ public class Parser {
     return symbols;
   }
 
+  /**
+   * Parses the employee configuration file. Reads in the names of employees.
+   *
+   * @param reader the reader of the employee configuration file.
+   * @throws IOException if something went horribly wrong in reading files.
+   */
   private void parseEmployeeConfiguration(BufferedReader reader) throws IOException {
     String[] symbols;
     while ((symbols = preParse(reader)) != null) {
@@ -115,6 +162,12 @@ public class Parser {
     }
   }
 
+  /**
+   * Parses the ingredient configuration file. Reads in the names of ingredients.
+   *
+   * @param reader the reader of the ingredient configuration file.
+   * @throws IOException if something went horribly wrong in reading files.
+   */
   private void parseIngredientConfiguration(BufferedReader reader) throws IOException {
     String[] symbols;
     while ((symbols = preParse(reader)) != null) {
@@ -122,6 +175,13 @@ public class Parser {
     }
   }
 
+  /**
+   * Parses the menu configuration file. Reads in the names of menus, their menu items, what they are made of and
+   * what additions and subtractions can be added to each.
+   *
+   * @param reader the reader of the menu configuration file.
+   * @throws IOException if something went horribly wrong in reading files.
+   */
   private void parseMenuConfiguration(BufferedReader reader) throws IOException {
     String currentMenu = null;
 
@@ -150,6 +210,12 @@ public class Parser {
     }
   }
 
+  /**
+   * Parses the events file. Offloads work to {@link EventParser}.
+   *
+   * @param reader the reader of the employee configuration file.
+   * @throws IOException if something went horribly wrong in reading files.
+   */
   private void parseEventsFile(BufferedReader reader) throws IOException {
     String[] symbols;
     while ((symbols = preParse(reader)) != null) {
