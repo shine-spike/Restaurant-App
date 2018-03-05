@@ -6,7 +6,7 @@ import java.io.IOException;
 
 /**
  * Controls all file input parsing from configuration files and provides an interface for parsing event files.
- *
+ * <p>
  * Passes on the parsed information to the respective Restaurant.
  */
 public class Parser {
@@ -149,6 +149,9 @@ public class Parser {
    */
   private void parseEmployeeConfiguration() {
     BufferedReader reader = getReader(EMPLOYEE_FILE_NAME);
+    if (reader == null) {
+      return;
+    }
 
     String[] symbols;
     while ((symbols = preParse(reader)) != null) {
@@ -166,6 +169,9 @@ public class Parser {
    */
   private void parseIngredientConfiguration() {
     BufferedReader reader = getReader(INGREDIENTS_FILE_NAME);
+    if (reader == null) {
+      return;
+    }
 
     String[] symbols;
     while ((symbols = preParse(reader)) != null) {
@@ -190,6 +196,9 @@ public class Parser {
    */
   private void parseMenuConfiguration() {
     BufferedReader reader = getReader(MENUS_FILE_NAME);
+    if (reader == null) {
+      return;
+    }
     String currentMenu = null;
 
     String[] symbols;
@@ -209,7 +218,7 @@ public class Parser {
         }
 
         for (String additionName : preParse(reader)) {
-          Ingredient addition = restaurant.inventory.getIngredient(ingredientName);
+          Ingredient addition = restaurant.inventory.getIngredient(additionName);
           restaurant.menuController.addAdditionToMenuItem(currentMenu, currentItem, addition);
         }
       } else {
@@ -224,6 +233,9 @@ public class Parser {
    */
   private void parseEventsFile() {
     BufferedReader reader = getReader(EVENTS_FILE_NAME);
+    if (reader == null) {
+      return;
+    }
 
     String[] symbols;
     while ((symbols = preParse(reader)) != null) {
