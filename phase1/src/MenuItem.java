@@ -1,65 +1,55 @@
 import java.util.ArrayList;
 
 public class MenuItem {
-    int price;
-    String name;
-    ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
-    ArrayList<Ingredient> substitutions = new ArrayList<Ingredient>();
+  private int price;
+  private String name;
 
-    MenuItem(int price, String name){
-        this.price = price;
-        this.name = name;
+  private ArrayList<Ingredient> ingredients = new ArrayList<>();
+  private ArrayList<Ingredient> additions = new ArrayList<>();
+
+  MenuItem(String name, int price) {
+    this.price = price;
+    this.name = name;
+  }
+
+  public int getPrice() {
+    return price;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public Ingredient[] getAllIngredients() {
+    ArrayList<Ingredient> allIngredients = new ArrayList<>(ingredients);
+    ArrayList<Ingredient> newIngredients = new ArrayList<>();
+
+    for (Ingredient sub : additions) {
+      if (allIngredients.contains(sub)) {
+        Ingredient original = allIngredients.get(allIngredients.indexOf(sub));
+        original.setQuantity(original.getQuantity() + sub.getQuantity());
+      } else {
+        newIngredients.add(sub);
+      }
     }
 
-    public int getPrice(){
-        return price;
-    }
+    allIngredients.addAll(newIngredients);
+    return allIngredients.toArray(new Ingredient[allIngredients.size()]);
+  }
 
-    public String getName(){
-        return name;
-    }
+  public Ingredient[] getIngredients() {
+    return ingredients.toArray(new Ingredient[ingredients.size()]);
+  }
 
-    public Ingredient[] getAllIngredients(){
-        ArrayList<Ingredient> allIngredients = new ArrayList<>();
-        allIngredients.addAll(ingredients);
-        ArrayList<Ingredient> newIngredients = new ArrayList<>();
-        for (Ingredient sub:
-             substitutions) {
-            if (allIngredients.contains(sub)){
-                Ingredient original = allIngredients.get(allIngredients.indexOf(sub));
-                original.setQuantity(original.getQuantity() + sub.getQuantity());
-            }
-            else {
-                newIngredients.add(sub);
-            }
-        }
+  public Ingredient[] getAdditions() {
+    return additions.toArray(new Ingredient[additions.size()]);
+  }
 
-        allIngredients.addAll(newIngredients);
-        return allIngredients.toArray(new Ingredient[allIngredients.size()]);
-    }
+  public void addIngredient(Ingredient ingredient) {
+    ingredients.add(ingredient);
+  }
 
-    public Ingredient[] getIngredients(){
-        return ingredients.toArray(new Ingredient[ingredients.size()]);
-    }
-
-    public Ingredient[] getSubstitutions(){
-        return substitutions.toArray(new Ingredient[substitutions.size()]);
-    }
-
-    public String toString(){
-        StringBuilder out = new StringBuilder(name + " " + price);
-        for(Ingredient i : substitutions){
-            out.append(System.lineSeparator() + "  - " + i.getName());
-        }
-
-        return out.toString();
-    }
-
-    public void addIngredient(Ingredient ingredient){
-        this.ingredients.add(ingredient);
-    }
-
-    public void addSubstitution(Ingredient ingredient){
-        this.substitutions.add(ingredient);
-    }
+  public void addAddition(Ingredient ingredient) {
+    additions.add(ingredient);
+  }
 }

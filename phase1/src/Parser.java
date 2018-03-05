@@ -136,8 +136,7 @@ public class Parser {
           symbols = line.split("\\s+");
         }
       } else {
-        // If the line is the end of the file return an empty array
-        return new String[]{};
+        return null;
       }
     } while (symbols == null);
 

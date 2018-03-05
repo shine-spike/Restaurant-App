@@ -6,50 +6,37 @@ import java.util.ArrayList;
  */
 
 public class Menu {
-    String name;
-    private ArrayList<MenuItem> menuItems;
+  private String name;
+  private ArrayList<MenuItem> menuItems = new ArrayList<>();;
 
-    public Menu(String name){
-        menuItems = new ArrayList<>();
-        this.name = name;
+  Menu(String name) {
+    this.name = name;
+  }
+
+  public MenuItem getMenuItem(String itemName) {
+    for (MenuItem item : menuItems) {
+      if (item.getName().equals(itemName)) {
+        return item;
+      }
     }
+    return null;
+  }
 
-    public MenuItem getMenuItem(String itemName){
-        for(MenuItem i : menuItems){
-            if(i.getName().equals(itemName)){
-                return i;
-            }
-        }
+  public String getName() {
+    return name;
+  }
 
-        return null;
-    }
+  public void addIngredientToMenuItem(String menuItemName, Ingredient ingredient) {
+    MenuItem item = getMenuItem(menuItemName);
+    item.addIngredient(ingredient);
+  }
 
-    public String toString(){
-        StringBuilder out = new StringBuilder();
+  public void addAdditionToMenuItem(String menuItemName, Ingredient addition) {
+    MenuItem item = getMenuItem(menuItemName);
+    item.addAddition(addition);
+  }
 
-        for(MenuItem i : menuItems){
-            out.append(menuItems.toString());
-
-        }
-
-        return out.toString();
-    }
-
-    public String getName(){
-        return name;
-    }
-
-    public void addIngredientToMenuItem(String menuItemName, Ingredient ingredient){
-        MenuItem item = getMenuItem(menuItemName);
-        item.addIngredient(ingredient);
-    }
-
-    public void addAdditionToMenuItem(String menuItemName, Ingredient addition){
-        MenuItem item = getMenuItem(menuItemName);
-        item.addSubstitution(addition);
-    }
-
-    public void addMenuItem(String menuItemName, int price){
-        MenuItem newItem = new MenuItem(price, menuItemName);
-    }
+  public void addMenuItem(String menuItemName, int price) {
+    menuItems.add(new MenuItem(menuItemName, price));
+  }
 }
