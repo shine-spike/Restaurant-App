@@ -18,4 +18,8 @@ public class MenuController {
     public void addAdditionToMenuItem(String menuName, String menuItemName, String additionName) {
         menus.get(menuName).addAdditionToMenuItem(menuItemName, additionName);
     }
+
+    public MenuItem getItemFromMenu(String menuName, String menuItemName) {
+        return menus.get(menuName).getMenuItem(menuItemName);
+    }
 }
