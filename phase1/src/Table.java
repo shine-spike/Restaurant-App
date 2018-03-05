@@ -1,9 +1,16 @@
+/**
+ * Represents a table in a restaurant.
+ *
+ * Stores a bill and the methods to interact with it.
+ */
+
 public class Table
 {
   private int tableID;
   private Bill myBill;
 
-  public Table(int tableNum)
+  // Creates a table with a given ID number and an empty bill
+  Table(int tableNum)
   {
     this.tableID = tableNum;
     myBill = new Bill();
@@ -17,11 +24,13 @@ public class Table
     return billPrice;
   }
 
+  // Adds a given order to the table's bill
   public void addToBill(Order order)
   {
     myBill.addOrder(order);
   }
 
+  // Prints the table's bill
   public String printBill()
   {
     return myBill.toString();
