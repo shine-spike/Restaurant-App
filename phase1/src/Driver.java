@@ -1,6 +1,6 @@
 /**
  * Entry point to the program.
- *
+ * <p>
  * Manages starting up a {@link Restaurant} and {@link Parser}.
  */
 public class Driver {

@@ -24,8 +24,8 @@ public enum EventType {
   /**
    * Constructs an EventType.
    *
-   * @param keyword the word that triggers this event in the file.
-   * @param minimumArguments the minimum number of arguments that should be passed to this event.
+   * @param keyword              the word that triggers this event in the file.
+   * @param minimumArguments     the minimum number of arguments that should be passed to this event.
    * @param numberArgumentsFixed whether or not the minimum number of arguments is also the maximum.
    */
   EventType(String keyword, int minimumArguments, boolean numberArgumentsFixed) {
@@ -41,8 +41,8 @@ public enum EventType {
    * @return the event type corresponding to the given keyword or {@code null} if it does not exist.
    */
   public static EventType getEventType(String keyword) {
-    for(EventType e : EventType.values()){
-      if(keyword.equals(e.keyword)) {
+    for (EventType e : EventType.values()) {
+      if (keyword.equals(e.keyword)) {
         return e;
       }
     }

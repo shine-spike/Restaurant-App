@@ -6,7 +6,7 @@ import java.io.IOException;
 
 /**
  * Controls all file input parsing from configuration files and provides an interface for parsing event files.
- *
+ * <p>
  * Passes on the parsed information to the respective Restaurant.
  */
 public class Parser {
