@@ -3,14 +3,12 @@ import java.util.ArrayList;
 public class MenuItem {
     int price;
     String name;
-    ArrayList<Ingredient> ingredients;
-    ArrayList<Ingredient> substitutions;
+    ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
+    ArrayList<Ingredient> substitutions = new ArrayList<Ingredient>();
 
-    MenuItem(int price, String name, ArrayList<Ingredient> ingredients, ArrayList<Ingredient> subs){
+    MenuItem(int price, String name){
         this.price = price;
         this.name = name;
-        this.ingredients = ingredients;
-        this.substitutions = subs;
     }
 
     public int getPrice(){
@@ -55,5 +53,13 @@ public class MenuItem {
         }
 
         return out.toString();
+    }
+
+    public void addIngredient(Ingredient ingredient){
+        this.ingredients.add(ingredient);
+    }
+
+    public void addSubstitution(Ingredient ingredient){
+        this.substitutions.add(ingredient);
     }
 }

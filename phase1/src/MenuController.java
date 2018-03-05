@@ -4,11 +4,11 @@ public class MenuController {
     private HashMap<String, Menu> menus = new HashMap<>();
 
     public void addMenu(String menuName) {
-        menus.put(menuName, new Menu());
+        menus.put(menuName, new Menu(menuName));
     }
 
     public void addItemToMenu(String menuName, String menuItemName, int price) {
-        menus.get(menuName).addMenuItem(menuItemName, price);
+        menus.get(menuName).createMenuItem(menuItemName, price);
     }
 
     public void addIngredientToMenuItem(String menuName, String menuItemName, Ingredient ingredient) {
