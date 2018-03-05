@@ -45,7 +45,7 @@ public class MenuController {
       return;
     }
 
-    menu.createMenuItem(menuItemName, price);
+    menu.addMenuItem(menuItemName, price);
   }
 
   /**
