@@ -152,6 +152,11 @@ public class Parser {
 
     String[] symbols;
     while ((symbols = preParse(reader)) != null) {
+      if (symbols.length != 2) {
+        System.out.println("Line in employees file should have two entries, "
+                + symbols.length + " were given. Skipping.");
+        continue;
+      }
       restaurant.employeeController.addEmployee(symbols[0] + symbols[1]);
     }
   }
@@ -164,7 +169,18 @@ public class Parser {
 
     String[] symbols;
     while ((symbols = preParse(reader)) != null) {
-      restaurant.inventory.addIngredient(symbols[0], Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
+      if (symbols.length != 3) {
+        System.out.println("Line in ingredients file should have three entries, "
+                + symbols.length + " were given. Skipping.");
+        continue;
+      }
+
+
+      try {
+        restaurant.inventory.addIngredient(symbols[0], Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
+      } catch (NumberFormatException e) {
+        System.out.println("Final two entries in a line should be numbers. Skipping.");
+      }
     }
   }
 
