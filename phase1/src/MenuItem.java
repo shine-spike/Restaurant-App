@@ -49,7 +49,7 @@ public class MenuItem {
     }
 
     public String toString(){
-        StringBuilder out = new StringBuilder(name);
+        StringBuilder out = new StringBuilder(name + " " + price);
         for(Ingredient i : substitutions){
             out.append(System.lineSeparator() + "  - " + i.getName());
         }

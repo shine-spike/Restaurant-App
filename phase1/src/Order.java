@@ -44,27 +44,33 @@ public class Order {
   }
 
   /**
-   * Adds an Ingredient to this order
+   * Adds an Ingredient to this order, does nothing if the ingredient is not on the list of permitted substitutions for
+   * this order
    *
    * @param toAdd the Ingredient to be added
    */
   public void addAddition(Ingredient toAdd) {
-    ingredients.add(toAdd);
-    additions.add(toAdd);
+    if (menuItem.ingredients.contains(toAdd)) {
+      ingredients.add(toAdd);
+      additions.add(toAdd);
+    }
   }
 
   /**
-   * Removes an ingredient from this order
+   * Removes an ingredient from this order, does nothing if the ingredient is not on the menuItem
    *
    * @param toRemove the Ingredient to be removed
    */
   public void addSubtraction(Ingredient toRemove) {
-    ingredients.remove(toRemove);
-    subtractions.add(toRemove);
+      if (menuItem.ingredients.contains(toRemove)) {
+          ingredients.remove(toRemove);
+          subtractions.add(toRemove);
+      }
   }
 
   /**
    * getter for this employeeNumber
+   *
    * @return the id of the employee who took this order
    */
   public int getEmployeeNumber() {
@@ -73,6 +79,7 @@ public class Order {
 
   /**
    * getter for tableNumber
+   *
    * @return the number of the table that placed this order
    */
   public int getTableNumber() {
@@ -81,6 +88,7 @@ public class Order {
 
   /**
    * getter for menuItem
+   *
    * @return the menuItem that was ordered
    */
   public MenuItem getMenuItem() {
@@ -89,6 +97,7 @@ public class Order {
 
   /**
    * getter for price
+   *
    * @return the price of this Order
    */
   public int getPrice() {
@@ -97,45 +106,46 @@ public class Order {
 
   /**
    * getter for orderNumber
+   *
    * @return the number of this Order
    */
   public int getOrderNumber() {
     return orderNumber;
   }
 
-  /**
-   * @return True iff this order has been seen by a chef
-   */
+  /** @return True iff this order has been seen by a chef */
   public boolean isSeen() {
     return seen;
   }
 
   /**
-   * Returns the list of ingredients needed to make this order including the additions, not including the subtractions
+   * Returns the list of ingredients needed to make this order including the additions, not
+   * including the subtractions
+   *
    * @return the list of ingredients to make this order
    */
   public ArrayList<Ingredient> getIngredients() {
     return ingredients;
   }
 
-  /**
-   * Records that this order has been seen by a chef
-   */
+  /** Records that this order has been seen by a chef */
   public void orderSeen() {
     seen = true;
   }
 
   /**
    * Expresses this order with the list of additions and subtractions
+   *
    * @return formatted String containing item ordered, and then the substitutions
    */
   public String toString() {
-    StringBuilder out = new StringBuilder(menuItem.toString());
-    for(Ingredient i : additions) {
-      out.append(System.lineSeparator() + "  - ADD " + i.toString());
+    StringBuilder out = new StringBuilder(menuItem.getName() + " " + menuItem.getPrice());
+    ;
+    for (Ingredient i : additions) {
+      out.append(System.lineSeparator() + "  - ADD " + i.getName());
     }
-    for(Ingredient i : subtractions) {
-      out.append(System.lineSeparator() + "  - NO " + i.toString());
+    for (Ingredient i : subtractions) {
+      out.append(System.lineSeparator() + "  - NO " + i.getName());
     }
 
     return out.toString();
