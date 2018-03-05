@@ -136,7 +136,15 @@ public class Order {
   /**
    * Expresses this order with the list of additions and subtractions
    *
-   * @return formatted String containing item ordered, and then the substitutions
+   * @return a formatted string of the form
+   *
+   * [menuItem] [price]
+   *  - ADD [Addition 1]
+   *  - ADD [Addition 2]
+   *  ...
+   *  - NO [Subtraction 1]
+   *  - NO [Subtraction 2]
+   *  ...
    */
   public String toString() {
     StringBuilder out = new StringBuilder(menuItem.getName() + " " + menuItem.getPrice());

@@ -94,6 +94,7 @@ public class Restaurant {
   /**
    * Notifies the respective server of the order with the given order number that the employee with the given
    * employee number has finished preparing the order and it is ready to be delivered to the respective table.
+   * Then updates the inventory to subtract the ingredients used to make this order.
    *
    * @param employeeNumber the number of the employee who finished preparing the order.
    * @param orderNumber the order number of the order that is ready.
@@ -108,6 +109,11 @@ public class Restaurant {
       System.out.println("Order " + orderNumber + " is ready for delivery!");
       pendingOrders.remove(order);
       readyOrders.add(order);
+
+      for(Ingredient i: order.getIngredients()){
+        inventory.useIngredient(i.getName(), 1);
+      }
+
       return true;
     }
     return false;

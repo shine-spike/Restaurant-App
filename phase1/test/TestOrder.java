@@ -1,14 +1,24 @@
 import org.junit.Test;
+
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 public class TestOrder {
 
     @Test
     public void testOrderNum(){
-        Order o0 = new Order(0, 0, new MenuItem());
-        Order o1 = new Order(0, 0, new MenuItem());
+        ArrayList<Ingredient> i = new ArrayList<>();
+        i.add(new Ingredient("i", 1, 10));
 
-        assert(o0.getOrderNum() == o1.getOrderNum() - 1);
+        ArrayList<Ingredient> a = new ArrayList<>();
+        a.add(new Ingredient("a", 1, 10));
+
+        MenuItem m = new MenuItem(0, "mI", i, a);
+        Order o0 = new Order(0, 0, m);
+        Order o1 = new Order(0, 0, m);
+
+        assert(o0.getOrderNumber() == o1.getOrderNumber() - 1);
     }
 
     @Test
@@ -31,5 +41,20 @@ public class TestOrder {
         o.addSubtraction(i);
 
         assertFalse(o.getIngredients().contains(i));
+    }
+
+    @Test
+    public void printOrder(){
+        ArrayList<Ingredient> i = new ArrayList<>();
+        i.add(new Ingredient("i", 1, 10));
+
+        ArrayList<Ingredient> a = new ArrayList<>();
+        a.add(new Ingredient("a", 1, 10));
+
+        MenuItem m = new MenuItem(0, "mI", i, a);
+        Order o = new Order(0, 0, m);
+
+        System.out.println(o);
+
     }
 }
