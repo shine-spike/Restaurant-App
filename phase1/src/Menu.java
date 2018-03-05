@@ -14,10 +14,6 @@ public class Menu {
         this.name = name;
     }
 
-    public void addMenuItem(MenuItem item){
-        this.menuItems.add(item);
-    }
-
     public MenuItem getMenuItem(String itemName){
         for(MenuItem i : menuItems){
             if(i.getName().equals(itemName)){
@@ -33,6 +29,7 @@ public class Menu {
 
         for(MenuItem i : menuItems){
             out.append(menuItems.toString());
+
         }
 
         return out.toString();
@@ -52,7 +49,7 @@ public class Menu {
         item.addSubstitution(addition);
     }
 
-    public void createMenuItem(String menuItemName, int price){
+    public void addMenuItem(String menuItemName, int price){
         MenuItem newItem = new MenuItem(price, menuItemName);
     }
 }
