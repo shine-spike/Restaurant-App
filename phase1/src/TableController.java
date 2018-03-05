@@ -1,7 +1,7 @@
 public class TableController {
   private Table[] tableList;
 
-  public TableController(int numTables) {
+  TableController(int numTables) {
     tableList = new Table[numTables];
     this.createTables();
   }
@@ -12,13 +12,18 @@ public class TableController {
     }
   }
 
-  public void addToBill(int tableNumber, Order order) {
-    Table myTable = tableList[tableNumber - 1];
+  public int payBill(int tableNumber)
+  {
+    return tableList[tableNumber].payBill();
+  }
+
+  public void addToBill(Order order) {
+    Table myTable = tableList[order.getTableNumber()];
     myTable.addToBill(order);
   }
 
   public String printBill(int tableNumber) {
-    return tableList[tableNumber - 1].printBill();
+    return tableList[tableNumber].printBill();
   }
 
 }

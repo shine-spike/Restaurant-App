@@ -1,46 +1,77 @@
-import java.io.*;
-
 /**
- * Entry point for the program.
+ * Entry point to the program.
  *
- * Controls the starting up of the restaurant program. Parses available configuration files
- * or generates them if they have not been created.
+ * Manages starting up a {@link Restaurant} and {@link Parser}.
  */
 public class Driver {
-  private static final String CONFIG_LOCATION       = "phase1/config/";
-  private static final String EMPLOYEE_FILE_NAME    = "employees.txt";
-  private static final String INGREDIENTS_FILE_NAME = "ingredients.txt";
-  private static final String MENUS_FILE_NAME       = "menus.txt";
-  private static final String EVENTS_FILE_NAME      = "events.txt";
+  /**
+   * Low-level flags to determine whether or not to read in information from files.
+   */
+  private static final boolean READ_CONFIGURATION = true;
+  private static final boolean READ_EVENTS = true;
 
-  public static void main(String[] args) {
-    Restaurant restaurant = new Restaurant();
+  private Restaurant restaurant;
+  private Parser parser;
 
-    // Make sure that the configuration file location exists
-    Boolean madeNew = new File(CONFIG_LOCATION).mkdir();
-    if (madeNew) {
-      System.out.println("Created a configuration folder.");
-    }
 
-    try {
-      restaurant.parseEmployeeConfiguration(getConfigurationReader(EMPLOYEE_FILE_NAME));
-      restaurant.parseIngredientConfiguration(getConfigurationReader(INGREDIENTS_FILE_NAME));
-      restaurant.parseMenuConfiguration(getConfigurationReader(MENUS_FILE_NAME));
-      restaurant.parseEvents(getConfigurationReader(EVENTS_FILE_NAME));
-    } catch (IOException e) {
-      // TODO: be more delicate
-      System.out.println("Parsing of configuration files was not successful.");
-      System.exit(1);
-    }
+  /**
+   * Constructs a driver with a default {@link Restaurant} and {@link Parser}.
+   */
+  Driver() {
+    restaurant = new Restaurant();
+    parser = new Parser(restaurant);
   }
 
-  private static BufferedReader getConfigurationReader(String fileName) throws IOException {
-    File file = new File(CONFIG_LOCATION + fileName);
+  /**
+   * Returns the {@link Restaurant} that this Driver is managing.
+   *
+   * @return the managed {@link Restaurant}.
+   */
+  public Restaurant getRestaurant() {
+    return restaurant;
+  }
 
-    Boolean madeNew = file.createNewFile();
-    if (madeNew) {
-      System.out.println("Created a " + fileName + " configuration file.");
+  /**
+   * Returns the {@link Parser} associated with this Driver.
+   *
+   * @return the associated {@link Parser}.
+   */
+  public Parser getParser() {
+    return parser;
+  }
+
+  /**
+   * Changes the location of the configuration and event files.
+   *
+   * @param location the new location of the files.
+   */
+  public void setFilesLocation(String location) {
+    parser.setFilesLocation(location);
+  }
+
+  /**
+   * Reads and parses configuration files.
+   */
+  public void readConfiguration() {
+    parser.parseConfiguration();
+  }
+
+  /**
+   * Reads and parses events.
+   */
+  public void readEvents() {
+    parser.parseEvents();
+  }
+
+
+  public static void main(String[] args) {
+    Driver driver = new Driver();
+
+    if (READ_CONFIGURATION) {
+      driver.readConfiguration();
     }
-    return new BufferedReader(new FileReader(file));
+    if (READ_EVENTS) {
+      driver.readEvents();
+    }
   }
 }

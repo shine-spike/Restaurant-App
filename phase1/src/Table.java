@@ -6,13 +6,14 @@ public class Table
   public Table(int tableNum)
   {
     this.tableID = tableNum;
+    myBill = new Bill();
   }
 
   //Removes the Table's bill and returns the price of the bill
   public int payBill()
   {
     int billPrice = myBill.billTotal();
-    myBill = null;
+    myBill = new Bill();
     return billPrice;
   }
 
