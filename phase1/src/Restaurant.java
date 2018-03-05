@@ -61,11 +61,11 @@ public class Restaurant {
     Order order = new Order(employeeNumber, tableNumber, menuItem);
 
     for (String subtraction : subtractionStrings) {
-      order.addSubtraction(subtraction);
+      order.addSubtraction(inventory.getIngredient(subtraction));
     }
 
     for (String addition : additionStrings) {
-      order.addAddition(addition);
+      order.addAddition(inventory.getIngredient(addition));
     }
 
     return registerOrder(order);

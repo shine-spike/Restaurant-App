@@ -47,4 +47,13 @@ public class MenuItem {
     public Ingredient[] getSubstitutions(){
         return substitutions.toArray(new Ingredient[substitutions.size()]);
     }
+
+    public String toString(){
+        StringBuilder out = new StringBuilder(name);
+        for(Ingredient i : substitutions){
+            out.append(System.lineSeparator() + "  - " + i.getName());
+        }
+
+        return out.toString();
+    }
 }
