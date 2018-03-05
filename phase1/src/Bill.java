@@ -33,6 +33,7 @@ public class Bill
       str.append(order.toString()).append("\n");
     }
     str.append("Bill total: \n");
+    str.append(this.billTotal());
     return str.toString();
   }
 }
