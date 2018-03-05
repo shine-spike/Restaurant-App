@@ -32,6 +32,12 @@ public class EventParser {
       return;
     }
 
+    // Make sure the given symbols are of the correct size for the event they represent
+    if (!eventType.correctSize(symbols.length)) {
+      System.out.println(eventType.name() + " event should have " + eventType.getRequiredNumberArguments()
+              + " number of arguments, got " + symbols.length + ". Skipping.");
+    }
+
     // Distribute the event parsing depending on the type of event
     switch (eventType) {
       // An order is placed by a server
