@@ -1,10 +1,15 @@
 import java.util.ArrayList;
 
+/**
+ * Represents a bill
+ *
+ * Stores an ArrayList of bills
+ */
 public class Bill
 {
   private ArrayList<Order> orders;
 
-  public Bill()
+  Bill()
   {
     orders = new ArrayList<>();
   }
@@ -14,6 +19,7 @@ public class Bill
     orders.add(order);
   }
 
+  // Computes the total price of all orders on the bill
   public int billTotal()
   {
     int total = 0;
@@ -24,6 +30,16 @@ public class Bill
     return total;
   }
 
+  /* 
+   * Returns a string in the following format:
+   *
+   * Bill:
+   * [MenuItem] [MenuItemPrice]
+   * [MenuItem] [MenuItemPrice]
+   * ...
+   * Bill total:
+   * [totalPrice]
+   */
   public String toString()
   {
     StringBuilder str = new StringBuilder();
