@@ -203,11 +203,13 @@ public class Parser {
         String currentItem = symbols[0];
         restaurant.menuController.addItemToMenu(currentMenu, currentItem, Integer.parseInt(symbols[1]));
 
-        for (String ingredient : preParse(reader)) {
+        for (String ingredientName : preParse(reader)) {
+          Ingredient ingredient = restaurant.inventory.getIngredient(ingredientName);
           restaurant.menuController.addIngredientToMenuItem(currentMenu, currentItem, ingredient);
         }
 
-        for (String addition : preParse(reader)) {
+        for (String additionName : preParse(reader)) {
+          Ingredient addition = restaurant.inventory.getIngredient(ingredientName);
           restaurant.menuController.addAdditionToMenuItem(currentMenu, currentItem, addition);
         }
       } else {

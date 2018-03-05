@@ -11,12 +11,12 @@ public class MenuController {
         menus.get(menuName).addMenuItem(menuItemName, price);
     }
 
-    public void addIngredientToMenuItem(String menuName, String menuItemName, String ingredientName) {
-        menus.get(menuName).addIngredientToMenuItem(menuItemName, ingredientName);
+    public void addIngredientToMenuItem(String menuName, String menuItemName, Ingredient ingredient) {
+        menus.get(menuName).addIngredientToMenuItem(menuItemName, ingredient);
     }
 
-    public void addAdditionToMenuItem(String menuName, String menuItemName, String additionName) {
-        menus.get(menuName).addAdditionToMenuItem(menuItemName, additionName);
+    public void addAdditionToMenuItem(String menuName, String menuItemName, Ingredient addition) {
+        menus.get(menuName).addAdditionToMenuItem(menuItemName, addition);
     }
 
     public MenuItem getItemFromMenu(String menuName, String menuItemName) {
