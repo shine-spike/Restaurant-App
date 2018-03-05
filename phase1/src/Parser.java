@@ -159,7 +159,7 @@ public class Parser {
                 + symbols.length + " were given. Skipping.");
         continue;
       }
-      restaurant.employeeController.addEmployee(symbols[0] + symbols[1]);
+      restaurant.employeeController.addEmployee(symbols[0] + " " + symbols[1]);
     }
   }
 

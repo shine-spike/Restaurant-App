@@ -18,9 +18,10 @@ public class Restaurant {
   public Inventory inventory = new Inventory();
   public MenuController menuController = new MenuController();
 
-  // Holder for pending and ready orders
+  // Holder for pending, ready, and completed orders
   private ArrayList<Order> pendingOrders = new ArrayList<>();
   private ArrayList<Order> readyOrders = new ArrayList<>();
+  private ArrayList<Order> completedOrders = new ArrayList<>();
 
 
   /**
@@ -130,6 +131,7 @@ public class Restaurant {
 
     if (order != null) {
       readyOrders.remove(order);
+      completedOrders.add(order);
       tableController.addToBill(order);
       return true;
     }
@@ -149,6 +151,7 @@ public class Restaurant {
 
     if (order != null) {
       readyOrders.remove(order);
+      completedOrders.add(order);
       return true;
     }
     return false;
@@ -168,6 +171,7 @@ public class Restaurant {
 
     if (order != null) {
       readyOrders.remove(order);
+      completedOrders.add(order);
       Order redoOrder = new Order(order.getEmployeeNumber(), order.getTableNumber(), order.getMenuItem());
       return registerOrder(redoOrder);
     }
@@ -241,5 +245,4 @@ public class Restaurant {
     }
     return false;
   }
-
 }
