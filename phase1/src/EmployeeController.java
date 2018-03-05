@@ -13,6 +13,7 @@ public class EmployeeController {
 
   /**
    * Adds an Employee to this EmployeeController
+   *
    * @param name the first and last name of the Employee to be added
    */
   public void addEmployee(String name) {
@@ -21,6 +22,7 @@ public class EmployeeController {
 
   /**
    * Gets the name of an Employee from the Employee's id
+   *
    * @param id the id of the desired Employee
    * @return the name of Employee id
    */

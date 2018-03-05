@@ -52,7 +52,7 @@ public class Inventory {
     return true;
   }
 
-  public void restockIngredient(String ingredientName, int quantity){
+  public void restockIngredient(String ingredientName, int quantity) {
     Ingredient myIngredient = getIngredient(ingredientName);
     myIngredient.setQuantity(myIngredient.getQuantity() + quantity);
   }

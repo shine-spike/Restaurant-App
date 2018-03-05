@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Menu {
   private String name;
-  private ArrayList<MenuItem> menuItems = new ArrayList<>();;
+  private ArrayList<MenuItem> menuItems = new ArrayList<>();
 
   Menu(String name) {
     this.name = name;

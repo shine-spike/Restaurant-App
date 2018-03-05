@@ -1,4 +1,7 @@
-/** Represents a table's order of a single menuItem, with additions and subtractions */
+/**
+ * Represents a table's order of a single menuItem, with additions and subtractions
+ */
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,10 +66,10 @@ public class Order {
    * @param toRemove the Ingredient to be removed
    */
   public void addSubtraction(Ingredient toRemove) {
-      if (Arrays.asList(menuItem.getIngredients()).contains(toRemove)) {
-          ingredients.remove(toRemove);
-          subtractions.add(toRemove);
-      }
+    if (Arrays.asList(menuItem.getIngredients()).contains(toRemove)) {
+      ingredients.remove(toRemove);
+      subtractions.add(toRemove);
+    }
   }
 
   /**
