@@ -1,10 +1,10 @@
-import java.util.HashMap;
+import java.util.ArrayList;
 
 /**
  * Controls all aspects of all the menus in a restaurant. Main interface for interaction with menus.
  */
 public class MenuController {
-  private HashMap<String, Menu> menus = new HashMap<>();
+  private ArrayList<Menu> menus = new ArrayList<>();
 
 
   /**
@@ -13,7 +13,22 @@ public class MenuController {
    * @param menuName the name of the menu to add.
    */
   public void addMenu(String menuName) {
-    menus.put(menuName, new Menu());
+    menus.add(new Menu(menuName));
+  }
+
+  /**
+   * Gets the Menu with the given name.
+   *
+   * @param menuName the name of the menu.
+   * @return the Menu with the given name.
+   */
+  private Menu getMenu(String menuName) {
+    for (Menu menu : menus) {
+      if (menu.getName().equals(menuName)) {
+        return menu;
+      }
+    }
+    return null;
   }
 
   /**
@@ -24,7 +39,13 @@ public class MenuController {
    * @param price        the price of the item.
    */
   public void addItemToMenu(String menuName, String menuItemName, int price) {
-    menus.get(menuName).addMenuItem(menuItemName, price);
+    Menu menu = getMenu(menuName);
+    if (menu == null) {
+      System.out.println("Given menu could not be found. Skipping.");
+      return;
+    }
+
+    menu.createMenuItem(menuItemName, price);
   }
 
   /**
@@ -35,7 +56,13 @@ public class MenuController {
    * @param ingredient   the Ingredient to add.
    */
   public void addIngredientToMenuItem(String menuName, String menuItemName, Ingredient ingredient) {
-    menus.get(menuName).addIngredientToMenuItem(menuItemName, ingredient);
+    Menu menu = getMenu(menuName);
+    if (menu == null) {
+      System.out.println("Given menu could not be found. Skipping.");
+      return;
+    }
+
+    menu.addIngredientToMenuItem(menuItemName, ingredient);
   }
 
   /**
@@ -46,7 +73,13 @@ public class MenuController {
    * @param addition     the Ingredient that is a valid addition.
    */
   public void addAdditionToMenuItem(String menuName, String menuItemName, Ingredient addition) {
-    menus.get(menuName).addAdditionToMenuItem(menuItemName, addition);
+    Menu menu = getMenu(menuName);
+    if (menu == null) {
+      System.out.println("Given menu could not be found. Skipping.");
+      return;
+    }
+
+    menu.addAdditionToMenuItem(menuItemName, addition);
   }
 
   /**
@@ -57,6 +90,12 @@ public class MenuController {
    * @return the corresponding MenuItem with the given name in the menu with the given name.
    */
   public MenuItem getItemFromMenu(String menuName, String menuItemName) {
-    return menus.get(menuName).getMenuItem(menuItemName);
+    Menu menu = getMenu(menuName);
+    if (menu == null) {
+      System.out.println("Given menu could not be found. Skipping.");
+      return null;
+    }
+
+    return menu.getMenuItem(menuItemName);
   }
 }
