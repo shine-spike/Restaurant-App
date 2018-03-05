@@ -167,7 +167,13 @@ public class EventParser {
    * @param symbols the array of strings representing a reject event.
    */
   private void parseRejectEvent(String[] symbols) {
-    boolean result = restaurant.orderRejected(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]), symbols[3]);
+    StringBuilder reason = new StringBuilder();
+    for (int i = 3; i < symbols.length; i++) {
+      reason.append(symbols[i]);
+      reason.append(" ");
+    }
+
+    boolean result = restaurant.orderRejected(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]), reason.toString());
     if (!result) {
       System.out.println("Order with the given number is not ready.");
     }
@@ -180,7 +186,13 @@ public class EventParser {
    * @param symbols the array of strings representing a redo event.
    */
   private void parseRedoEvent(String[] symbols) {
-    boolean result = restaurant.redoOrder(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]), symbols[3]);
+    StringBuilder reason = new StringBuilder();
+    for (int i = 3; i < symbols.length; i++) {
+      reason.append(symbols[i]);
+      reason.append(" ");
+    }
+
+    boolean result = restaurant.redoOrder(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]), reason.toString());
     if (!result) {
       System.out.println("Order with the given number is not ready or the order cannot be fulfilled.");
     }

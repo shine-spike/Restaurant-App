@@ -33,3 +33,18 @@
 %   E.g. "RECEIVE 0 meat 100"
 %
 % Orders are automatically assigned zero-indexed incrementing numbers.
+
+ORDER   0 4 lunch burger NO pickles ADD ketchup
+ORDER   0 4 lunch veggie_burger NO onions pickles ADD ketchup mayonnaise
+SEEN    0 0
+SEEN    0 1
+READY   0 0
+READY   0 1
+ACCEPT  0 0
+REDO    0 1 not good
+SEEN    0 2
+READY   0 2
+REJECT  0 2 not bad
+BILL    0 4
+PAID    0 4
+RECEIVE 0 burger_bun 10

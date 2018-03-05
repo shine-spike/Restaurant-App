@@ -6,8 +6,8 @@ public enum EventType {
   SEEN("SEEN", 1, true),
   READY("READY", 1, true),
   ACCEPT("ACCEPT", 1, true),
-  REJECT("REJECT", 2, true),
-  REDO("REDO", 2, true),
+  REJECT("REJECT", 2, false),
+  REDO("REDO", 2, false),
   BILL("BILL", 1, true),
   PAID("PAID", 1, true),
   RECEIVE("RECEIVE", 2, true);
@@ -71,9 +71,9 @@ public enum EventType {
    */
   public String getRequiredNumberArguments() {
     if (numberArgumentsFixed) {
-      return "at least " + this.minimumArguments;
+      return "exactly " + (this.minimumArguments + BASIC_ARGUMENT_NUMBER);
     } else {
-      return "exactly " + this.minimumArguments;
+      return "at least " + (this.minimumArguments + BASIC_ARGUMENT_NUMBER);
     }
   }
 }
