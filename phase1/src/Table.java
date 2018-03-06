@@ -1,33 +1,42 @@
 import java.util.ArrayList;
 
 /**
- * Represents a table in a restaurant.
- * <p>
- * Stores a bill and the methods to interact with it.
+ * Represents a table in a restaurant. Stores the bill for this table.
  */
-
 public class Table {
-  private int tableNumber;
   private Bill currentBill = new Bill();
-  private ArrayList<Bill> previousBills = new ArrayList<>();
+  private ArrayList<Bill> billHistory = new ArrayList<>();
 
-  // Creates a table with a given ID number and an empty bill
-  Table(int tableNumber) {
-    this.tableNumber = tableNumber;
+
+  /**
+   * Create a table with an empty bill and no bill history.
+   */
+  Table() {
+
   }
 
-  // Removes the Table's bill
-  public void payBill() {
-    previousBills.add(currentBill);
+  /**
+   * Clears this tables bill and adds it to the bill history.
+   */
+  public void clearBill() {
+    billHistory.add(currentBill);
     currentBill = new Bill();
   }
 
-  // Adds a given order to the table's bill
+  /**
+   * Adds a given order to the tables bill.
+   *
+   * @param order the order to add to the bill.
+   */
   public void addToBill(Order order) {
     currentBill.addOrder(order);
   }
 
-  // Prints the table's bill
+  /**
+   * Returns this table's formatted bill.
+   *
+   * @return the formatted bill string.
+   */
   public String printBill() {
     return currentBill.toString();
   }

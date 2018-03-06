@@ -1,42 +1,46 @@
 /**
- * Representation of all tables in the restaurant. Manages all interaction with individual tables.
- * <p>
- * Stores an array of tables and methods to manipulate or gain required information from any table.
+ * Controls all tables in this restaurant. Manages all interactions with tables or bills.
  */
-
 public class TableController {
-  // Array of tables in a restaurant
   private Table[] tables;
 
+
+  /**
+   * Construct a table controller with a given number of tables.
+   *
+   * @param numTables the number of tables this table controller manages.
+   */
   TableController(int numTables) {
-    // Creates an array of a given length full of empty tables
     tables = new Table[numTables];
-
-    this.createTables();
-  }
-
-  // Populates each index with a constructed table
-  private void createTables() {
     for (int i = 0; i < tables.length; i++) {
-      tables[i] = new Table(i);
+      tables[i] = new Table();
     }
   }
 
-  // Calls the payBill method for the table of a given number
-  public void payBill(int tableNumber) {
-    tables[tableNumber].payBill();
+  /**
+   * Clears the bill for the table with the given table number.
+   *
+   * @param tableNumber the number of the table for which to clear the bill.
+   */
+  public void clearBill(int tableNumber) {
+    tables[tableNumber].clearBill();
   }
 
-  // Adds a given order to the bill of the table it belongs to
+  /**
+   * Adds a given order to the bill of the correct table.
+   *
+   * @param order the order to add to bill.
+   */
   public void addToBill(Order order) {
-    // Stores the table that the order belongs to
-    Table myTable = tables[order.getTableNumber()];
-
-    // Calls the addToBill method of Table
-    myTable.addToBill(order);
+    tables[order.getTableNumber()].addToBill(order);
   }
 
-  // Prints the bill, with the price and all orders
+  /**
+   * Returns the formatted string representation of the bill for the table with the given table number.
+   *
+   * @param tableNumber the number of the table for which to print the bill.
+   * @return the string representation of the bill of the table with the given table number.
+   */
   public String printBill(int tableNumber) {
     return tables[tableNumber].printBill();
   }

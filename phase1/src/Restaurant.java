@@ -251,7 +251,7 @@ public class Restaurant {
    * @return whether or not the bill was successfully acknowledged to be paid off.
    */
   public boolean billPaid(int employeeNumber, int tableNumber) {
-    tableController.payBill(tableNumber);
+    tableController.clearBill(tableNumber);
     logger.info("Bill for table number " + tableNumber + " has been paid. ("
             + employeeController.getEmployeeName(employeeNumber) + ")");
     return true;

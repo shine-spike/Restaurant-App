@@ -35,11 +35,11 @@ public class Bill {
    * Returns a string representation of the bill in the following format.
    *
    * === BILL ===
-   * <ORDER_1>
-   * <ORDER_2>
+   * [ORDER_1]
+   * [ORDER_2]
    * ...
    *
-   * TOTAL: <TOTAL_PRICE>
+   * TOTAL: [TOTAL_PRICE]
    *
    * @return the bill in string format.
    */
