@@ -106,12 +106,13 @@ public class Order {
 
   /**
    * Adds an Ingredient to this order or
-   * does nothing if the ingredient is not on the list of permitted additions for this order.
+   * does nothing if the ingredient is not on the list of permitted additions or basic ingredients for this order.
    *
    * @param addition the Ingredient to be added.
    */
   public void addAddition(Ingredient addition) {
-    if (Arrays.asList(menuItem.getAdditions()).contains(addition)) {
+    if (Arrays.asList(menuItem.getAdditions()).contains(addition) ||
+            Arrays.asList(menuItem.getIngredients()).contains(addition)) {
       ingredients.add(addition);
       additions.add(addition);
     }
