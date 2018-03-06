@@ -1,7 +1,7 @@
 /**
  * Entry point to the program. Manages some low-level aspects of the program.
  */
-public class Main {
+class Main {
   /**
    * Low-level flags to determine whether or not to read in information from files.
    */

@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Controls all aspects of inventory management and reordering of ingredients.
  */
 public class Inventory {
-  private ArrayList<Ingredient> ingredients;
+  private final ArrayList<Ingredient> ingredients;
 
   /**
    * Constructs an inventory with an empty ingredient container.

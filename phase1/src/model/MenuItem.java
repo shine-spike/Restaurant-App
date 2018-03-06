@@ -6,11 +6,11 @@ import java.util.ArrayList;
  * A menu item in a menu, it is basically a list of ingredients with available additions and a price.
  */
 public class MenuItem {
-  private int price;
-  private String name;
+  private final int price;
+  private final String name;
 
-  private ArrayList<Ingredient> ingredients = new ArrayList<>();
-  private ArrayList<Ingredient> additions = new ArrayList<>();
+  private final ArrayList<Ingredient> ingredients = new ArrayList<>();
+  private final ArrayList<Ingredient> additions = new ArrayList<>();
 
 
   /**

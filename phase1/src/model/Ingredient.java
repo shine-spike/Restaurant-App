@@ -4,8 +4,8 @@ package model;
  * Ingredient in the restaurant. Has all information it needs to stand alone.
  */
 public class Ingredient {
-  private String name;
-  private int threshold;
+  private final String name;
+  private final int threshold;
   private int quantity;
 
   /**

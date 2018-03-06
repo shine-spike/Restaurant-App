@@ -6,8 +6,8 @@ import java.util.ArrayList;
  * A menu in the restaurant. Stores and manages menu items.
  */
 public class Menu {
-  private String name;
-  private ArrayList<MenuItem> menuItems = new ArrayList<>();
+  private final String name;
+  private final ArrayList<MenuItem> menuItems = new ArrayList<>();
 
   /**
    * Constructs an empty menu with the given name.

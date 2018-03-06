@@ -7,8 +7,8 @@ import java.util.ArrayList;
 /**
  * Controls parsing of all event symbols and passing on the respective information to the Restaurant.
  */
-public class EventParser {
-  private Restaurant restaurant;
+class EventParser {
+  private final Restaurant restaurant;
 
 
   /**

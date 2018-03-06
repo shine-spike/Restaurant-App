@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Stores an ArrayList of bills
  */
 public class Bill {
-  private ArrayList<Order> orders = new ArrayList<>();
+  private final ArrayList<Order> orders = new ArrayList<>();
 
 
   /**

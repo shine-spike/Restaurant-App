@@ -29,7 +29,7 @@ public class Parser {
   private static final String MENUS_FILE_NAME = "menus.txt";
   private static final String EVENTS_FILE_NAME = "events.txt";
 
-  private Restaurant restaurant;
+  private final Restaurant restaurant;
 
 
   /**

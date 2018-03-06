@@ -5,8 +5,8 @@ import parsing.Parser;
  * Manages starting up a {@link Restaurant} and {@link Parser} and coordinating their interaction.
  */
 public class Driver {
-  private Restaurant restaurant;
-  private Parser parser;
+  private final Restaurant restaurant;
+  private final Parser parser;
 
 
   /**

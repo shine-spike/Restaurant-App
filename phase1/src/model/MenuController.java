@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Controls all aspects of all the menus in a restaurant. Main interface for interaction with menus.
  */
 public class MenuController {
-  private ArrayList<Menu> menus = new ArrayList<>();
+  private final ArrayList<Menu> menus = new ArrayList<>();
 
 
   /**

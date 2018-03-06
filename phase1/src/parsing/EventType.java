@@ -18,9 +18,9 @@ public enum EventType {
   // Each event has two basic arguments, the event itself and the employee number
   private static final int BASIC_ARGUMENT_NUMBER = 2;
 
-  private String keyword;
-  private int minimumArguments;
-  private boolean numberArgumentsFixed;
+  private final String keyword;
+  private final int minimumArguments;
+  private final boolean numberArgumentsFixed;
 
 
   /**

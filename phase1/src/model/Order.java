@@ -12,15 +12,15 @@ public class Order {
   // The largest order number stored for all orders
   private static int currentOrderNum = 0;
 
-  private int orderNumber;
-  private int tableNumber;
-  private int employeeNumber;
-  private MenuItem menuItem;
-  private ArrayList<Ingredient> ingredients;
+  private final int orderNumber;
+  private final int tableNumber;
+  private final int employeeNumber;
+  private final MenuItem menuItem;
+  private final ArrayList<Ingredient> ingredients;
 
   // Lists of additions and subtractions on this order
-  private ArrayList<Ingredient> additions = new ArrayList<>();
-  private ArrayList<Ingredient> subtractions = new ArrayList<>();
+  private final ArrayList<Ingredient> additions = new ArrayList<>();
+  private final ArrayList<Ingredient> subtractions = new ArrayList<>();
 
   // Whether or not this order has been seen and is being prepared
   private boolean seen = false;

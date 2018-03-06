@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class EmployeeController {
   // List of employees indexed by employee number
-  private ArrayList<String> employees;
+  private final ArrayList<String> employees;
 
   /**
    * Creates an EmployeeController with no employees

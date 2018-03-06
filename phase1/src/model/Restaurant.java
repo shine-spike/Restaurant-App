@@ -15,21 +15,21 @@ import java.util.logging.SimpleFormatter;
 public class Restaurant {
   // Logging system
   private static final String LOG_FILE_LOCATION = "phase1/log.txt";
-  private Logger logger = Logger.getLogger("Restaurant");
+  private final Logger logger = Logger.getLogger("Restaurant");
 
   // Default number of tables in the restaurant
   private static final int DEFAULT_NUM_TABLES = 100;
 
   // Controllers for all aspects of the Restaurant.
-  public TableController tableController;
-  public EmployeeController employeeController = new EmployeeController();
-  public Inventory inventory = new Inventory();
-  public MenuController menuController = new MenuController();
+  public final TableController tableController;
+  public final EmployeeController employeeController = new EmployeeController();
+  public final Inventory inventory = new Inventory();
+  public final MenuController menuController = new MenuController();
 
   // Holder for pending, ready, and completed orders
-  private ArrayList<Order> pendingOrders = new ArrayList<>();
-  private ArrayList<Order> readyOrders = new ArrayList<>();
-  private ArrayList<Order> completedOrders = new ArrayList<>();
+  private final ArrayList<Order> pendingOrders = new ArrayList<>();
+  private final ArrayList<Order> readyOrders = new ArrayList<>();
+  private final ArrayList<Order> completedOrders = new ArrayList<>();
 
 
   /**
