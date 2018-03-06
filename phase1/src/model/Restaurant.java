@@ -68,6 +68,13 @@ public class Restaurant {
   }
 
   /**
+   * Prints the inventory to be viewed.
+   */
+  public void printInventory() {
+    inventory.printInventory();
+  }
+
+  /**
    * Places the order an employee with the given employee number takes from the table with given table number.
    * The order consists of a given menu item name from a given menu name with a list of ingredient names
    * to be added or subtracted from the menu item.

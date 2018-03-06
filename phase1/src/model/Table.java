@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Represents a table in a restaurant. Stores the bill for this table.
  */
-class Table {
+public class Table {
   private Bill currentBill = new Bill();
   private final ArrayList<Bill> billHistory = new ArrayList<>();
 

@@ -16,6 +16,18 @@ public class Inventory {
   }
 
   /**
+   * Prints a formatted view of the inventory with all inventory items and their quantities.
+   */
+  public void printInventory() {
+    String formatString = "%-30.30s  %-30.30s%n";
+    System.out.println("\n== INVENTORY ==");
+    System.out.printf(formatString, "NAME", "QUANTITY");
+    for (Ingredient ingredient : ingredients) {
+      System.out.printf(formatString, ingredient.getName(), ingredient.getQuantity());
+    }
+  }
+
+  /**
    * Gets the Ingredient with the given name.
    *
    * @param ingredientName the name of the ingredient.
