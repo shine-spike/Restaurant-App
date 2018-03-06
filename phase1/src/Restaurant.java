@@ -1,4 +1,8 @@
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 
 /**
@@ -7,9 +11,11 @@ import java.util.ArrayList;
  * Contains all functional parts of a restaurant and provides an interface for interaction.
  */
 public class Restaurant {
-  /**
-   * Default number of tables in a Restaurant.
-   */
+  // Logging system
+  private static final String LOG_FILE_LOCATION = "phase1/log.txt";
+  private Logger logger = Logger.getLogger("Restaurant");
+
+  // Default number of tables in the restaurant
   private static final int DEFAULT_NUM_TABLES = 100;
 
   // Controllers for all aspects of the Restaurant.
@@ -31,6 +37,10 @@ public class Restaurant {
    */
   Restaurant(int numTables) {
     tableController = new TableController(numTables);
+
+    logger.setUseParentHandlers(false);
+    System.setProperty("java.util.logging.SimpleFormatter.format",
+            "%1$tF %1$tT %5$s%6$s%n");
   }
 
   /**
@@ -38,6 +48,21 @@ public class Restaurant {
    */
   Restaurant() {
     this(DEFAULT_NUM_TABLES);
+  }
+
+  /**
+   * Starts the logger to log information to file.
+   */
+  public void startLogger() {
+    try {
+      // Configure the logger with formatting
+      FileHandler fileHandler = new FileHandler(LOG_FILE_LOCATION);
+      logger.addHandler(fileHandler);
+      SimpleFormatter formatter = new SimpleFormatter();
+      fileHandler.setFormatter(formatter);
+    } catch (IOException e) {
+      System.out.println("Logging system could not be started.");
+    }
   }
 
   /**
@@ -56,14 +81,15 @@ public class Restaurant {
    */
   public boolean placeOrder(int employeeNumber, int tableNumber, String menuNameString, String menuItemString,
                             ArrayList<String> subtractionStrings, ArrayList<String> additionStrings) {
-
     MenuItem menuItem = menuController.getItemFromMenu(menuNameString, menuItemString);
     Order order = new Order(employeeNumber, tableNumber, menuItem);
+    logger.info("Order number " + order.getOrderNumber() + " has been created. ("
+            + employeeController.getEmployeeName(employeeNumber) + ")");
 
+    // Adds each subtraction and addition to the order
     for (String subtraction : subtractionStrings) {
       order.addSubtraction(inventory.getIngredient(subtraction));
     }
-
     for (String addition : additionStrings) {
       order.addAddition(inventory.getIngredient(addition));
     }
@@ -85,8 +111,13 @@ public class Restaurant {
 
     if (order != null) {
       order.orderSeen();
+      logger.info("Order number " + orderNumber + " has been seen. ("
+              + employeeController.getEmployeeName(employeeNumber) + ")");
       return true;
     }
+
+    logger.info("Order number " + orderNumber + " is not pending. ("
+            + employeeController.getEmployeeName(employeeNumber) + ")");
     return false;
   }
 
@@ -112,8 +143,13 @@ public class Restaurant {
         inventory.useIngredient(i.getName(), 1);
       }
 
+      logger.info("Order number " + orderNumber + " has been prepared. ("
+              + employeeController.getEmployeeName(employeeNumber) + ")");
       return true;
     }
+
+    logger.info("Order number " + orderNumber + " is not pending. ("
+            + employeeController.getEmployeeName(employeeNumber) + ")");
     return false;
   }
 
@@ -133,8 +169,13 @@ public class Restaurant {
       readyOrders.remove(order);
       completedOrders.add(order);
       tableController.addToBill(order);
+      logger.info("Order number " + orderNumber + " has been accepted. ("
+              + employeeController.getEmployeeName(employeeNumber) + ")");
       return true;
     }
+
+    logger.info("Order number " + orderNumber + " is not ready. ("
+            + employeeController.getEmployeeName(employeeNumber) + ")");
     return false;
   }
 
@@ -152,8 +193,13 @@ public class Restaurant {
     if (order != null) {
       readyOrders.remove(order);
       completedOrders.add(order);
+      logger.info("Order number " + orderNumber + " has been rejected. ("
+              + employeeController.getEmployeeName(employeeNumber) + ")");
       return true;
     }
+
+    logger.info("Order number " + orderNumber + " is not ready. ("
+            + employeeController.getEmployeeName(employeeNumber) + ")");
     return false;
   }
 
@@ -172,9 +218,18 @@ public class Restaurant {
     if (order != null) {
       readyOrders.remove(order);
       completedOrders.add(order);
+      logger.info("Order number " + orderNumber + " has been requested for redo. ("
+              + employeeController.getEmployeeName(employeeNumber) + ")");
+
       Order redoOrder = new Order(order.getEmployeeNumber(), order.getTableNumber(), order.getMenuItem());
+      logger.info("Order number " + redoOrder.getOrderNumber() +
+              " has been created as a redo for order number " + orderNumber  + ".");
+
       return registerOrder(redoOrder);
     }
+
+    logger.info("Order number " + orderNumber + " is not ready. ("
+            + employeeController.getEmployeeName(employeeNumber) + ")");
     return false;
   }
 
@@ -187,6 +242,8 @@ public class Restaurant {
    */
   public boolean printBill(int employeeNumber, int tableNumber) {
     System.out.println(tableController.printBill(tableNumber));
+    logger.info("Bill for table number " + tableNumber + " has been printed. ("
+            + employeeController.getEmployeeName(employeeNumber) + ")");
     return true;
   }
 
@@ -199,6 +256,8 @@ public class Restaurant {
    */
   public boolean billPaid(int employeeNumber, int tableNumber) {
     tableController.payBill(tableNumber);
+    logger.info("Bill for table number " + tableNumber + " has been paid. ("
+            + employeeController.getEmployeeName(employeeNumber) + ")");
     return true;
   }
 
@@ -212,6 +271,8 @@ public class Restaurant {
    */
   public boolean ingredientsReceived(int employeeNumber, String ingredientName, int ingredientAmount) {
     inventory.restockIngredient(ingredientName, ingredientAmount);
+    logger.info("Inventory has received " + ingredientAmount + " of " + ingredientName + ". ("
+            + employeeController.getEmployeeName(employeeNumber) + ")");
     return true;
   }
 
@@ -241,8 +302,10 @@ public class Restaurant {
   private boolean registerOrder(Order order) {
     if (inventory.confirmOrder(order)) {
       pendingOrders.add(order);
+      logger.info("Order " + order.getOrderNumber() + " has been registered.");
       return true;
     }
+    logger.info("Order " + order.getOrderNumber() + " cannot be satisfied.");
     return false;
   }
 }
