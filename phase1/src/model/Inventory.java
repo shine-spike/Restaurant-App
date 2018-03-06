@@ -93,6 +93,19 @@ public class Inventory {
   }
 
   /**
+   * Restocks a given list of ingredients with their respective quantities.
+   *
+   * @param ingredientNames the names of the ingredients to restock.
+   * @param quantities      the quantities of the ingredients to add.
+   */
+  // DO NOT REMOVE, THIS IS TO SATISFY SPECIFICATIONS
+  public void restockIngredients(ArrayList<String> ingredientNames, ArrayList<Integer> quantities) {
+    for (int i = 0; i < ingredientNames.size(); i++) {
+      restockIngredient(ingredientNames.get(i), quantities.get(i));
+    }
+  }
+
+  /**
    * Print to file the need to reorder the given ingredient.
    *
    * @param ingredient the ingredient to reorder.
