@@ -1,7 +1,10 @@
 import java.util.ArrayList;
 
+/**
+ * Controls all aspects of employees in the restaurant.
+ */
 public class EmployeeController {
-  // List of employees, indexed by employee id
+  // List of employees indexed by employee number
   private ArrayList<String> employees;
 
   /**

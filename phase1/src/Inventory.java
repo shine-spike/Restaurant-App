@@ -1,59 +1,79 @@
 import java.util.ArrayList;
 
+/**
+ * Controls all aspects of inventory management and reordering of ingredients.
+ */
 public class Inventory {
   private ArrayList<Ingredient> ingredients;
 
+  /**
+   * Constructs an inventory with an empty ingredient container.
+   */
   Inventory() {
-    this.ingredients = new ArrayList<Ingredient>();
+    this.ingredients = new ArrayList<>();
   }
 
+  /**
+   * Gets the Ingredient with the given name.
+   *
+   * @param ingredientName the name of the ingredient.
+   * @return the Ingredient with that name. If no ingredient has that name, returns {@code null}.
+   */
   public Ingredient getIngredient(String ingredientName) {
-    for (Ingredient ingredient :
-            ingredients)
-      if (ingredient.getName().equals(ingredientName)) return ingredient;
+    for (Ingredient ingredient : ingredients) {
+      if (ingredient.getName().equals(ingredientName)) {
+        return ingredient;
+      }
+    }
     return null;
   }
 
-  public int getAmount(String ingredientName) {
-    Ingredient ingredient = getIngredient(ingredientName);
-    if (ingredient == null) {
-      return 0;
-    } else {
-      return ingredient.getQuantity();
-    }
-  }
-
-  public boolean enoughIngredient(String ingredientName, int quantityRequired) {
-    return getAmount(ingredientName) >= quantityRequired;
-  }
-
-  public boolean useIngredient(String ingredientName, int quantityRequired) {
-    if (enoughIngredient(ingredientName, quantityRequired)) {
-      Ingredient ingredient = getIngredient(ingredientName);
-      ingredient.setQuantity(ingredient.getQuantity() - quantityRequired);
-      return true;
-    } else {
-      return false;
-    }
-  }
-
+  /**
+   * Adds an ingredient with the given name to the inventory.
+   *
+   * @param name      the name of the ingredient.
+   * @param quantity  the initial amount of this ingredient.
+   * @param threshold the reordering threshold of this ingredient.
+   */
   public void addIngredient(String name, int quantity, int threshold) {
-    Ingredient newIngredient = new Ingredient(name, quantity, threshold);
-    ingredients.add(newIngredient);
+    ingredients.add(new Ingredient(name, quantity, threshold));
   }
 
+  /**
+   * Confirms an order can be satisfied and modifies the ingredients accordingly.
+   *
+   * @param order the order to be checked.
+   * @return whether or not it can be satisfied.
+   */
   public boolean confirmOrder(Order order) {
-    for (Ingredient ingredient :
-            order.getIngredients()) {
-      if (!enoughIngredient(ingredient.getName(), ingredient.getQuantity())) {
+    for (Ingredient ingredient : order.getIngredients()) {
+      if (ingredient.getQuantity() <= 0) {
         return false;
+      }
+      ingredient.modifyQuantity(-1);
+      if (ingredient.shouldReorder()) {
+        reorder(ingredient);
       }
     }
     return true;
   }
 
+  /**
+   * Restocks a given ingredient with a given quantity.
+   *
+   * @param ingredientName the name of the ingredient to restock.
+   * @param quantity       the quantity of the ingredient to add.
+   */
   public void restockIngredient(String ingredientName, int quantity) {
-    Ingredient myIngredient = getIngredient(ingredientName);
-    myIngredient.setQuantity(myIngredient.getQuantity() + quantity);
+    getIngredient(ingredientName).modifyQuantity(quantity);
+  }
+
+  /**
+   * Print to file the need to reorder the given ingredient.
+   *
+   * @param ingredient the ingredient to reorder.
+   */
+  private void reorder(Ingredient ingredient) {
+    // TODO: implement
   }
 }

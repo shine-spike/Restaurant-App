@@ -139,10 +139,6 @@ public class Restaurant {
       pendingOrders.remove(order);
       readyOrders.add(order);
 
-      for (Ingredient i : order.getIngredients()) {
-        inventory.useIngredient(i.getName(), 1);
-      }
-
       logger.info("Order number " + orderNumber + " has been prepared. ("
               + employeeController.getEmployeeName(employeeNumber) + ")");
       return true;
@@ -193,7 +189,7 @@ public class Restaurant {
     if (order != null) {
       readyOrders.remove(order);
       completedOrders.add(order);
-      logger.info("Order number " + orderNumber + " has been rejected. ("
+      logger.info("Order number " + orderNumber + " has been rejected for reason \"" + reason + "\". ("
               + employeeController.getEmployeeName(employeeNumber) + ")");
       return true;
     }
@@ -218,12 +214,12 @@ public class Restaurant {
     if (order != null) {
       readyOrders.remove(order);
       completedOrders.add(order);
-      logger.info("Order number " + orderNumber + " has been requested for redo. ("
+      logger.info("Order number " + orderNumber + " has been requested for redo for reason \"" + reason + "\". ("
               + employeeController.getEmployeeName(employeeNumber) + ")");
 
-      Order redoOrder = new Order(order.getEmployeeNumber(), order.getTableNumber(), order.getMenuItem());
+      Order redoOrder = order.duplicate();
       logger.info("Order number " + redoOrder.getOrderNumber() +
-              " has been created as a redo for order number " + orderNumber  + ".");
+              " has been created as a redo for order number " + orderNumber + ".");
 
       return registerOrder(redoOrder);
     }

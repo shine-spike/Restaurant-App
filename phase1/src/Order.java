@@ -1,11 +1,10 @@
-/**
- * Represents a table's order of a single menuItem, with additions and subtractions
- */
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+
+/**
+ * Represents a table's order of a single menuItem, with additions and subtractions
+ */
 public class Order {
   // The current order number stored for all orders
   private static int currentOrderNum = 0;
@@ -30,15 +29,15 @@ public class Order {
   /**
    * Constructs an order of menuItem placed by serverNumber, at table tableNum
    *
-   * @param serverNumber the id of the server who entered this order
-   * @param tableNumber the number of the table who placed this order
-   * @param menuItem the menuItem ordered
+   * @param employeeNumber the id of the server who entered this order
+   * @param tableNumber    the number of the table who placed this order
+   * @param menuItem       the menuItem ordered
    */
-  public Order(int serverNumber, int tableNumber, MenuItem menuItem) {
+  public Order(int employeeNumber, int tableNumber, MenuItem menuItem) {
     this.orderNumber = currentOrderNum;
     currentOrderNum++;
 
-    this.employeeNumber = serverNumber;
+    this.employeeNumber = employeeNumber;
     this.tableNumber = tableNumber;
     this.menuItem = menuItem;
     this.ingredients = new ArrayList<>(Arrays.asList(menuItem.getIngredients()));
@@ -48,13 +47,29 @@ public class Order {
   }
 
   /**
+   * Deeply duplicates this order and returns the copy.
+   *
+   * @return a deep copy of this order.
+   */
+  public Order duplicate() {
+    Order duplicateOrder = new Order(employeeNumber, tableNumber, menuItem);
+    for (Ingredient addition : additions) {
+      duplicateOrder.addAddition(addition);
+    }
+    for (Ingredient subtraction : subtractions) {
+      duplicateOrder.addSubtraction(subtraction);
+    }
+    return duplicateOrder;
+  }
+
+  /**
    * Adds an Ingredient to this order, does nothing if the ingredient is not on the list of permitted substitutions for
    * this order
    *
    * @param toAdd the Ingredient to be added
    */
   public void addAddition(Ingredient toAdd) {
-    if (Arrays.asList(menuItem.getIngredients()).contains(toAdd)) {
+    if (Arrays.asList(menuItem.getAdditions()).contains(toAdd)) {
       ingredients.add(toAdd);
       additions.add(toAdd);
     }
@@ -117,7 +132,9 @@ public class Order {
     return orderNumber;
   }
 
-  /** @return True iff this order has been seen by a chef */
+  /**
+   * @return True iff this order has been seen by a chef
+   */
   public boolean isSeen() {
     return seen;
   }
@@ -132,7 +149,9 @@ public class Order {
     return ingredients;
   }
 
-  /** Records that this order has been seen by a chef */
+  /**
+   * Records that this order has been seen by a chef
+   */
   public void orderSeen() {
     seen = true;
   }
@@ -141,18 +160,17 @@ public class Order {
    * Expresses this order with the list of additions and subtractions
    *
    * @return a formatted string of the form
-   *
+   * <p>
    * [menuItem] [price]
-   *  - ADD [Addition 1]
-   *  - ADD [Addition 2]
-   *  ...
-   *  - NO [Subtraction 1]
-   *  - NO [Subtraction 2]
-   *  ...
+   * - ADD [Addition 1]
+   * - ADD [Addition 2]
+   * ...
+   * - NO [Subtraction 1]
+   * - NO [Subtraction 2]
+   * ...
    */
   public String toString() {
     StringBuilder out = new StringBuilder(menuItem.getName() + " " + menuItem.getPrice());
-    ;
     for (Ingredient i : additions) {
       out.append(System.lineSeparator() + "  - ADD " + i.getName());
     }

@@ -20,23 +20,6 @@ public class MenuItem {
     return name;
   }
 
-  public Ingredient[] getAllIngredients() {
-    ArrayList<Ingredient> allIngredients = new ArrayList<>(ingredients);
-    ArrayList<Ingredient> newIngredients = new ArrayList<>();
-
-    for (Ingredient sub : additions) {
-      if (allIngredients.contains(sub)) {
-        Ingredient original = allIngredients.get(allIngredients.indexOf(sub));
-        original.setQuantity(original.getQuantity() + sub.getQuantity());
-      } else {
-        newIngredients.add(sub);
-      }
-    }
-
-    allIngredients.addAll(newIngredients);
-    return allIngredients.toArray(new Ingredient[allIngredients.size()]);
-  }
-
   public Ingredient[] getIngredients() {
     return ingredients.toArray(new Ingredient[ingredients.size()]);
   }

@@ -44,7 +44,7 @@ ACCEPT  0 0
 REDO    0 1 not good
 SEEN    0 2
 READY   0 2
-REJECT  0 2 not bad
+ACCEPT  0 2
 BILL    0 4
 PAID    0 4
 RECEIVE 0 burger_bun 10

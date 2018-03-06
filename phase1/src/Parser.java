@@ -136,7 +136,7 @@ public class Parser {
           symbols = line.split("\\s+");
         }
       } else {
-        return null;
+        return new String[]{};
       }
     } while (symbols == null);
 
@@ -153,7 +153,7 @@ public class Parser {
     }
 
     String[] symbols;
-    while ((symbols = preParse(reader)) != null) {
+    while ((symbols = preParse(reader)) != null && symbols.length != 0) {
       if (symbols.length != 2) {
         System.out.println("Line in employees file should have two entries, "
                 + symbols.length + " were given. Skipping.");
@@ -173,7 +173,7 @@ public class Parser {
     }
 
     String[] symbols;
-    while ((symbols = preParse(reader)) != null) {
+    while ((symbols = preParse(reader)) != null && symbols.length != 0) {
       if (symbols.length != 3) {
         System.out.println("Line in ingredients file should have three entries, "
                 + symbols.length + " were given. Skipping.");
@@ -201,7 +201,7 @@ public class Parser {
     String currentMenu = null;
 
     String[] symbols;
-    while ((symbols = preParse(reader)) != null) {
+    while ((symbols = preParse(reader)) != null && symbols.length != 0) {
       if (currentMenu != null) {
         if (symbols[0].equals("END")) {
           currentMenu = null;
@@ -237,7 +237,7 @@ public class Parser {
     }
 
     String[] symbols;
-    while ((symbols = preParse(reader)) != null) {
+    while ((symbols = preParse(reader)) != null && symbols.length != 0) {
       EventParser eventParser = new EventParser(restaurant);
       eventParser.parseEvent(symbols);
     }
