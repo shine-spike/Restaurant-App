@@ -42,7 +42,7 @@ public class Inventory {
   }
 
   /**
-   * Confirms an order can be satisfied and modifies the ingredients accordingly.
+   * Confirms an order can be satisfied.
    *
    * @param order the order to be checked.
    * @return whether or not it can be satisfied.
@@ -52,12 +52,22 @@ public class Inventory {
       if (ingredient.getQuantity() <= 0) {
         return false;
       }
+    }
+    return true;
+  }
+
+  /**
+   * Consumes ingredients from the inventory according to what is in the given order.
+   *
+   * @param order the order that has been prepared.
+   */
+  public void consumeIngredients(Order order) {
+    for (Ingredient ingredient : order.getIngredients()) {
       ingredient.modifyQuantity(-1);
       if (ingredient.shouldReorder()) {
         reorder(ingredient);
       }
     }
-    return true;
   }
 
   /**

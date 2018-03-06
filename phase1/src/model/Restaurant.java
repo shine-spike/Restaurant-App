@@ -138,6 +138,7 @@ public class Restaurant {
 
     if (order != null) {
       System.out.println("Order " + orderNumber + " is ready for delivery!");
+      inventory.consumeIngredients(order);
       pendingOrders.remove(order);
       readyOrders.add(order);
 
