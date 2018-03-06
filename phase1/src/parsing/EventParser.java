@@ -1,3 +1,7 @@
+package parsing;
+
+import model.Restaurant;
+
 import java.util.ArrayList;
 
 /**

@@ -1,3 +1,5 @@
+package model;
+
 /**
  * Controls all tables in this restaurant. Manages all interactions with tables or bills.
  */

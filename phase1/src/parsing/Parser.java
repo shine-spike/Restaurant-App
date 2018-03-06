@@ -1,3 +1,8 @@
+package parsing;
+
+import model.Ingredient;
+import model.Restaurant;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -32,7 +37,7 @@ public class Parser {
    *
    * @param restaurant the Restaurant to pass in the information to.
    */
-  Parser(Restaurant restaurant) {
+  public Parser(Restaurant restaurant) {
     this.restaurant = restaurant;
   }
 

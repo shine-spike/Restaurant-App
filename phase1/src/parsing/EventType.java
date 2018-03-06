@@ -1,3 +1,5 @@
+package parsing;
+
 /**
  * Stores all types of events that should be processed by the Parser and related information.
  */

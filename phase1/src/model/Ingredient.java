@@ -1,3 +1,5 @@
+package model;
+
 /**
  * Ingredient in the restaurant. Has all information it needs to stand alone.
  */

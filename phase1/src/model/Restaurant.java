@@ -1,3 +1,5 @@
+package model;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.FileHandler;
@@ -35,7 +37,7 @@ public class Restaurant {
    *
    * @param numTables the number of tables in this Restaurant.
    */
-  Restaurant(int numTables) {
+  public Restaurant(int numTables) {
     tableController = new TableController(numTables);
 
     logger.setUseParentHandlers(false);
@@ -46,7 +48,7 @@ public class Restaurant {
   /**
    * Constructs a Restaurant with the default number of tables.
    */
-  Restaurant() {
+  public Restaurant() {
     this(DEFAULT_NUM_TABLES);
   }
 

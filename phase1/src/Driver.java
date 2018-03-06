@@ -1,20 +1,10 @@
+import model.Restaurant;
+import parsing.Parser;
+
 /**
- * Entry point to the program.
- * <p>
- * Manages starting up a {@link Restaurant} and {@link Parser}.
+ * Manages starting up a {@link Restaurant} and {@link Parser} and coordinating their interaction.
  */
 public class Driver {
-  /**
-   * Low-level flags to determine whether or not to read in information from files.
-   */
-  private static final boolean READ_CONFIGURATION = true;
-  private static final boolean READ_EVENTS = true;
-
-  /**
-   * Low-level flag to determine whether or not to log to file.
-   */
-  private static final boolean LOG_TO_FILE = true;
-
   private Restaurant restaurant;
   private Parser parser;
 
@@ -66,20 +56,5 @@ public class Driver {
    */
   public void readEvents() {
     parser.parseEvents();
-  }
-
-
-  public static void main(String[] args) {
-    Driver driver = new Driver();
-
-    if (LOG_TO_FILE) {
-      driver.getRestaurant().startLogger();
-    }
-    if (READ_CONFIGURATION) {
-      driver.readConfiguration();
-    }
-    if (READ_EVENTS) {
-      driver.readEvents();
-    }
   }
 }
