@@ -1,11 +1,18 @@
 package model;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /**
  * Controls all aspects of inventory management and reordering of ingredients.
  */
 public class Inventory {
+  private static final String REORDER_REQUEST_FILE = "phase1/reorder_requests.txt";
+  private static final int DEFAULT_REORDER_AMOUNT = 20;
+
   private final ArrayList<Ingredient> ingredients;
 
   /**
@@ -13,18 +20,6 @@ public class Inventory {
    */
   Inventory() {
     this.ingredients = new ArrayList<>();
-  }
-
-  /**
-   * Prints a formatted view of the inventory with all inventory items and their quantities.
-   */
-  public void printInventory() {
-    String formatString = "%-30.30s  %-30.30s%n";
-    System.out.println("\n== INVENTORY ==");
-    System.out.printf(formatString, "NAME", "QUANTITY");
-    for (Ingredient ingredient : ingredients) {
-      System.out.printf(formatString, ingredient.getName(), ingredient.getQuantity());
-    }
   }
 
   /**
@@ -111,6 +106,33 @@ public class Inventory {
    * @param ingredient the ingredient to reorder.
    */
   private void reorder(Ingredient ingredient) {
-    // TODO: implement
+    // Find the file we want to write to
+    File file = new File(REORDER_REQUEST_FILE);
+
+    try {
+      // Attempt to create the file and notify if it was created now
+      if (file.createNewFile()) {
+        System.out.println(file.getName() + " not found. Created a new one.");
+      }
+
+      // Write out to the file
+      PrintWriter out = new PrintWriter(new FileWriter(file));
+      out.println("Reorder request for " + DEFAULT_REORDER_AMOUNT + " of " + ingredient.getName() + ".");
+      out.close();
+    } catch (IOException e) {
+      System.out.println(file.getName() + " not found and could not be created.");
+    }
+  }
+
+  /**
+   * Prints a formatted view of the inventory with all inventory items and their quantities.
+   */
+  public void printInventory() {
+    String formatString = "%-30.30s  %-30.30s%n";
+    System.out.println("\n== INVENTORY ==");
+    System.out.printf(formatString, "NAME", "QUANTITY");
+    for (Ingredient ingredient : ingredients) {
+      System.out.printf(formatString, ingredient.getName(), ingredient.getQuantity());
+    }
   }
 }

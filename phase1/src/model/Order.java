@@ -159,15 +159,21 @@ public class Order {
     if (additions.size() > 0) {
       out.append(System.lineSeparator()).append("  - ADD ");
     }
-    for (Ingredient addition : additions) {
-      out.append(addition.getName()).append(", ");
+    for (int i  = 0; i < additions.size(); i++) {
+      out.append(additions.get(i).getName());
+      if (i != additions.size() - 1) {
+        out.append(", ");
+      }
     }
 
     if (subtractions.size() > 0) {
-      out.append(System.lineSeparator()).append("  - NO  ");
+      out.append(System.lineSeparator()).append("  - NO ");
     }
-    for (Ingredient subtraction : subtractions) {
-      out.append(subtraction.getName()).append(", ");
+    for (int i  = 0; i < subtractions.size(); i++) {
+      out.append(subtractions.get(i).getName());
+      if (i != subtractions.size() - 1) {
+        out.append(", ");
+      }
     }
 
     return out.toString();
