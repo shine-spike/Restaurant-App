@@ -40,6 +40,7 @@ public class Restaurant {
   public Restaurant(int numTables) {
     tableController = new TableController(numTables);
 
+    // Do print logs to console and set log format
     logger.setUseParentHandlers(false);
     System.setProperty("java.util.logging.SimpleFormatter.format",
             "%1$tF %1$tT %5$s%6$s%n");
@@ -60,6 +61,7 @@ public class Restaurant {
       // Configure the logger with formatting
       FileHandler fileHandler = new FileHandler(LOG_FILE_LOCATION);
       logger.addHandler(fileHandler);
+
       SimpleFormatter formatter = new SimpleFormatter();
       fileHandler.setFormatter(formatter);
     } catch (IOException e) {
@@ -310,10 +312,10 @@ public class Restaurant {
   private boolean registerOrder(Order order) {
     if (inventory.confirmOrder(order)) {
       pendingOrders.add(order);
-      logger.info("Order " + order.getOrderNumber() + " has been registered.");
+      logger.info("Order number " + order.getOrderNumber() + " has been registered.");
       return true;
     }
-    logger.info("Order " + order.getOrderNumber() + " cannot be satisfied.");
+    logger.info("Order number " + order.getOrderNumber() + " cannot be satisfied, discarding.");
     return false;
   }
 }
