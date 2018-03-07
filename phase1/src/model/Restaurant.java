@@ -40,6 +40,7 @@ public class Restaurant {
   public Restaurant(int numTables) {
     tableController = new TableController(numTables);
 
+    // Do print logs to console and set log format
     logger.setUseParentHandlers(false);
     System.setProperty("java.util.logging.SimpleFormatter.format",
             "%1$tF %1$tT %5$s%6$s%n");
@@ -60,6 +61,7 @@ public class Restaurant {
       // Configure the logger with formatting
       FileHandler fileHandler = new FileHandler(LOG_FILE_LOCATION);
       logger.addHandler(fileHandler);
+
       SimpleFormatter formatter = new SimpleFormatter();
       fileHandler.setFormatter(formatter);
     } catch (IOException e) {
@@ -190,6 +192,7 @@ public class Restaurant {
    *
    * @param employeeNumber the number of the employee who confirmed rejection of the order.
    * @param orderNumber    the order number of the order that has been rejected.
+   * @param reason         the reason this order has been rejected.
    * @return whether or not this order has been successfully registered as rejected. This can fail if
    * the order is not a ready order.
    */
@@ -215,8 +218,9 @@ public class Restaurant {
    *
    * @param employeeNumber the number of the employee who confirmed request of the order.
    * @param orderNumber    the order number of the order that has been requested to be redone.
+   * @param reason         the reason this order has been requested to be redone.
    * @return whether or not this order has been successfully registered as requested to be redone. This can fail if
-   * the order is not a ready order or for any {@link #placeOrder} an order can fail.
+   * the order is not a ready order or for any {@code placeOrder} an order can fail.
    */
   public boolean redoOrder(int employeeNumber, int orderNumber, String reason) {
     Order order = getOrderFromNumber(readyOrders, orderNumber);
@@ -308,10 +312,10 @@ public class Restaurant {
   private boolean registerOrder(Order order) {
     if (inventory.confirmOrder(order)) {
       pendingOrders.add(order);
-      logger.info("Order " + order.getOrderNumber() + " has been registered.");
+      logger.info("Order number " + order.getOrderNumber() + " has been registered.");
       return true;
     }
-    logger.info("Order " + order.getOrderNumber() + " cannot be satisfied.");
+    logger.info("Order number " + order.getOrderNumber() + " cannot be satisfied, discarding.");
     return false;
   }
 }
