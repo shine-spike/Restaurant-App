@@ -45,14 +45,14 @@ public class Driver {
   }
 
   /**
-   * Reads and parses configuration files.
+   * Reads and parses configuration files from the stored files location.
    */
   public void readConfiguration() {
     parser.parseConfiguration();
   }
 
   /**
-   * Reads and parses events.
+   * Reads and parses events from the stored files location.
    */
   public void readEvents() {
     parser.parseEvents();

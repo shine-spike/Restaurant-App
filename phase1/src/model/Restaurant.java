@@ -190,6 +190,7 @@ public class Restaurant {
    *
    * @param employeeNumber the number of the employee who confirmed rejection of the order.
    * @param orderNumber    the order number of the order that has been rejected.
+   * @param reason         the reason this order has been rejected.
    * @return whether or not this order has been successfully registered as rejected. This can fail if
    * the order is not a ready order.
    */
@@ -215,8 +216,9 @@ public class Restaurant {
    *
    * @param employeeNumber the number of the employee who confirmed request of the order.
    * @param orderNumber    the order number of the order that has been requested to be redone.
+   * @param reason         the reason this order has been requested to be redone.
    * @return whether or not this order has been successfully registered as requested to be redone. This can fail if
-   * the order is not a ready order or for any {@link #placeOrder} an order can fail.
+   * the order is not a ready order or for any {@code placeOrder} an order can fail.
    */
   public boolean redoOrder(int employeeNumber, int orderNumber, String reason) {
     Order order = getOrderFromNumber(readyOrders, orderNumber);
