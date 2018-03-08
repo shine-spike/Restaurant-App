@@ -3,9 +3,13 @@ This program is run by the main method in the file Main.java
 This program takes input in from the file "config/events.txt". The format to enter events, as well as sample events are
 stored int the file, and the format can also be found at the bottom of this file for redundancy,
 
-This file also uses the three configuration files "employees.txt", "menus.txt", and "ingredients.txt", these files
-configure the lists of employees, the menus, and the ingredients that the restaurant has respectively. The format to
-add lines to these files is also stored in those files, and is stored at the bottom of this file for redundancy.
+This program also uses the three configuration files "config/employees.txt", "config/menus.txt", and
+"config/ingredients.txt", these files configure the lists of employees, the menus, and the ingredients that the
+restaurant has respectively. The format to add lines to these files is also stored in those files, and is stored at the
+bottom of this file for redundancy.
+
+Output for the program goes to "log.txt", and shows how each event is processed, as it is processed. As well as to
+"requests.txt", and when orders are ready, or the bill is requested, it is logged, as well as printed to screen.
 
 #### events.txt ####
 
