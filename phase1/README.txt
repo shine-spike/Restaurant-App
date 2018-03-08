@@ -11,6 +11,28 @@ bottom of this file for redundancy.
 Output for the program goes to "log.txt", and shows how each event is processed, as it is processed. As well as to
 "requests.txt", and when orders are ready, or the bill is requested, it is logged, as well as printed to screen.
 
+What follows is the intended order of events for our events.txt file, should someone wish to create their own
+events file. Then, the format intended for each of the events.txt, employees.txt, menus.txt and ingredients.txt.
+
+#### Intended Order of Events ####
+
+Suppose food is ordered:
+ORDER                   (An order is originally placed)
+SEEN                    (This order is presented to the kitchen/chef)
+READY                   (This order has been prepared and is ready for serving)
+
+READY can lead to three different events:
+ACCEPT                  (This order has been received and all is well)
+REDO                    (There is a problem with this order. This problem is given to the kitchen to fix in a new ORDER)
+REJECT                  (There is a problem with this order so catastrophic that the customer doesn't want it anymore)
+
+CONFIRMED adds this menu item to the bill, and then this table can reach BILL:
+BILL                    (The bill has been presented to the table, as they are done eating)
+PAID                    (The bill has been paid and the table is now clear for more customers)
+
+There is one more event that is not a part of this flow:
+RECEIVE                 (Some ingredient has been delivered, and is to be added to the inventory)
+
 #### events.txt ####
 
 % Lines starting with a percentage sign are not read.
