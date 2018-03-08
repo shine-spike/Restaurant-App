@@ -19,5 +19,5 @@ mayonnaise 6 11
 
 % Toppings
 pickles 5 18
-onions 8 16
+onions 8 1
 tomatoes 14 27
