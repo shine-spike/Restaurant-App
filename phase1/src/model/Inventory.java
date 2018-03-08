@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Controls all aspects of inventory management and reordering of ingredients.
  */
 public class Inventory {
-  private static final String REORDER_REQUEST_FILE = "phase1/reorder_requests.txt";
+  private static final String REORDER_REQUEST_FILE = "phase1/requests.txt";
   private static final int DEFAULT_REORDER_AMOUNT = 20;
 
   private final ArrayList<Ingredient> ingredients;
