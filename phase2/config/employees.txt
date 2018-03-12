@@ -1,0 +1,7 @@
+% Lines starting with a percentage sign are not read.
+% The format of an employee creation is as follows:
+% <EMPLOYEE_FIRST_NAME> <EMPLOYEE_LAST_NAME>
+%
+% Employees are automatically assigned zero-indexed incrementing IDs.
+Ziyad Edher
+
