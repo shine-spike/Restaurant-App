@@ -12,13 +12,16 @@ import java.util.logging.SimpleFormatter;
  * <p>
  * Contains all functional parts of a restaurant and provides an interface for interaction.
  */
-public class Restaurant {
+public final class Restaurant {
+  // Default number of tables in the restaurant
+  private static final int DEFAULT_NUM_TABLES = 100;
+
+  // Singleton
+  private static final Restaurant INSTANCE = new Restaurant(DEFAULT_NUM_TABLES);
+
   // Logging system
   private static final String LOG_FILE_LOCATION = "phase1/log.txt";
   private final Logger logger = Logger.getLogger("Restaurant");
-
-  // Default number of tables in the restaurant
-  private static final int DEFAULT_NUM_TABLES = 100;
 
   // Controllers for all aspects of the Restaurant.
   public final TableController tableController;
@@ -37,7 +40,7 @@ public class Restaurant {
    *
    * @param numTables the number of tables in this Restaurant.
    */
-  public Restaurant(int numTables) {
+  private Restaurant(int numTables) {
     tableController = new TableController(numTables);
 
     // Do print logs to console and set log format
@@ -46,11 +49,8 @@ public class Restaurant {
             "%1$tF %1$tT %5$s%6$s%n");
   }
 
-  /**
-   * Constructs a Restaurant with the default number of tables.
-   */
-  public Restaurant() {
-    this(DEFAULT_NUM_TABLES);
+  public static Restaurant getInstance() {
+    return INSTANCE;
   }
 
   /**
@@ -309,7 +309,7 @@ public class Restaurant {
    * @return whether or not the order has been successfully registered. This can fail if
    * there are not enough ingredients to fulfil it.
    */
-  private boolean registerOrder(Order order) {
+  public boolean registerOrder(Order order) {
     if (inventory.confirmOrder(order)) {
       pendingOrders.add(order);
       logger.info("Order number " + order.getOrderNumber() + " has been registered.");
