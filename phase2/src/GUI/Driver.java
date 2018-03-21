@@ -1,3 +1,4 @@
+package GUI;
 import model.Restaurant;
 import parsing.Parser;
 
