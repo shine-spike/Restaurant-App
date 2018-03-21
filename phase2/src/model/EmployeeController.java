@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class EmployeeController {
   // List of employees indexed by employee number
-  private final ArrayList<String> employees;
+  private final ArrayList<Employee> employees;
 
   /**
    * Creates an EmployeeController with no employees
@@ -19,19 +19,41 @@ public class EmployeeController {
   /**
    * Adds an Employee to this EmployeeController
    *
-   * @param name the first and last name of the Employee to be added
+   * @param firstName this employee's first name
+   * @param lastName this employee's last name
+   * @param password this employee's password
+   * @param type this employee's type
    */
-  public void addEmployee(String name) {
-    employees.add(name);
+  public void addEmployee(String firstName, String lastName, String password, String type) {
+    EmployeeType employeeType = EmployeeType.getEmployeeType(type);
+    if(employeeType != null) {
+      employees.add(new Employee(firstName, lastName, password, employeeType));
+    }
   }
 
   /**
    * Gets the name of an Employee from the Employee's id
    *
    * @param id the id of the desired Employee
-   * @return the name of Employee id
+   * @return the Employee object with the given id
    */
-  public String getEmployeeName(int id) {
+  public Employee getEmployee(int id) {
     return employees.get(id);
+  }
+
+  /**
+   * Gets the name of an Employee from the Employee's id
+   *
+   * @param name the name of the desired Employee
+   * @return the Employee object with the given name
+   */
+  public Employee getEmployee(String name) {
+    for(Employee i: employees){
+      if(i.getName().equals(name)){
+        return i;
+      }
+    }
+
+    return null;
   }
 }

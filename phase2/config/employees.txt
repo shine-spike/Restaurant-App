@@ -3,5 +3,6 @@
 % <EMPLOYEE_FIRST_NAME> <EMPLOYEE_LAST_NAME>
 %
 % Employees are automatically assigned zero-indexed incrementing IDs.
-Ziyad Edher
+Ziyad Edher bunny24 MANAGER
+Matthew Verreault bunny23 COOK
 

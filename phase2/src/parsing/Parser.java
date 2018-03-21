@@ -161,12 +161,12 @@ public class Parser {
 
     String[] symbols;
     while ((symbols = preParse(reader)) != null && symbols.length != 0) {
-      if (symbols.length != 2) {
-        System.out.println("Line in employees file should have two entries, "
+      if (symbols.length != 4) {
+        System.out.println("Line in employees file should have four entries, "
                 + symbols.length + " were given. Skipping.");
         continue;
       }
-      restaurant.employeeController.addEmployee(symbols[0] + " " + symbols[1]);
+      restaurant.employeeController.addEmployee(symbols[0], symbols[1], symbols[2], symbols[3]);
     }
   }
 
