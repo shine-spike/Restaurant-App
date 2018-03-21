@@ -40,7 +40,7 @@ public class Restaurant {
   public Restaurant(int numTables) {
     tableController = new TableController(numTables);
 
-    // Do print logs to console and set log format
+    // Do not print logs to console and set log format
     logger.setUseParentHandlers(false);
     System.setProperty("java.util.logging.SimpleFormatter.format",
             "%1$tF %1$tT %5$s%6$s%n");

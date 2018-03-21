@@ -21,7 +21,7 @@ public class Parser {
   private static final char COMMENT_SYMBOL = '%';
 
   // Where to read the files from
-  private String filesLocation = "phase1/config/";
+  private String filesLocation = "phase2/config/";
 
   // The names of all the files we need to access.
   private static final String EMPLOYEE_FILE_NAME = "employees.txt";

@@ -18,7 +18,7 @@ class Main {
     Driver driver = new Driver();
 
     if (LOG_TO_FILE) {
-      driver.getRestaurant().startLogger();
+      driver.startLogger();
     }
     if (READ_CONFIGURATION) {
       driver.readConfiguration();

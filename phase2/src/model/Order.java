@@ -23,7 +23,7 @@ public class Order {
   private final ArrayList<Ingredient> subtractions = new ArrayList<>();
 
   // Whether or not this order has been seen and is being prepared
-  private boolean seen = false;
+  private OrderStatus status = OrderStatus.CREATED;
 
 
   /**
@@ -71,21 +71,12 @@ public class Order {
     return orderNumber;
   }
 
-  /**
-   * Records that this order has been seen by a chef
-   */
-  public void orderSeen() {
-    seen = true;
+  public OrderStatus getStatus() {
+    return status;
   }
 
-
-  /**
-   * Returns whether or not this order has been seen by a chef and is being prepared.
-   *
-   * @return whether or not this order has been seen.
-   */
-  public boolean isSeen() {
-    return seen;
+  public void setStatus(OrderStatus status) {
+    this.status = status;
   }
 
   /**
@@ -101,6 +92,8 @@ public class Order {
     for (Ingredient subtraction : subtractions) {
       duplicateOrder.addSubtraction(subtraction);
     }
+    duplicateOrder.setStatus(OrderStatus.CREATED);
+
     return duplicateOrder;
   }
 

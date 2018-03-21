@@ -1,5 +1,6 @@
 package parsing;
 
+import event.*;
 import model.Restaurant;
 
 import java.util.ArrayList;
@@ -117,11 +118,13 @@ class EventParser {
       }
     }
 
-    boolean result = restaurant.placeOrder(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]),
-            symbols[3], symbols[4], subtractions, additions);
-    if (!result) {
-      System.out.println("Order could not be placed.");
-    }
+//    boolean result = restaurant.placeOrder(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]),
+//            symbols[3], symbols[4], subtractions, additions);
+//    if (!result) {
+//      System.out.println("Order could not be placed.");
+//    }
+    new PlaceOrderEvent(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]),
+                        symbols[3], symbols[4], subtractions, additions).process();
   }
 
   /**
@@ -131,10 +134,11 @@ class EventParser {
    * @param symbols the array of strings representing a seen event.
    */
   private void parseSeenEvent(String[] symbols) {
-    boolean result = restaurant.orderSeen(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
-    if (!result) {
-      System.out.println("Order with the given number is not pending.");
-    }
+//    boolean result = restaurant.orderSeen(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
+//    if (!result) {
+//      System.out.println("Order with the given number is not pending.");
+//    }
+    new SeenOrderEvent(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2])).process();
   }
 
   /**
@@ -144,10 +148,11 @@ class EventParser {
    * @param symbols the array of strings representing a ready event.
    */
   private void parseReadyEvent(String[] symbols) {
-    boolean result = restaurant.orderReady(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
-    if (!result) {
-      System.out.println("Order with the given number is not pending.");
-    }
+//    boolean result = restaurant.orderReady(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
+//    if (!result) {
+//      System.out.println("Order with the given number is not pending.");
+//    }
+    new ReadyOrderEvent(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2])).process();
   }
 
   /**
@@ -157,10 +162,11 @@ class EventParser {
    * @param symbols the array of strings representing an accept event.
    */
   private void parseAcceptEvent(String[] symbols) {
-    boolean result = restaurant.orderAccepted(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
-    if (!result) {
-      System.out.println("Order with the given number is not ready.");
-    }
+//    boolean result = restaurant.orderAccepted(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
+//    if (!result) {
+//      System.out.println("Order with the given number is not ready.");
+//    }
+    new AcceptedOrderEvent(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2])).process();
   }
 
   /**
@@ -176,10 +182,11 @@ class EventParser {
       reason.append(" ");
     }
 
-    boolean result = restaurant.orderRejected(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]), reason.toString());
-    if (!result) {
-      System.out.println("Order with the given number is not ready.");
-    }
+//    boolean result = restaurant.orderRejected(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]), reason.toString());
+//    if (!result) {
+//      System.out.println("Order with the given number is not ready.");
+//    }
+    new RejectedOrderEvent(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]), reason.toString()).process();
   }
 
   /**
@@ -195,10 +202,11 @@ class EventParser {
       reason.append(" ");
     }
 
-    boolean result = restaurant.redoOrder(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]), reason.toString());
-    if (!result) {
-      System.out.println("Order with the given number is not ready or the order cannot be fulfilled.");
-    }
+//    boolean result = restaurant.redoOrder(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]), reason.toString());
+//    if (!result) {
+//      System.out.println("Order with the given number is not ready or the order cannot be fulfilled.");
+//    }
+    new RedoOrderEvent(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]), reason.toString()).process();
   }
 
   /**
@@ -208,10 +216,11 @@ class EventParser {
    * @param symbols the array of strings representing a bill event.
    */
   private void parseBillEvent(String[] symbols) {
-    boolean result = restaurant.printBill(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
-    if (!result) {
-      System.out.println("Bill was not able to be printed.");
-    }
+//    boolean result = restaurant.printBill(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
+//    if (!result) {
+//      System.out.println("Bill was not able to be printed.");
+//    }
+    new PrintBillEvent(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2])).process();
   }
 
   /**
@@ -221,10 +230,11 @@ class EventParser {
    * @param symbols the array of strings representing a paid event.
    */
   private void parsePaidEvent(String[] symbols) {
-    boolean result = restaurant.billPaid(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
-    if (!result) {
-      System.out.println("Bill was not able to be paid.");
-    }
+//    boolean result = restaurant.billPaid(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
+//    if (!result) {
+//      System.out.println("Bill was not able to be paid.");
+//    }
+    new PaidBillEvent(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2])).process();
   }
 
   /**
@@ -234,9 +244,10 @@ class EventParser {
    * @param symbols the array of strings representing a receive event.
    */
   private void parseReceiveEvent(String[] symbols) {
-    boolean result = restaurant.ingredientsReceived(Integer.parseInt(symbols[1]), symbols[2], Integer.parseInt(symbols[3]));
-    if (!result) {
-      System.out.println("Ingredient was not able to be received.");
-    }
+//    boolean result = restaurant.ingredientsReceived(Integer.parseInt(symbols[1]), symbols[2], Integer.parseInt(symbols[3]));
+//    if (!result) {
+//      System.out.println("Ingredient was not able to be received.");
+//    }
+    new ReceiveEvent(Integer.parseInt(symbols[1]), symbols[2], Integer.parseInt(symbols[3])).process();
   }
 }
