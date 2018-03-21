@@ -14,18 +14,18 @@
 
 START lunch
 burger 1000
-burger_bun burger pickles onions tomatoes
+burger_bun burger_patty pickles onions tomatoes
 ketchup mustard mayonnaise
 
 veggie_burger 1200
-burger_bun veggie_burger pickles onions tomatoes
+burger_bun veggie_burger_patty pickles onions tomatoes
 ketchup mustard mayonnaise
 
 hot_dog 300
-hot_dog hot_dog_bun
+hot_dog_wiener hot_dog_bun
 ketchup mustard
 
 veggie_dog 500
-veggie_dog hot_dog_bun
+veggie_dog_wiener hot_dog_bun
 ketchup mustard
 END

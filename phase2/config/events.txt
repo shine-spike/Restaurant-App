@@ -48,4 +48,4 @@ ACCEPT  0 2
 BILL    0 4
 PAID    0 4
 RECEIVE 0 burger_bun 10
-RECEIVE 0 veggie_burger 100
+RECEIVE 0 veggie_burger_patty 100

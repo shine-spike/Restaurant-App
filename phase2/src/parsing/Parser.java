@@ -28,6 +28,7 @@ public class Parser {
   private static final String INGREDIENTS_FILE_NAME = "ingredients.txt";
   private static final String MENUS_FILE_NAME = "menus.txt";
   private static final String EVENTS_FILE_NAME = "events.txt";
+  private static final String LOCALE_FILE_NAME = "locale.txt";
 
   private final Restaurant restaurant;
 
@@ -71,6 +72,7 @@ public class Parser {
     verifyConfigurationFolder();
 
     // Parse each type of configuration file
+    parseLocale();
     parseEmployeeConfiguration();
     parseIngredientConfiguration();
     parseMenuConfiguration();
@@ -185,7 +187,6 @@ public class Parser {
         continue;
       }
 
-
       try {
         restaurant.inventory.addIngredient(symbols[0], Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
       } catch (NumberFormatException e) {
@@ -228,6 +229,36 @@ public class Parser {
       } else {
         currentMenu = symbols[1];
         restaurant.menuController.addMenu(currentMenu);
+      }
+    }
+  }
+
+  /**
+   * Parses the localization file.
+   */
+  private void parseLocale() {
+    BufferedReader reader = getReader(LOCALE_FILE_NAME);
+    if (reader == null) {
+      return;
+    }
+
+    String[] symbols;
+    while ((symbols = preParse(reader)) != null && symbols.length != 0) {
+      if (symbols.length < 2) {
+        System.out.println("Line in localization file should have at least two entries, "
+                + symbols.length + " were given. Skipping.");
+        continue;
+      }
+
+      String unlocalizedName = symbols[0];
+      StringBuilder localizedName = new StringBuilder(symbols[1]);
+      for (int i = 2; i < symbols.length; i++) {
+        localizedName.append(" ");
+        localizedName.append(symbols[i]);
+      }
+
+      if (Localizer.register(unlocalizedName, localizedName.toString()) != null) {
+        System.out.println("Unlocalized name \'" + unlocalizedName + "\' was previously declared. Skipping.");
       }
     }
   }

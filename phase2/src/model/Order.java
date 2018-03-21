@@ -1,5 +1,7 @@
 package model;
 
+import parsing.Localizer;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -147,13 +149,13 @@ public class Order {
    * @return the formatted string representation of this order.
    */
   public String toString() {
-    StringBuilder out = new StringBuilder(menuItem.getName() + " " + menuItem.getPrice());
+    StringBuilder out = new StringBuilder(Localizer.localize(menuItem.getName()) + " " + menuItem.getPrice());
 
     if (additions.size() > 0) {
       out.append(System.lineSeparator()).append("  - ADD ");
     }
     for (int i  = 0; i < additions.size(); i++) {
-      out.append(additions.get(i).getName());
+      out.append(Localizer.localize(additions.get(i).getName()));
       if (i != additions.size() - 1) {
         out.append(", ");
       }
@@ -163,7 +165,7 @@ public class Order {
       out.append(System.lineSeparator()).append("  - NO ");
     }
     for (int i  = 0; i < subtractions.size(); i++) {
-      out.append(subtractions.get(i).getName());
+      out.append(Localizer.localize(subtractions.get(i).getName()));
       if (i != subtractions.size() - 1) {
         out.append(", ");
       }
