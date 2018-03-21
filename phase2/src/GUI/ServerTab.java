@@ -2,11 +2,21 @@ package GUI;
 
 import javafx.scene.control.Tab;
 
-public class ServerTab {
-    public Tab getTab(){
-        Tab managerTab = new Tab("Server");
-        managerTab.setClosable(false);
+public class ServerTab extends RestaurantTab{
+    /**
+     * Initializes this ServerTab's JavaFX tab
+     */
+    public void initializeTab(){
+        Tab serverTab = new Tab("Server");
+        serverTab.setClosable(false);
 
-        return managerTab;
+        setTab(serverTab);
+    }
+
+    /**
+     * Updates all the nodes of this tab with the appropriate new information
+     */
+    public void update(){
+
     }
 }
