@@ -1,6 +1,7 @@
 package GUI;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import model.Employee;
 
 
 public class RestaurantApplication extends Application{
@@ -17,7 +18,7 @@ public class RestaurantApplication extends Application{
         stage.show();
     }
 
-    public void startRestaurantScene(){
-        stage.setScene(new RestaurantScene(this).getScene());
+    public void startRestaurantScene(Employee employee){
+        stage.setScene(new RestaurantScene(this, employee).getScene());
     }
 }

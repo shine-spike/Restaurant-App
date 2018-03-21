@@ -11,9 +11,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import model.Restaurant;
 
 public class SigninScene {
     RestaurantApplication application;
+    TextField userTextField;
+    PasswordField passwordField;
 
     public SigninScene(RestaurantApplication application){
         this.application = application;
@@ -28,11 +31,11 @@ public class SigninScene {
 
         // Username
         Label userName = new Label("Employee Name");
-        TextField userTextField = new TextField();
+        userTextField = new TextField();
 
         // Password
         Label password = new Label("Password");
-        PasswordField passwordField = new PasswordField();
+        passwordField = new PasswordField();
 
         // Button
         Button button = new Button("Sign in");
@@ -51,7 +54,9 @@ public class SigninScene {
     private class SignInButtonHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent e) {
-            application.startRestaurantScene();
+            model.Employee employee = Restaurant.getInstance().employeeController.getEmployee(userTextField.getText());
+            if(employee.checkPassword(passwordField.getText()))
+                application.startRestaurantScene(employee);
         }
     }
 }
