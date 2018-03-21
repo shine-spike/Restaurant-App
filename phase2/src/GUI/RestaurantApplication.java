@@ -8,6 +8,9 @@ public class RestaurantApplication extends Application{
 
     @Override
     public void start(Stage stage){
+        GUI.Driver d = new GUI.Driver();
+        d.readConfiguration();
+
         this.stage = stage;
         stage.setTitle("Restaurant");
         stage.setScene(new SigninScene(this).getScene());
