@@ -59,4 +59,8 @@ public class EmployeeController {
 
     return null;
   }
+
+  public String getEmployeeName(int id) {
+    return getEmployee(id).getName();
+  }
 }

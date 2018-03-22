@@ -1,15 +1,12 @@
 package event;
 
-import model.Ingredient;
 
-public class ReceiveEvent extends Event {
-    private String ingredientName;
+public class ReceiveEvent extends InventoryEvent {
     private int amount;
 
 
     public ReceiveEvent(int employeeNumber, String ingredientName, int amount) {
-        super(employeeNumber);
-        this.ingredientName = ingredientName;
+        super(employeeNumber, ingredientName);
         this.amount = amount;
     }
 

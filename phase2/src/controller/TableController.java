@@ -50,4 +50,7 @@ public class TableController {
     return tables[tableNumber].printBill();
   }
 
+  public String printBill(int tableNumber, int customerIndex) {
+    return tables[tableNumber].printBill(customerIndex);
+  }
 }

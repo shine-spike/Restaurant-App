@@ -3,7 +3,7 @@ package event;
 import model.Order;
 
 
-public abstract class OrderEvent extends Event {
+abstract class OrderEvent extends Event {
     Order order;
 
 
