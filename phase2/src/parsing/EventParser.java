@@ -123,7 +123,7 @@ class EventParser {
 //    if (!result) {
 //      System.out.println("Order could not be placed.");
 //    }
-    new PlaceOrderEvent(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]),
+    new PlaceOrderEvent(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]), 0,
                         symbols[3], symbols[4], ingredientStrings).process();
   }
 

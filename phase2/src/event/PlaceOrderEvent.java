@@ -19,10 +19,11 @@ public class PlaceOrderEvent extends OrderEvent {
      * @return whether or not this order has been successfully placed. This can fail if
      * there are not enough ingredients to fulfill it.
      */
-    public PlaceOrderEvent(int employeeNumber, int tableNumber, String menuNameString, String menuItemString,
-                           HashMap<String, Integer> ingredientStrings) {
+    public PlaceOrderEvent(int employeeNumber, int tableNumber, int customerIndex,
+                           String menuNameString, String menuItemString, HashMap<String, Integer> ingredientStrings) {
         super(employeeNumber, null);
-        this.order = restaurant.createOrder(employeeNumber, tableNumber, menuNameString, menuItemString, ingredientStrings);
+        this.order = restaurant.createOrder(employeeNumber, tableNumber, customerIndex,
+                menuNameString, menuItemString, ingredientStrings);
     }
 
     PlaceOrderEvent(int employeeNumber, Order order) {

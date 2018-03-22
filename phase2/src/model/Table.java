@@ -7,6 +7,8 @@ import java.util.ArrayList;
  */
 public class Table {
   private Bill currentBill = new Bill();
+  private ArrayList<Bill> customerBills = new ArrayList<>();
+
   private final ArrayList<Bill> billHistory = new ArrayList<>();
 
 
@@ -22,6 +24,8 @@ public class Table {
    */
   public void clearBill() {
     billHistory.add(currentBill);
+
+    customerBills = new ArrayList<>();
     currentBill = new Bill();
   }
 
@@ -32,6 +36,13 @@ public class Table {
    */
   public void addToBill(Order order) {
     currentBill.addOrder(order);
+
+    if (customerBills.size() > order.getCustomerIndex()) {
+      customerBills.get(order.getCustomerIndex()).addOrder(order);
+    }
+    Bill customerBill = new Bill();
+    customerBill.addOrder(order);
+    customerBills.add(customerBill);
   }
 
   /**
@@ -41,5 +52,9 @@ public class Table {
    */
   public String printBill() {
     return currentBill.toString();
+  }
+
+  public String printBill(int customerNumber) {
+    return customerBills.get(customerNumber).toString();
   }
 }

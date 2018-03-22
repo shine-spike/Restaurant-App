@@ -52,8 +52,8 @@ public final class Restaurant {
     return inventory;
   }
 
-  public Order createOrder(int employeeNumber, int tableNumber, String menuNameString, String menuItemString,
-                           HashMap<String, Integer> ingredientStrings) {
+  public Order createOrder(int employeeNumber, int tableNumber, int customerIndex,
+                           String menuNameString, String menuItemString, HashMap<String, Integer> ingredientStrings) {
     MenuItem menuItem = menuController.getMenuItem(menuNameString, menuItemString);
     HashMap<Ingredient, Integer> ingredients = new HashMap<>();
 
@@ -62,7 +62,7 @@ public final class Restaurant {
       ingredients.put(inventory.getIngredient(ingredientString), ingredientStrings.get(ingredientString));
     }
 
-    return orderController.createOrder(employeeNumber, tableNumber, menuItem, ingredients);
+    return orderController.createOrder(employeeNumber, tableNumber, customerIndex, menuItem, ingredients);
   }
 
   /**

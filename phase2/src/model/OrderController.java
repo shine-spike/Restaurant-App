@@ -23,9 +23,9 @@ public class OrderController {
         return null;
     }
 
-    public Order createOrder(int employeeNumber, int tableNumber, MenuItem menuItem,
-                             HashMap<Ingredient, Integer> ingredients) {
-        Order order = new Order(employeeNumber, tableNumber, menuItem, ingredients);
+    public Order createOrder(int employeeNumber, int tableNumber, int customerIndex,
+                             MenuItem menuItem, HashMap<Ingredient, Integer> ingredients) {
+        Order order = new Order(employeeNumber, tableNumber, customerIndex, menuItem, ingredients);
         orders.add(order);
         return order;
     }
