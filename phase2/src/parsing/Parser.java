@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 
 
 /**
@@ -166,7 +167,7 @@ public class Parser {
                 + symbols.length + " were given. Skipping.");
         continue;
       }
-      restaurant.employeeController.addEmployee(symbols[0], symbols[1], symbols[2], symbols[3]);
+      restaurant.getEmployeeController().addEmployee(symbols[0], symbols[1], symbols[2], symbols[3]);
     }
   }
 
@@ -188,7 +189,7 @@ public class Parser {
       }
 
       try {
-        restaurant.inventory.addIngredient(symbols[0], Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
+        restaurant.getInventory().addIngredient(symbols[0], Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
       } catch (NumberFormatException e) {
         System.out.println("Final two entries in a line should be numbers. Skipping.");
       }
@@ -215,20 +216,22 @@ public class Parser {
         }
 
         String currentItem = symbols[0];
-        restaurant.menuController.addItemToMenu(currentMenu, currentItem, Integer.parseInt(symbols[1]));
+        HashMap<Ingredient, Integer> ingredients = new HashMap<>();
 
         for (String ingredientName : preParse(reader)) {
-          Ingredient ingredient = restaurant.inventory.getIngredient(ingredientName);
-          restaurant.menuController.addIngredientToMenuItem(currentMenu, currentItem, ingredient);
+          Ingredient ingredient = restaurant.getInventory().getIngredient(ingredientName);
+          ingredients.put(ingredient, 1);
         }
 
         for (String additionName : preParse(reader)) {
-          Ingredient addition = restaurant.inventory.getIngredient(additionName);
-          restaurant.menuController.addAdditionToMenuItem(currentMenu, currentItem, addition);
+          Ingredient addition = restaurant.getInventory().getIngredient(additionName);
+          ingredients.put(addition, 0);
         }
+
+        restaurant.getMenuController().addMenuItem(currentMenu, currentItem, Integer.parseInt(symbols[1]), ingredients);
       } else {
         currentMenu = symbols[1];
-        restaurant.menuController.addMenu(currentMenu);
+        restaurant.getMenuController().addMenu(currentMenu);
       }
     }
   }

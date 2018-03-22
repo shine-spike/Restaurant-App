@@ -11,7 +11,7 @@ public class AcceptedOrderEvent extends OrderEvent {
     @Override
     public EventStatus process() {
         order.setStatus(OrderStatus.ACCEPTED);
-        restaurant.addToBill(order);
+        restaurant.getTableController().addToBill(order);
         return EventStatus.COMPLETED;
     }
 }

@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * A menu item in a menu, it is basically a list of ingredients with available additions and a price.
@@ -9,8 +10,7 @@ public class MenuItem {
   private final int price;
   private final String name;
 
-  private final ArrayList<Ingredient> ingredients = new ArrayList<>();
-  private final ArrayList<Ingredient> additions = new ArrayList<>();
+  private final HashMap<Ingredient, Integer> ingredients;
 
 
   /**
@@ -19,9 +19,10 @@ public class MenuItem {
    * @param name  the name of the menu item.
    * @param price the price of the menu item.
    */
-  MenuItem(String name, int price) {
+  MenuItem(String name, int price, HashMap<Ingredient, Integer> ingredients) {
     this.price = price;
     this.name = name;
+    this.ingredients = ingredients;
   }
 
   /**
@@ -47,34 +48,7 @@ public class MenuItem {
    *
    * @return the ingredients of this menu item.
    */
-  public Ingredient[] getIngredients() {
-    return ingredients.toArray(new Ingredient[ingredients.size()]);
-  }
-
-  /**
-   * Gets the possible additions to this menu item.
-   *
-   * @return the possible additions to this menu item.
-   */
-  public Ingredient[] getAdditions() {
-    return additions.toArray(new Ingredient[additions.size()]);
-  }
-
-  /**
-   * Adds an ingredient to this menu item.
-   *
-   * @param ingredient the Ingredient to add to the basic menu item.
-   */
-  public void addIngredient(Ingredient ingredient) {
-    ingredients.add(ingredient);
-  }
-
-  /**
-   * Adds a possible addition to this menu item.
-   *
-   * @param ingredient the Ingredient that is a possible addition to the menu item.
-   */
-  public void addAddition(Ingredient ingredient) {
-    additions.add(ingredient);
+  public HashMap<Ingredient, Integer> getIngredients() {
+    return ingredients;
   }
 }

@@ -1,12 +1,6 @@
 package model;
 
-import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.FileHandler;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
 
 /**
@@ -22,11 +16,11 @@ public final class Restaurant {
   private static final Restaurant INSTANCE = new Restaurant();
 
   // Controllers for all aspects of the Restaurant.
-  public final TableController tableController = new TableController(DEFAULT_NUM_TABLES);
-  public final EmployeeController employeeController = new EmployeeController();
-  public final Inventory inventory = new Inventory();
-  public final MenuController menuController = new MenuController();
-  public final OrderController orderController = new OrderController();
+  private final TableController tableController = new TableController(DEFAULT_NUM_TABLES);
+  private final EmployeeController employeeController = new EmployeeController();
+  private final MenuController menuController = new MenuController();
+  private final OrderController orderController = new OrderController();
+  private final Inventory inventory = new Inventory();
 
 
   /**
@@ -38,25 +32,29 @@ public final class Restaurant {
     return INSTANCE;
   }
 
-  public Order getOrderFromNumber(int orderNumber) {
-    return orderController.getOrderFromNumber(orderNumber);
+  public TableController getTableController() {
+    return tableController;
   }
 
-  public void addToBill(Order order) {
-    tableController.addToBill(order);
+  public EmployeeController getEmployeeController() {
+    return employeeController;
   }
 
-  public String printBill(int tableNumber) {
-    return tableController.printBill(tableNumber);
+  public MenuController getMenuController() {
+    return menuController;
   }
 
-  public void clearBill(int tableNumber) {
-    tableController.clearBill(tableNumber);
+  public OrderController getOrderController() {
+    return orderController;
+  }
+
+  public Inventory getInventory() {
+    return inventory;
   }
 
   public Order createOrder(int employeeNumber, int tableNumber, String menuNameString, String menuItemString,
                            HashMap<String, Integer> ingredientStrings) {
-    MenuItem menuItem = menuController.getItemFromMenu(menuNameString, menuItemString);
+    MenuItem menuItem = menuController.getMenuItem(menuNameString, menuItemString);
     HashMap<Ingredient, Integer> ingredients = new HashMap<>();
 
     // Adds each subtraction and addition to the order
@@ -82,13 +80,5 @@ public final class Restaurant {
     }
     order.setStatus(OrderStatus.UNSATISFIABLE);
     return false;
-  }
-
-  public void consumeIngredients(Order order) {
-    inventory.consumeIngredients(order);
-  }
-
-  public void restockIngredient(String ingredientName, int quantity) {
-    inventory.restockIngredient(ingredientName, quantity);
   }
 }

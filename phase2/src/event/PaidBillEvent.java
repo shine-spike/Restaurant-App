@@ -12,7 +12,7 @@ public class PaidBillEvent extends BillEvent {
     @Override
     public EventStatus process() {
         // TODO: implement single-customer clearance
-        restaurant.clearBill(tableNumber);
+        restaurant.getTableController().clearBill(tableNumber);
         return EventStatus.COMPLETED;
     }
 }

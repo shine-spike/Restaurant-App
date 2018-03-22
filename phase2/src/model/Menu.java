@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * A menu in the restaurant. Stores and manages menu items.
@@ -33,8 +34,8 @@ public class Menu {
    * @param menuItemName the name of the new menu item.
    * @param price        the price of the new menu item.
    */
-  public void addMenuItem(String menuItemName, int price) {
-    menuItems.add(new MenuItem(menuItemName, price));
+  public void addMenuItem(String menuItemName, int price, HashMap<Ingredient, Integer> ingredients) {
+    menuItems.add(new MenuItem(menuItemName, price, ingredients));
   }
 
   /**
@@ -50,27 +51,5 @@ public class Menu {
       }
     }
     return null;
-  }
-
-  /**
-   * Adds an ingredient to a menu item in this menu.
-   *
-   * @param menuItemName the name of the menu item.
-   * @param ingredient   the Ingredient to add.
-   */
-  public void addIngredientToMenuItem(String menuItemName, Ingredient ingredient) {
-    MenuItem item = getMenuItem(menuItemName);
-    item.addIngredient(ingredient);
-  }
-
-  /**
-   * Adds a possible addition to a menu item in this menu.
-   *
-   * @param menuItemName the name of the menu item.
-   * @param addition     the Ingredient to add to the menu item as a possible addition.
-   */
-  public void addAdditionToMenuItem(String menuItemName, Ingredient addition) {
-    MenuItem item = getMenuItem(menuItemName);
-    item.addAddition(addition);
   }
 }

@@ -48,9 +48,9 @@ public class EmployeeController {
    * @return the Employee object with the given name
    */
   public Employee getEmployee(String name) {
-    for(Employee i: employees){
-      if(i.getName().equals(name)){
-        return i;
+    for(Employee employee: employees){
+      if(employee.getName().equals(name)){
+        return employee;
       }
     }
 

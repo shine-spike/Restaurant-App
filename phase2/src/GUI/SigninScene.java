@@ -62,7 +62,7 @@ public class SigninScene {
     private class SignInButtonHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent e) {
-            model.Employee employee = Restaurant.getInstance().employeeController.getEmployee(userTextField.getText());
+            model.Employee employee = Restaurant.getInstance().getEmployeeController().getEmployee(userTextField.getText());
             if(employee != null && employee.checkPassword(passwordField.getText())) {
                 application.startRestaurantScene(employee);
             } else {

@@ -9,7 +9,7 @@ public abstract class OrderEvent extends Event {
 
     OrderEvent(int employeeNumber, int orderNumber) {
         super(employeeNumber);
-        this.order = restaurant.getOrderFromNumber(orderNumber);
+        this.order = restaurant.getOrderController().getOrderFromNumber(orderNumber);
     }
 
     OrderEvent(int employeeNumber, Order order) {

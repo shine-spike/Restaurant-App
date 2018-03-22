@@ -9,7 +9,7 @@ public class ReadyOrderEvent extends OrderEvent {
 
     @Override
     public EventStatus process() {
-        restaurant.consumeIngredients(order);
+        restaurant.getInventory().consumeIngredients(order);
         order.setStatus(OrderStatus.READY);
         return EventStatus.COMPLETED;
     }
