@@ -1,6 +1,5 @@
 package GUI;
 
-import event.ReceiveEvent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,9 +8,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import model.Ingredient;
+import controller.Restaurant;
 import model.Order;
-import model.Restaurant;
 import model.Table;
 
 public class ServerTab extends RestaurantTab{
