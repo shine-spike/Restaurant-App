@@ -6,24 +6,31 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import controller.Restaurant;
 import model.Order;
 import model.Table;
 
+import static java.lang.Integer.parseInt;
+
 public class ServerTab extends RestaurantTab{
 
     private Restaurant restaurant = Restaurant.getInstance();
     private TextField tableNumField;
-    private Table table;
+    private int tableID;
+    private Button tableButton;
+    private Boolean tableSelected = false;
+    private ObservableList<Order> ordersList;
+    private Label selectedTableNum;
+    private Button billButton;
+    private Button orderButton;
 
     /**
      * Initializes this ServerTab's JavaFX tab
      */
     public void initializeTab(){
-        Boolean tableSelected = false;
-
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
@@ -36,22 +43,15 @@ public class ServerTab extends RestaurantTab{
         tableNumField.setOnAction(new ServerTabHandler());
 
         // Select Table Button
-        Button tableButton = new Button("Select Table");
+        tableButton = new Button("Select Table");
         tableButton.setOnAction(new ServerTabHandler());
 
         // Selected Table Number
-        Label selectedTableNum;
-
-        if(tableSelected) {
-            selectedTableNum = new Label("Table " + tableNumField.toString() + ":");
-        }
-        else{
-            selectedTableNum = new Label("Table not selected");
-        }
+        selectedTableNum = new Label("Table not selected");
 
         //Order List
         Label orderList = new Label("Order List:");
-        ObservableList<Order> ordersList = FXCollections.observableArrayList();
+        ordersList = FXCollections.observableArrayList();
         ListView<Order> ordersListView = new ListView<>(ordersList);
 
         //Order Status List
@@ -60,11 +60,11 @@ public class ServerTab extends RestaurantTab{
         ListView<Order> ordersStatusListView = new ListView<>(ordersStatusList);
 
         //Add Order Button
-        Button orderButton = new Button("Add Order");
+        orderButton = new Button("Add Order");
         orderButton.setOnAction(new ServerTabHandler());
 
         //Generate Bill Button
-        Button billButton = new Button("Create Bill");
+        billButton = new Button("Create Bill");
         billButton.setOnAction(new ServerTabHandler());
 
         // Grid Additions
@@ -96,10 +96,30 @@ public class ServerTab extends RestaurantTab{
     private class ServerTabHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent e) {
+            if (e.getSource() instanceof Button){
 
+                if(e.getSource().equals(tableButton)){
+                    if(tableNumField.getText().matches("\\d+")){
+                        tableID = parseInt(tableNumField.getText());
+                        selectedTableNum.setText("Table " + tableID + ":");
+                        ordersList.setAll(restaurant.getTableController().getTable(tableID).getCurrentBill().getOrders());
+                    }
+                    tableNumField.setText("");
+                }
+
+                else if(e.getSource().equals(billButton)){
+                    //new Scene();
+                }
+
+                else if(e.getSource().equals(orderButton)){
+                    //new Scene();
+                }
+            }
         }
 
         // Populates the orders list
         // table.getCurrentBill().getOrders()
     }
+
+
 }
