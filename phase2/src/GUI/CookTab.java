@@ -4,6 +4,14 @@ import javafx.scene.control.Tab;
 
 public class CookTab extends RestaurantTab{
     /**
+     * Constructs a CookTab for the employee with the id employeeNumber
+     */
+    public CookTab(int employeeNumber){
+        super(employeeNumber);
+    }
+
+
+    /**
      * Initializes this CookTab's JavaFX tab
      */
     public void initializeTab(){

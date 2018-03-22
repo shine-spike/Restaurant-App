@@ -8,6 +8,7 @@ import util.Logger;
 
 public class RestaurantApplication extends Application{
     private Stage stage;
+    private int employeeNumber;
 
     @Override
     public void start(Stage stage){
@@ -19,6 +20,10 @@ public class RestaurantApplication extends Application{
         stage.setTitle("Restaurant");
         stage.setScene(new SigninScene(this).getScene());
         stage.show();
+    }
+
+    public void setEmployeeNumber(int employeeNumber){
+        this.employeeNumber = employeeNumber;
     }
 
     public void startRestaurantScene(Employee employee){

@@ -23,6 +23,14 @@ public class TableController {
   }
 
   /**
+   * Returns the table with the given table number.
+   *
+   * @param tableNumber the number of the table to be accessed.
+   * @return the table with the given table number.
+   */
+  public Table getTable(int tableNumber){ return tables[tableNumber];}
+
+  /**
    * Clears the bill for the table with the given table number.
    *
    * @param tableNumber the number of the table for which to clear the bill.
