@@ -1,5 +1,6 @@
 package GUI;
 
+import controller.MenuController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import controller.Restaurant;
+import javafx.stage.Stage;
+import model.Menu;
 import model.Order;
 import model.Table;
 
@@ -20,12 +23,18 @@ public class ServerTab extends RestaurantTab{
     private Restaurant restaurant = Restaurant.getInstance();
     private TextField tableNumField;
     private int tableID;
-    private Button tableButton;
-    private Boolean tableSelected = false;
     private ObservableList<Order> ordersList;
     private Label selectedTableNum;
+    private Button tableButton;
     private Button billButton;
-    private Button orderButton;
+    private Button addOrderButton;
+    private Button modifyOrderButton;
+    private Button submitOrderButton;
+    private Button returnToMainButton;
+    private GridPane mainGrid;
+    private GridPane addOrderGrid;
+    private Tab serverTab;
+    private MenuController menuController = restaurant.getMenuController();
 
     /**
      * Constructs a ServerTab for the employee with the id employeeNumber
@@ -38,11 +47,23 @@ public class ServerTab extends RestaurantTab{
      * Initializes this ServerTab's JavaFX tab
      */
     public void initializeTab(){
-        GridPane grid = new GridPane();
-        grid.setAlignment(Pos.CENTER);
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(25, 25, 25, 25));
+        initializeMainGrid();
+        initializeAddOrderGrid();
+
+        serverTab = new Tab("Server", mainGrid);
+        serverTab.setClosable(false);
+        setTab(serverTab);
+    }
+
+    /**
+     * Initialized this ServerTab's Main Grid
+     */
+    private void initializeMainGrid(){
+        mainGrid = new GridPane();
+        mainGrid.setAlignment(Pos.CENTER);
+        mainGrid.setHgap(10);
+        mainGrid.setVgap(10);
+        mainGrid.setPadding(new Insets(25, 25, 25, 25));
 
         // Table Number
         Label tableNum = new Label("Table Number:");
@@ -67,30 +88,57 @@ public class ServerTab extends RestaurantTab{
         ListView<Order> ordersStatusListView = new ListView<>(ordersStatusList);
 
         //Add Order Button
-        orderButton = new Button("Add Order");
-        orderButton.setOnAction(new ServerTabHandler());
+        addOrderButton = new Button("Add Order");
+        addOrderButton.setOnAction(new ServerTabHandler());
 
         //Generate Bill Button
         billButton = new Button("Create Bill");
         billButton.setOnAction(new ServerTabHandler());
 
         // Grid Additions
-        grid.add(tableNum, 0,0);
-        grid.add(tableNumField, 0, 1);
-        grid.add(tableButton, 0, 2);
-        grid.add(selectedTableNum, 2, 1);
-        grid.add(orderList, 1,2);
-        grid.add(ordersListView, 1, 3);
-        grid.add(orderStatusList, 3,2);
-        grid.add(ordersStatusListView, 3, 3);
-        grid.add(orderButton, 1,4);
-        grid.add(billButton, 3, 4);
+        mainGrid.add(tableNum, 0,0);
+        mainGrid.add(tableNumField, 0, 1);
+        mainGrid.add(tableButton, 0, 2);
+        mainGrid.add(selectedTableNum, 2, 1);
+        mainGrid.add(orderList, 1,2);
+        mainGrid.add(ordersListView, 1, 3);
+        mainGrid.add(orderStatusList, 3,2);
+        mainGrid.add(ordersStatusListView, 3, 3);
+        mainGrid.add(addOrderButton, 1,4);
+        mainGrid.add(billButton, 3, 4);
+    }
 
+    private void initializeAddOrderGrid(){
+        TabPane addOrderPanes = new TabPane();
+        if (menuController != null) {
+            for (Menu menu : menuController.getMenuList()) {
+                addOrderPanes.getTabs().add(new Tab(menu.getName()));
+            }
+            addOrderPanes.getTabs().add(new Tab());
+        }
 
-        Tab serverTab = new Tab("Server", grid);
-        serverTab.setClosable(false);
+        addOrderGrid = new GridPane();
+        addOrderGrid.setAlignment(Pos.CENTER);
+        addOrderGrid.setHgap(10);
+        addOrderGrid.setVgap(10);
+        addOrderGrid.setPadding(new Insets(25, 25, 25, 25));
 
-        setTab(serverTab);
+        // Modify Order Button
+        modifyOrderButton = new Button("Modify Order");
+        modifyOrderButton.setOnAction(new ServerTabHandler());
+
+        // Submit Order Button
+        submitOrderButton = new Button("Submit Order");
+        submitOrderButton.setOnAction(new ServerTabHandler());
+
+        // Return to Main Button
+        returnToMainButton = new Button("Back");
+        returnToMainButton.setOnAction(new ServerTabHandler());
+
+        // Grid Additions
+        addOrderGrid.add(returnToMainButton, 3, 1);
+        addOrderGrid.add(modifyOrderButton, 3,3);
+        addOrderGrid.add(submitOrderButton, 3, 4);
     }
 
     /**
@@ -115,11 +163,15 @@ public class ServerTab extends RestaurantTab{
                 }
 
                 else if(e.getSource().equals(billButton)){
-                    //new Scene();
+                    //new tab;
                 }
 
-                else if(e.getSource().equals(orderButton)){
-                    //new Scene();
+                else if(e.getSource().equals(addOrderButton)) {
+                    serverTab.setContent(addOrderGrid);
+                }
+
+                else if(e.getSource().equals(returnToMainButton)){
+                    serverTab.setContent(mainGrid);
                 }
             }
         }

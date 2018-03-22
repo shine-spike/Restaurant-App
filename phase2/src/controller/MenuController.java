@@ -39,6 +39,13 @@ public class MenuController {
   }
 
   /**
+   * Gets the ArrayList of Menus
+   *
+   * @return the instance variable menus
+   */
+  public ArrayList<Menu> getMenuList(){return menus;}
+
+  /**
    * Adds a menu item with a given price to a the menu with the given name.
    *
    * @param menuName     the name of the menu to add the item to.
