@@ -5,11 +5,14 @@ import javafx.scene.control.Tab;
 public abstract class RestaurantTab {
     // The JavaFX tab that this class represents
     private Tab tab;
+    // The number of the employee using this tab
+    private int employeeNumber;
 
     /**
-     * Constructs a restaurant tab
+     * Constructs a restaurant tab for the employee with the id employeeNumber
      */
-    public RestaurantTab(){
+    public RestaurantTab(int employeeNumber){
+        this.employeeNumber = employeeNumber;
         initializeTab();
     }
 
@@ -32,6 +35,10 @@ public abstract class RestaurantTab {
      */
     protected void setTab(Tab newTab){
         this.tab = newTab;
+    }
+
+    public int getEmployeeNumber(){
+        return employeeNumber;
     }
 
     /**

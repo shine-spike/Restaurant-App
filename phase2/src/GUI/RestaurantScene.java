@@ -15,18 +15,19 @@ public class RestaurantScene {
 
     public Scene getScene() {
         TabPane restaurantTabPane = new TabPane();
+        int id = employee.getEmployeeNumber();
 
         if (employee.isManager()) {
-            restaurantTabPane.getTabs().add(new ManagerTab().getTab());
+            restaurantTabPane.getTabs().add(new ManagerTab(id).getTab());
         }
         if (employee.isServer()) {
-            restaurantTabPane.getTabs().add(new ServerTab().getTab());
+            restaurantTabPane.getTabs().add(new ServerTab(id).getTab());
         }
         if (employee.isCook()) {
-            restaurantTabPane.getTabs().add(new CookTab().getTab());
+            restaurantTabPane.getTabs().add(new CookTab(id).getTab());
         }
         if (employee.isReceiver()) {
-            restaurantTabPane.getTabs().add(new ReceiverTab().getTab());
+            restaurantTabPane.getTabs().add(new ReceiverTab(id).getTab());
         }
 
         return new Scene(restaurantTabPane);

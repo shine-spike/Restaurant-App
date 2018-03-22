@@ -1,5 +1,9 @@
 package GUI;
 
+import controller.Inventory;
+import event.ReceiveEvent;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,15 +13,27 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import controller.Restaurant;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import util.Localizer;
+
 import java.util.ArrayList;
 
 public class ReceiverTab extends RestaurantTab{
-    private Restaurant restaurant = Restaurant.getInstance();
-    private TextField ingredientNumField;
+    private static final Inventory inventory = Restaurant.getInstance().getInventory();
+    private Spinner<Integer> ingredientSpinner;
     private TextField ingredientNameField;
     private ListView<String> ingredientsListView;
-    //private ObservableList<String> ingredientsList = FXCollections.observableArrayList(restaurant.inventory.search(""));
-    private ObservableList<String> ingredientsList = FXCollections.observableArrayList(new ArrayList<String>());
+    private ObservableList<String> displayIngredientsList;
+    private ArrayList<String> ingredientsList;
+    private Text warningString;
+
+    /**
+     * Constructs a ReceiverTab for the employee with the id employeeNumber
+     */
+    public ReceiverTab(int employeeNumber){
+        super(employeeNumber);
+    }
 
     /**
      * Initializes this ReceiverTab's JavaFX tab
@@ -32,16 +48,26 @@ public class ReceiverTab extends RestaurantTab{
         // Ingredient Name
         Label ingredientName = new Label("Ingredient Name");
         ingredientNameField = new TextField();
-        ingredientNameField.setOnAction(new ReceiverTabHandler());
+        ingredientNameField.textProperty().addListener(new IngredientNameChangeListener());
 
         // Number of Ingredients
         Label ingredientNum = new Label("No.");
-        ingredientNumField = new TextField();
-        ingredientNumField.setMaxWidth(40);
+        ingredientSpinner = new Spinner<>(1, 99, 1);
+        ingredientSpinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
+        ingredientSpinner.setEditable(true);
+        ingredientSpinner.setMaxWidth(70);
 
-        // List of Ingredients
-        ingredientsListView = new ListView<>(ingredientsList);
+        // Lists of Ingredients
+        ingredientsList = inventory.search(ingredientNameField.getText());
+
+        displayIngredientsList = FXCollections.observableArrayList();
+        displayIngredientsList.setAll(Localizer.localize(ingredientsList));
+
+        ingredientsListView = new ListView<>(displayIngredientsList);
         ingredientsListView.setMaxHeight(100);
+
+        // Warning String
+        warningString = new Text();
 
         // Add Ingredients Button
         Button button = new Button("Enter");
@@ -50,9 +76,10 @@ public class ReceiverTab extends RestaurantTab{
         grid.add(ingredientName, 0,0);
         grid.add(ingredientNameField, 0, 1);
         grid.add(ingredientNum, 1, 0);
-        grid.add(ingredientNumField, 1, 1);
+        grid.add(ingredientSpinner, 1, 1);
         grid.add(ingredientsListView, 0, 2, 2, 1);
-        grid.add(button, 0, 3);
+        grid.add(warningString, 0, 3, 3, 1);
+        grid.add(button, 0, 4);
 
         Tab receiverTab = new Tab("Receiver", grid);
         receiverTab.setClosable(false);
@@ -70,12 +97,39 @@ public class ReceiverTab extends RestaurantTab{
     private class ReceiverTabHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent e) {
-            if(e.getSource() instanceof Button){
-                // ReceiveEvent receiveEvent = new ReceiveEvent(textField.getName);
-            } else if (e.getSource() instanceof TextField){
-                // ingredientsList = new ObservableList<String>(Restaurant.getInstance().inventory.search(ingredientNameField.getText()));
-                System.out.println("Hi");
+            warningString.setText("");
+            int num = ingredientSpinner.getValue();
+            int selectedIndex = ingredientsListView.getSelectionModel().getSelectedIndex();
+
+            if(selectedIndex != -1){
+                ReceiveEvent receiveEvent = new ReceiveEvent(
+                        getEmployeeNumber(), ingredientsList.get(selectedIndex), num
+                );
+
+                switch(receiveEvent.process()){
+                        case COMPLETED:
+                            warningString.setFill(Color.BLACK);
+                            warningString.setText(
+                                    num + " " + displayIngredientsList.get(selectedIndex) + "(s) added to inventory"
+                            );
+                            ingredientSpinner.getValueFactory().setValue(1);
+                            ingredientNameField.setText("");
+                            break;
+                        default:
+                            warningString.setFill(Color.FIREBRICK);warningString.setText("Unknown Error");
+                }
+            } else {
+                warningString.setFill(Color.FIREBRICK);
+                warningString.setText("No ingredient selected");
             }
+        }
+    }
+
+    private class IngredientNameChangeListener implements ChangeListener<String> {
+        @Override
+        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+            ingredientsList = inventory.search(newValue);
+            displayIngredientsList.setAll(Localizer.localize(ingredientsList));
         }
     }
 }

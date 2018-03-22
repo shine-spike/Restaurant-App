@@ -19,6 +19,13 @@ public class ServerTab extends RestaurantTab{
     private Table table;
 
     /**
+     * Constructs a ServerTab for the employee with the id employeeNumber
+     */
+    public ServerTab(int employeeNumber){
+        super(employeeNumber);
+    }
+
+    /**
      * Initializes this ServerTab's JavaFX tab
      */
     public void initializeTab(){

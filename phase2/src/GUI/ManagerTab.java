@@ -4,6 +4,13 @@ import javafx.scene.control.Tab;
 
 public class ManagerTab extends RestaurantTab{
     /**
+     * Constructs a ManagerTab for the employee with the id employeeNumber
+     */
+    public ManagerTab(int employeeNumber){
+        super(employeeNumber);
+    }
+
+    /**
      * Initializes this ManagerTab's JavaFX tab
      */
     public void initializeTab(){

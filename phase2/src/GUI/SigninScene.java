@@ -63,6 +63,7 @@ public class SigninScene {
         public void handle(ActionEvent e) {
             model.Employee employee = Restaurant.getInstance().getEmployeeController().getEmployee(userTextField.getText());
             if(employee != null && employee.checkPassword(passwordField.getText())) {
+                application.setEmployeeNumber(employee.getEmployeeNumber());
                 application.startRestaurantScene(employee);
             } else {
                 incorrectPassword.setFill(Color.FIREBRICK);
