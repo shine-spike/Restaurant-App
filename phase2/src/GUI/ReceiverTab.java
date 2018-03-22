@@ -41,7 +41,6 @@ public class ReceiverTab extends RestaurantTab{
         ingredientNumField.setMaxWidth(40);
 
         // List of Ingredients
-        ingredientsList.add("Testing");
         ingredientsListView = new ListView<>(ingredientsList);
         ingredientsListView.setMaxHeight(100);
 
@@ -76,7 +75,6 @@ public class ReceiverTab extends RestaurantTab{
                 // ReceiveEvent receiveEvent = new ReceiveEvent(textField.getName);
             } else if (e.getSource() instanceof TextField){
                 // ingredientsList = new ObservableList<String>(Restaurant.getInstance().inventory.search(ingredientNameField.getText()));
-                ingredientsList.add("Cool");
                 System.out.println("Hi");
             }
         }
