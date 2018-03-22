@@ -11,7 +11,7 @@ public class PrintBillEvent extends BillEvent {
 
     @Override
     public EventStatus process() {
-        System.out.println(restaurant.tableController.printBill(tableNumber));
+        System.out.println(restaurant.printBill(tableNumber));
         return EventStatus.COMPLETED;
     }
 }

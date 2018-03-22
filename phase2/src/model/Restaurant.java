@@ -46,6 +46,14 @@ public final class Restaurant {
     tableController.addToBill(order);
   }
 
+  public String printBill(int tableNumber) {
+    return tableController.printBill(tableNumber);
+  }
+
+  public void clearBill(int tableNumber) {
+    tableController.clearBill(tableNumber);
+  }
+
   public Order createOrder(int employeeNumber, int tableNumber, String menuNameString, String menuItemString,
                            HashMap<String, Integer> ingredientStrings) {
     MenuItem menuItem = menuController.getItemFromMenu(menuNameString, menuItemString);
@@ -74,5 +82,13 @@ public final class Restaurant {
     }
     order.setStatus(OrderStatus.UNSATISFIABLE);
     return false;
+  }
+
+  public void consumeIngredients(Order order) {
+    inventory.consumeIngredients(order);
+  }
+
+  public void restockIngredient(String ingredientName, int quantity) {
+    inventory.restockIngredient(ingredientName, quantity);
   }
 }

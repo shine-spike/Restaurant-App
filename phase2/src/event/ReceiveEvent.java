@@ -15,7 +15,7 @@ public class ReceiveEvent extends Event {
 
     @Override
     public EventStatus process() {
-        restaurant.inventory.restockIngredient(ingredientName, amount);
+        restaurant.restockIngredient(ingredientName, amount);
         return EventStatus.COMPLETED;
     }
 }

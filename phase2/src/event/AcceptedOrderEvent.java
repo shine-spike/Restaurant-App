@@ -2,6 +2,7 @@ package event;
 
 import model.OrderStatus;
 
+
 public class AcceptedOrderEvent extends OrderEvent {
     public AcceptedOrderEvent(int employeeName, int orderNumber) {
         super(employeeName, orderNumber);
@@ -10,7 +11,7 @@ public class AcceptedOrderEvent extends OrderEvent {
     @Override
     public EventStatus process() {
         order.setStatus(OrderStatus.ACCEPTED);
-        restaurant.tableController.addToBill(order);
+        restaurant.addToBill(order);
         return EventStatus.COMPLETED;
     }
 }
