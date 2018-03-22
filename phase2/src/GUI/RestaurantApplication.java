@@ -1,7 +1,9 @@
 package GUI;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.Employee;
+import util.Logger;
 
 
 public class RestaurantApplication extends Application{
@@ -9,8 +11,9 @@ public class RestaurantApplication extends Application{
 
     @Override
     public void start(Stage stage){
-        GUI.Driver d = new GUI.Driver();
-        d.readConfiguration();
+        Driver driver = new Driver();
+        driver.readConfiguration();
+        Logger.startLogger();
 
         this.stage = stage;
         stage.setTitle("Restaurant");
