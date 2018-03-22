@@ -1,5 +1,6 @@
-package event;
+package event.order;
 
+import event.Event;
 import model.Order;
 
 

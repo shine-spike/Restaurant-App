@@ -1,7 +1,10 @@
 package parsing;
 
-import event.*;
 import controller.Restaurant;
+import event.bill.PaidBillEvent;
+import event.bill.PrintBillEvent;
+import event.inventory.ReceiveInventoryEvent;
+import event.order.*;
 
 import java.util.HashMap;
 
@@ -247,6 +250,6 @@ class EventParser {
 //    if (!result) {
 //      System.out.println("Ingredient was not able to be received.");
 //    }
-    new ReceiveEvent(Integer.parseInt(symbols[1]), symbols[2], Integer.parseInt(symbols[3])).process();
+    new ReceiveInventoryEvent(Integer.parseInt(symbols[1]), symbols[2], Integer.parseInt(symbols[3])).process();
   }
 }

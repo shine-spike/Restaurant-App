@@ -1,5 +1,6 @@
-package event;
+package event.order;
 
+import event.EventStatus;
 import model.OrderStatus;
 
 public class ReadyOrderEvent extends OrderEvent {

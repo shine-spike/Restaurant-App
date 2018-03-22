@@ -1,10 +1,8 @@
-package event;
+package event.order;
 
-import model.MenuItem;
+import event.EventStatus;
 import model.Order;
-import model.OrderStatus;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 

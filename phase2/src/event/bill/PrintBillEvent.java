@@ -1,6 +1,6 @@
-package event;
+package event.bill;
 
-import util.Logger;
+import event.EventStatus;
 
 public class PrintBillEvent extends BillEvent {
     private static final String LOG_MESSAGE = "Bill for table %1$d has been printed.";

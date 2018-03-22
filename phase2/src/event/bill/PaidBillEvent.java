@@ -1,6 +1,6 @@
-package event;
+package event.bill;
 
-import util.Logger;
+import event.EventStatus;
 
 public class PaidBillEvent extends BillEvent {
     public PaidBillEvent(int employeeNumber, int tableNumber) {

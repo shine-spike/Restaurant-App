@@ -1,5 +1,7 @@
-package event;
+package event.bill;
 
+
+import event.Event;
 
 abstract class BillEvent extends Event {
     int tableNumber;

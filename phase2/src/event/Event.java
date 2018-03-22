@@ -3,13 +3,13 @@ package event;
 import controller.Restaurant;
 
 public abstract class Event {
-    Restaurant restaurant = Restaurant.getInstance();
-    int employeeNumber;
+    public final Restaurant restaurant = Restaurant.getInstance();
+    public final int employeeNumber;
 
 
-    Event(int employeeNumber) {
+    public Event(int employeeNumber) {
         this.employeeNumber = employeeNumber;
     }
 
-    abstract EventStatus process();
+    public abstract EventStatus process();
 }

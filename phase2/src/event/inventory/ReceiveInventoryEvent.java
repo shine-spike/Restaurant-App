@@ -1,11 +1,13 @@
-package event;
+package event.inventory;
 
 
-public class ReceiveEvent extends InventoryEvent {
+import event.EventStatus;
+
+public class ReceiveInventoryEvent extends InventoryEvent {
     private int amount;
 
 
-    public ReceiveEvent(int employeeNumber, String ingredientName, int amount) {
+    public ReceiveInventoryEvent(int employeeNumber, String ingredientName, int amount) {
         super(employeeNumber, ingredientName);
         this.amount = amount;
     }

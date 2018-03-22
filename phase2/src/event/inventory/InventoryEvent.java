@@ -1,6 +1,8 @@
-package event;
+package event.inventory;
 
-abstract class InventoryEvent extends Event{
+import event.Event;
+
+abstract class InventoryEvent extends Event {
     String ingredientName;
 
 
