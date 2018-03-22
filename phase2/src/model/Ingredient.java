@@ -56,4 +56,9 @@ public class Ingredient {
   public void modifyQuantity(int deltaQuantity) {
     this.quantity += deltaQuantity;
   }
+
+  @Override
+  public int hashCode() {
+    return name.hashCode();
+  }
 }

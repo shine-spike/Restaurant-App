@@ -1,7 +1,9 @@
 package model;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
@@ -17,51 +19,44 @@ public final class Restaurant {
   private static final int DEFAULT_NUM_TABLES = 100;
 
   // Singleton
-  private static final Restaurant INSTANCE = new Restaurant(DEFAULT_NUM_TABLES);
+  private static final Restaurant INSTANCE = new Restaurant();
 
   // Controllers for all aspects of the Restaurant.
-  public final TableController tableController;
+  public final TableController tableController = new TableController(DEFAULT_NUM_TABLES);
   public final EmployeeController employeeController = new EmployeeController();
   public final Inventory inventory = new Inventory();
   public final MenuController menuController = new MenuController();
-
-  // Holder for all orders are in the restaurant
-  private final ArrayList<Order> orders = new ArrayList<>();
+  public final OrderController orderController = new OrderController();
 
 
   /**
    * Constructs a Restaurant with the given number of tables.
-   *
-   * @param numTables the number of tables in this Restaurant.
    */
-  private Restaurant(int numTables) {
-    tableController = new TableController(numTables);
-  }
+  private Restaurant() {}
 
   public static Restaurant getInstance() {
     return INSTANCE;
   }
 
-  /**
-   * Prints the inventory to be viewed.
-   */
-  public void printInventory() {
-    inventory.printInventory();
+  public Order getOrderFromNumber(int orderNumber) {
+    return orderController.getOrderFromNumber(orderNumber);
   }
 
-  /**
-   * Gets the order with a given order number from all the orders.
-   *
-   * @param orderNumber the order number to search for.
-   * @return the {@link Order} that has the given order number.
-   */
-  public Order getOrderFromNumber(int orderNumber) {
-    for (Order order : orders) {
-      if (order.getOrderNumber() == orderNumber) {
-        return order;
-      }
+  public void addToBill(Order order) {
+    tableController.addToBill(order);
+  }
+
+  public Order createOrder(int employeeNumber, int tableNumber, String menuNameString, String menuItemString,
+                           HashMap<String, Integer> ingredientStrings) {
+    MenuItem menuItem = menuController.getItemFromMenu(menuNameString, menuItemString);
+    HashMap<Ingredient, Integer> ingredients = new HashMap<>();
+
+    // Adds each subtraction and addition to the order
+    for (String ingredientString : ingredientStrings.keySet()) {
+      ingredients.put(inventory.getIngredient(ingredientString), ingredientStrings.get(ingredientString));
     }
-    return null;
+
+    return orderController.createOrder(employeeNumber, tableNumber, menuItem, ingredients);
   }
 
   /**
@@ -74,7 +69,7 @@ public final class Restaurant {
   public boolean registerOrder(Order order) {
     if (inventory.confirmOrder(order)) {
       order.setStatus(OrderStatus.PLACED);
-      orders.add(order);
+      orderController.registerOrder(order);
       return true;
     }
     order.setStatus(OrderStatus.UNSATISFIABLE);

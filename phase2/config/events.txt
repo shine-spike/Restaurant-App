@@ -34,7 +34,7 @@
 %
 % Orders are automatically assigned zero-indexed incrementing numbers.
 
-ORDER   0 4 lunch burger NO pickles ADD ketchup ketchup burger
+ORDER   0 4 lunch burger NO pickles ADD ketchup ketchup burger_patty
 ORDER   0 4 lunch veggie_burger NO onions pickles ADD ketchup mayonnaise
 SEEN    0 0
 SEEN    0 1

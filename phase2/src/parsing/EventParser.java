@@ -4,6 +4,7 @@ import event.*;
 import model.Restaurant;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Controls parsing of all event symbols and passing on the respective information to the Restaurant.
@@ -98,8 +99,7 @@ class EventParser {
    * @param symbols the array of strings representing an order event.
    */
   private void parseOrderEvent(String[] symbols) {
-    ArrayList<String> subtractions = new ArrayList<>();
-    ArrayList<String> additions = new ArrayList<>();
+    HashMap<String, Integer> ingredientStrings = new HashMap<>();
 
     boolean isAddition = false;
     for (int i = 5; i < symbols.length; i++) {
@@ -112,9 +112,9 @@ class EventParser {
       }
 
       if (isAddition) {
-        additions.add(symbols[i]);
+        ingredientStrings.put(symbols[i], ingredientStrings.getOrDefault(symbols[i], 1) + 1);
       } else {
-        subtractions.add(symbols[i]);
+        ingredientStrings.put(symbols[i], ingredientStrings.getOrDefault(symbols[i], 0) - 1);
       }
     }
 
@@ -124,7 +124,7 @@ class EventParser {
 //      System.out.println("Order could not be placed.");
 //    }
     new PlaceOrderEvent(Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]),
-                        symbols[3], symbols[4], subtractions, additions).process();
+                        symbols[3], symbols[4], ingredientStrings).process();
   }
 
   /**

@@ -55,8 +55,8 @@ public class Inventory {
    * @return whether or not it can be satisfied.
    */
   public boolean confirmOrder(Order order) {
-    for (Ingredient ingredient : order.getIngredients()) {
-      if (ingredient.getQuantity() <= 0) {
+    for (Ingredient ingredient : order.getIngredients().keySet()) {
+      if (ingredient.getQuantity() < order.getIngredients().get(ingredient)) {
         return false;
       }
     }
@@ -69,8 +69,8 @@ public class Inventory {
    * @param order the order that has been prepared.
    */
   public void consumeIngredients(Order order) {
-    for (Ingredient ingredient : order.getIngredients()) {
-      ingredient.modifyQuantity(-1);
+    for (Ingredient ingredient : order.getIngredients().keySet()) {
+      ingredient.modifyQuantity(-order.getIngredients().get(ingredient));
       if (ingredient.shouldReorder()) {
         reorder(ingredient);
       }
