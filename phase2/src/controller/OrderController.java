@@ -35,6 +35,10 @@ public class OrderController {
         return order;
     }
 
+    public void cancelOrder(int employeeNumber, Order order) {
+        orders.remove(order);
+    }
+
     public void registerOrder(Order order) {
         orders.add(order);
     }
