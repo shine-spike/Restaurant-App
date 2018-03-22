@@ -1,6 +1,8 @@
-package model;
+package controller;
 
-import parsing.Localizer;
+import model.Ingredient;
+import model.Order;
+import util.Localizer;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -140,7 +142,7 @@ public class Inventory {
 
   /**
    * Returns an ArrayList of the names of items in the inventory whose names
-   * contain the search_term string. 
+   * contain the search term.
    *
    * @param searchTerm the search term we're checking ingredient names for.
    */

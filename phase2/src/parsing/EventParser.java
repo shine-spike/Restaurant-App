@@ -1,9 +1,8 @@
 package parsing;
 
 import event.*;
-import model.Restaurant;
+import controller.Restaurant;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**

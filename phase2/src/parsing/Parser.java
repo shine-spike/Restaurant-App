@@ -1,7 +1,8 @@
 package parsing;
 
 import model.Ingredient;
-import model.Restaurant;
+import controller.Restaurant;
+import util.Localizer;
 
 import java.io.BufferedReader;
 import java.io.File;

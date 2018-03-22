@@ -1,6 +1,5 @@
 package GUI;
 
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -13,7 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import model.Restaurant;
+import controller.Restaurant;
 
 public class SigninScene {
     private RestaurantApplication application;

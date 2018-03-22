@@ -1,4 +1,7 @@
-package model;
+package controller;
+
+import model.Order;
+import model.Table;
 
 /**
  * Controls all tables in this restaurant. Manages all interactions with tables or bills.

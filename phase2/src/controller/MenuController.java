@@ -1,4 +1,8 @@
-package model;
+package controller;
+
+import model.Ingredient;
+import model.Menu;
+import model.MenuItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;

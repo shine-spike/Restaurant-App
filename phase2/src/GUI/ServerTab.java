@@ -1,16 +1,13 @@
 package GUI;
 
-import event.ReceiveEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import model.Ingredient;
-import model.Restaurant;
 
-public class ServerTab extends RestaurantTab{
+public class ServerTab extends RestaurantTab {
     /**
      * Initializes this ServerTab's JavaFX tab
      */

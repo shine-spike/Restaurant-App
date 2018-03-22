@@ -15,7 +15,7 @@ public class Ingredient {
    * @param threshold the threshold to reorder.
    * @param quantity  the starting quantity.
    */
-  Ingredient(String name, int threshold, int quantity) {
+  public Ingredient(String name, int threshold, int quantity) {
     this.name = name;
     this.threshold = threshold;
     this.quantity = quantity;

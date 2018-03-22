@@ -1,4 +1,7 @@
-package model;
+package controller;
+
+import model.Employee;
+import model.EmployeeType;
 
 import java.util.ArrayList;
 

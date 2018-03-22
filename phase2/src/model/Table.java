@@ -15,7 +15,7 @@ public class Table {
   /**
    * Create a table with an empty bill and no bill history.
    */
-  Table() {
+  public Table() {
 
   }
 

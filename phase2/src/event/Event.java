@@ -1,6 +1,6 @@
 package event;
 
-import model.Restaurant;
+import controller.Restaurant;
 
 public abstract class Event {
     Restaurant restaurant = Restaurant.getInstance();

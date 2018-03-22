@@ -1,4 +1,4 @@
-package parsing;
+package util;
 
 import java.util.HashMap;
 
@@ -7,7 +7,7 @@ public class Localizer {
     private static final HashMap<String, String> localization = new HashMap<>();
 
 
-    static String register(String unlocalizedName, String localizedName) {
+    public static String register(String unlocalizedName, String localizedName) {
         return localization.putIfAbsent(unlocalizedName, localizedName);
     }
 

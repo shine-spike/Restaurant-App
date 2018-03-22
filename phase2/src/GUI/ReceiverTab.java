@@ -8,8 +8,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import model.Ingredient;
-import model.Restaurant;
+import controller.Restaurant;
 import java.util.ArrayList;
 
 public class ReceiverTab extends RestaurantTab{

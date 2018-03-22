@@ -1,5 +1,5 @@
 package GUI;
-import model.Restaurant;
+import controller.Restaurant;
 import parsing.Parser;
 
 import java.io.IOException;

@@ -15,7 +15,7 @@ public class Menu {
    *
    * @param name the name of this menu.
    */
-  Menu(String name) {
+  public Menu(String name) {
     this.name = name;
   }
 
