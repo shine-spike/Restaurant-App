@@ -3,6 +3,7 @@ package controller;
 import model.Ingredient;
 import model.MenuItem;
 import model.Order;
+import model.OrderStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,5 +37,17 @@ public class OrderController {
 
     public void registerOrder(Order order) {
         orders.add(order);
+    }
+
+    public ArrayList<Order> ordersFromStatus(OrderStatus orderStatus){
+        ArrayList<Order> out = new ArrayList<>();
+
+        for(Order i: orders){
+            if(i.getStatus().equals(orderStatus)){
+                out.add(i);
+            }
+        }
+
+        return out;
     }
 }

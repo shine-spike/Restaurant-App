@@ -1,5 +1,6 @@
 package util;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -13,5 +14,15 @@ public class Localizer {
 
     public static String localize(String unlocalizedName) {
         return localization.getOrDefault(unlocalizedName, unlocalizedName);
+    }
+
+    public static ArrayList<String> localize(ArrayList<String> unlocalizedNames) {
+        ArrayList<String> out = new ArrayList<>();
+
+        for(String i: unlocalizedNames){
+            out.add(localization.getOrDefault(i, i));
+        }
+
+        return out;
     }
 }
