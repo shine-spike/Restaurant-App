@@ -1,5 +1,7 @@
 package model;
 
+import parsing.Localizer;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -140,14 +142,14 @@ public class Inventory {
    * Returns an ArrayList of the names of items in the inventory whose names
    * contain the search_term string. 
    *
-   * @param search_term the search term we're checking ingredient names for.
+   * @param searchTerm the search term we're checking ingredient names for.
    */
-  public ArrayList<String> search(String search_term){
+  public ArrayList<String> search(String searchTerm){
     ArrayList<String> foundNames = new ArrayList<>();
-    for (Ingredient ingredient:
-         ingredients) {
+    for (Ingredient ingredient: ingredients) {
       String ingredientName = ingredient.getName();
-      if (ingredientName.contains(search_term)){
+
+      if (ingredientName.contains(searchTerm) || Localizer.localize(ingredientName).contains(searchTerm)){
         foundNames.add(ingredientName);
       }
     }
