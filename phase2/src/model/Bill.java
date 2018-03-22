@@ -34,6 +34,15 @@ public class Bill {
   }
 
   /**
+   * Returns the bill's ArrayList of orders.
+   *
+   * @return the current ArrayList of orders.
+   */
+  public ArrayList<Order> getOrders(){
+    return orders;
+  }
+
+  /**
    * Returns a string representation of the bill in the following format.
    *
    * === BILL ===

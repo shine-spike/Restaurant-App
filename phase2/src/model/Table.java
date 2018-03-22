@@ -46,6 +46,15 @@ public class Table {
   }
 
   /**
+   * Returns this table's unformatted bill.
+   *
+   * @return the unformatted bill.
+   */
+  public Bill getCurrentBill(){
+    return currentBill;
+  }
+
+  /**
    * Returns this table's formatted bill.
    *
    * @return the formatted bill string.
