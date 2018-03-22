@@ -101,7 +101,7 @@ public class Inventory {
   }
 
   /**
-   * Print to file the need to reorder the given ingredient.
+   * Prints to file the need to reorder the given ingredient.
    *
    * @param ingredient the ingredient to reorder.
    */
@@ -134,5 +134,23 @@ public class Inventory {
     for (Ingredient ingredient : ingredients) {
       System.out.printf(formatString, ingredient.getName(), ingredient.getQuantity());
     }
+  }
+
+  /**
+   * Returns an ArrayList of the names of items in the inventory whose names
+   * contain the search_term string. 
+   *
+   * @param search_term the search term we're checking ingredient names for.
+   */
+  public ArrayList<String> search(String search_term){
+    ArrayList<String> foundNames = new ArrayList<>();
+    for (Ingredient ingredient:
+         ingredients) {
+      String ingredientName = ingredient.getName();
+      if (ingredientName.contains(search_term)){
+        foundNames.add(ingredientName);
+      }
+    }
+    return foundNames;
   }
 }
