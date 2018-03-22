@@ -11,12 +11,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import model.Restaurant;
 
 public class SigninScene {
-    RestaurantApplication application;
-    TextField userTextField;
-    PasswordField passwordField;
+    private RestaurantApplication application;
+    private TextField userTextField;
+    private PasswordField passwordField;
+    private Text incorrectPassword;
 
     public SigninScene(RestaurantApplication application){
         this.application = application;
@@ -37,6 +40,10 @@ public class SigninScene {
         Label password = new Label("Password");
         passwordField = new PasswordField();
 
+        // Incorrect Password Text
+        incorrectPassword = new Text();
+
+
         // Button
         Button button = new Button("Sign in");
 
@@ -47,6 +54,7 @@ public class SigninScene {
         grid.add(password, 0, 1);
         grid.add(passwordField, 1, 1);
         grid.add(button, 0, 4, 2, 1);
+        grid.add(incorrectPassword, 0, 5, 2, 1);
 
         return new Scene(grid, 300, 275);
     }
@@ -55,8 +63,12 @@ public class SigninScene {
         @Override
         public void handle(ActionEvent e) {
             model.Employee employee = Restaurant.getInstance().employeeController.getEmployee(userTextField.getText());
-            if(employee.checkPassword(passwordField.getText()))
+            if(employee != null && employee.checkPassword(passwordField.getText())) {
                 application.startRestaurantScene(employee);
+            } else {
+                incorrectPassword.setFill(Color.FIREBRICK);
+                incorrectPassword.setText("Incorrect Username or Password");
+            }
         }
     }
 }
