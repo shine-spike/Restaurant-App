@@ -1,5 +1,6 @@
 package parsing;
 
+import model.EmployeeType;
 import model.Ingredient;
 import controller.Restaurant;
 import util.Localizer;
@@ -168,7 +169,8 @@ public class Parser {
                 + symbols.length + " were given. Skipping.");
         continue;
       }
-      restaurant.getEmployeeController().addEmployee(symbols[0], symbols[1], symbols[2], symbols[3]);
+      restaurant.getEmployeeController().registerEmployee(symbols[0], symbols[1], symbols[2],
+              EmployeeType.getEmployeeType(symbols[3]));
     }
   }
 

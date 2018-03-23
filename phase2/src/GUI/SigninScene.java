@@ -13,6 +13,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import controller.Restaurant;
+import model.Employee;
 
 public class SigninScene {
     private RestaurantApplication application;
@@ -61,8 +62,8 @@ public class SigninScene {
     private class SignInButtonHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent e) {
-            model.Employee employee = Restaurant.getInstance().getEmployeeController().getEmployee(userTextField.getText());
-            if(employee != null && employee.checkPassword(passwordField.getText())) {
+            Employee employee = Restaurant.getInstance().getEmployeeController().login(userTextField.getText(), passwordField.getText());
+            if (employee != null) {
                 application.setEmployeeNumber(employee.getEmployeeNumber());
                 application.startRestaurantScene(employee);
             } else {

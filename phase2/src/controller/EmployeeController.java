@@ -5,6 +5,7 @@ import model.EmployeeType;
 
 import java.util.ArrayList;
 
+
 /**
  * Controls all aspects of employees in the restaurant.
  */
@@ -12,40 +13,28 @@ public class EmployeeController {
   // List of employees indexed by employee number
   private final ArrayList<Employee> employees;
 
+
   /**
-   * Creates an EmployeeController with no employees
+   * Creates an empty employee controller.
    */
   EmployeeController() {
     employees = new ArrayList<>();
   }
 
   /**
-   * Adds an Employee to this EmployeeController
+   * Register an employee to the controller.
    *
-   * @param firstName this employee's first name
-   * @param lastName this employee's last name
-   * @param password this employee's password
-   * @param type this employee's type
+   * @param firstName the employee's first name.
+   * @param lastName the employee's last name.
+   * @param password the employee's password.
+   * @param employeeType the employee's {@link EmployeeType}.
    */
-  public void addEmployee(String firstName, String lastName, String password, String type) {
-    EmployeeType employeeType = EmployeeType.getEmployeeType(type);
-    if(employeeType != null) {
-      employees.add(new Employee(firstName, lastName, password, employeeType));
-    }
+  public void registerEmployee(String firstName, String lastName, String password, EmployeeType employeeType) {
+    employees.add(new Employee(firstName, lastName, password, employeeType));
   }
 
   /**
-   * Gets the name of an Employee from the Employee's id
-   *
-   * @param id the id of the desired Employee
-   * @return the Employee object with the given id
-   */
-  public Employee getEmployee(int id) {
-    return employees.get(id);
-  }
-
-  /**
-   * Gets the name of an Employee from the Employee's id
+   * Gets the employee object
    *
    * @param name the name of the desired Employee
    * @return the Employee object with the given name
@@ -60,7 +49,16 @@ public class EmployeeController {
     return null;
   }
 
-  public String getEmployeeName(int id) {
-    return getEmployee(id).getName();
+  /**
+   * Gets the employee with the given login information.
+   *
+   * @param name the name of the employee to login.
+   * @param password the password of the employee to login.
+   * @return the employee with the given login information, or {@code null} if the username-password
+   * combination does not exist in the controller.
+   */
+  public Employee login(String name, String password) {
+    Employee employee = getEmployee(name);
+    return employee != null && employee.checkPassword(password) ? employee : null;
   }
 }

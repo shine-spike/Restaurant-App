@@ -10,14 +10,16 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+
 /**
  * Controls all aspects of inventory management and reordering of ingredients.
  */
 public class Inventory {
-  private static final String REORDER_REQUEST_FILE = "phase1/requests.txt";
+  private static final String REORDER_REQUEST_FILE = "phase2/requests.txt";
   private static final int DEFAULT_REORDER_AMOUNT = 20;
 
   private final ArrayList<Ingredient> ingredients;
+
 
   /**
    * Constructs an inventory with an empty ingredient container.
@@ -125,18 +127,6 @@ public class Inventory {
       out.close();
     } catch (IOException e) {
       System.out.println(file.getName() + " not found and could not be created.");
-    }
-  }
-
-  /**
-   * Prints a formatted view of the inventory with all inventory items and their quantities.
-   */
-  public void printInventory() {
-    String formatString = "%-30.30s  %-30.30s%n";
-    System.out.println("\n== INVENTORY ==");
-    System.out.printf(formatString, "NAME", "QUANTITY");
-    for (Ingredient ingredient : ingredients) {
-      System.out.printf(formatString, ingredient.getName(), ingredient.getQuantity());
     }
   }
 

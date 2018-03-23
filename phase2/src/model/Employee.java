@@ -8,10 +8,11 @@ public class Employee {
     private String lastName;
     private String password;
 
-    private boolean isCook = false;
-    private boolean isServer = false;
-    private boolean isReceiver = true;
-    private boolean isManager = false;
+    private boolean isCook;
+    private boolean isServer;
+    private boolean isReceiver;
+    private boolean isManager;
+
 
     public Employee(String firstName, String lastName, String password, EmployeeType type){
         this.firstName = firstName;
@@ -20,6 +21,7 @@ public class Employee {
         this.employeeNumber = currentEmployeeNumber;
         currentEmployeeNumber++;
 
+        isReceiver = true;
         switch (type){
             case COOK:
                 isCook = true;
@@ -55,11 +57,11 @@ public class Employee {
         return isCook;
     }
 
-    public boolean isReceiver(){
-        return isReceiver;
-    }
-
     public boolean isServer(){
         return isServer;
+    }
+
+    public boolean isReceiver(){
+        return isReceiver;
     }
 }
