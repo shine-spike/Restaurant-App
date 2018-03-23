@@ -8,5 +8,6 @@ public enum OrderStatus {
     READY,
     ACCEPTED,
     REJECTED,
-    REDO
+    REDO,
+    CANCELLED
 }

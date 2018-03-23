@@ -2,6 +2,7 @@ package event.order;
 
 import event.EventStatus;
 import model.Order;
+import util.OrderFactory;
 
 import java.util.HashMap;
 
@@ -21,7 +22,7 @@ public class PlaceOrderEvent extends OrderEvent {
     public PlaceOrderEvent(int employeeNumber, int tableNumber, int customerIndex,
                            String menuNameString, String menuItemString, HashMap<String, Integer> ingredientStrings) {
         super(employeeNumber, null);
-        this.order = restaurant.createOrder(employeeNumber, tableNumber, customerIndex,
+        this.order = OrderFactory.createOrder(employeeNumber, tableNumber, customerIndex,
                 menuNameString, menuItemString, ingredientStrings);
     }
 

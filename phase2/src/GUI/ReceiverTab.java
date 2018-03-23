@@ -1,7 +1,7 @@
 package GUI;
 
 import controller.Inventory;
-import event.ReceiveEvent;
+import event.inventory.ReceiveInventoryEvent;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -102,7 +102,7 @@ public class ReceiverTab extends RestaurantTab{
             int selectedIndex = ingredientsListView.getSelectionModel().getSelectedIndex();
 
             if(selectedIndex != -1){
-                ReceiveEvent receiveEvent = new ReceiveEvent(
+                ReceiveInventoryEvent receiveEvent = new ReceiveInventoryEvent(
                         getEmployeeNumber(), ingredientsList.get(selectedIndex), num
                 );
 

@@ -1,12 +1,9 @@
 package controller;
 
-import model.Ingredient;
-import model.MenuItem;
 import model.Order;
 import model.OrderStatus;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
 public class OrderController {
@@ -28,15 +25,8 @@ public class OrderController {
         return null;
     }
 
-    public Order createOrder(int employeeNumber, int tableNumber, int customerIndex,
-                             MenuItem menuItem, HashMap<Ingredient, Integer> ingredients) {
-        Order order = new Order(employeeNumber, tableNumber, customerIndex, menuItem, ingredients);
-        orders.add(order);
-        return order;
-    }
-
     public void cancelOrder(int employeeNumber, Order order) {
-        orders.remove(order);
+        order.setStatus(OrderStatus.CANCELLED);
     }
 
     public void registerOrder(Order order) {

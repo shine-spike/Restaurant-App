@@ -37,6 +37,7 @@ public final class Restaurant {
     return INSTANCE;
   }
 
+
   public TableController getTableController() {
     return tableController;
   }
@@ -55,19 +56,6 @@ public final class Restaurant {
 
   public Inventory getInventory() {
     return inventory;
-  }
-
-  public Order createOrder(int employeeNumber, int tableNumber, int customerIndex,
-                           String menuNameString, String menuItemString, HashMap<String, Integer> ingredientStrings) {
-    MenuItem menuItem = menuController.getMenuItem(menuNameString, menuItemString);
-    HashMap<Ingredient, Integer> ingredients = new HashMap<>();
-
-    // Adds each subtraction and addition to the order
-    for (String ingredientString : ingredientStrings.keySet()) {
-      ingredients.put(inventory.getIngredient(ingredientString), ingredientStrings.get(ingredientString));
-    }
-
-    return orderController.createOrder(employeeNumber, tableNumber, customerIndex, menuItem, ingredients);
   }
 
   /**
