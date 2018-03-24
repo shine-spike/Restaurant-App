@@ -1,7 +1,6 @@
 package GUI;
 
 import controller.Inventory;
-import event.inventory.ReceiveInventoryEvent;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -102,21 +101,17 @@ public class ReceiverTab extends RestaurantTab{
             int selectedIndex = ingredientsListView.getSelectionModel().getSelectedIndex();
 
             if(selectedIndex != -1){
-                ReceiveInventoryEvent receiveEvent = new ReceiveInventoryEvent(
-                        getEmployeeNumber(), ingredientsList.get(selectedIndex), num
-                );
+                boolean hasReceived = inventory.restockIngredient(ingredientsList.get(selectedIndex), num);
 
-                switch(receiveEvent.process()){
-                        case COMPLETED:
-                            warningString.setFill(Color.BLACK);
-                            warningString.setText(
-                                    num + " " + displayIngredientsList.get(selectedIndex) + "(s) added to inventory"
-                            );
-                            ingredientSpinner.getValueFactory().setValue(1);
-                            ingredientNameField.setText("");
-                            break;
-                        default:
-                            warningString.setFill(Color.FIREBRICK);warningString.setText("Unknown Error");
+                if (hasReceived) {
+                    warningString.setFill(Color.BLACK);
+                    warningString.setText(
+                            num + " " + displayIngredientsList.get(selectedIndex) + "(s) added to inventory"
+                    );
+                    ingredientSpinner.getValueFactory().setValue(1);
+                    ingredientNameField.setText("");
+                } else {
+                    warningString.setFill(Color.FIREBRICK);warningString.setText("Unknown Error");
                 }
             } else {
                 warningString.setFill(Color.FIREBRICK);

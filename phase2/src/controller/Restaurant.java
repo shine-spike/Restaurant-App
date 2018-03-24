@@ -1,8 +1,5 @@
 package controller;
 
-import model.Order;
-import model.OrderStatus;
-
 /**
  * Restaurant in the system. Manages all interactions.
  *
@@ -77,22 +74,5 @@ public final class Restaurant {
    */
   public Inventory getInventory() {
     return inventory;
-  }
-
-  /**
-   * Registers a given order to be placed and changes its status accordingly.
-   *
-   * @param order the order to register.
-   * @return whether or not the order has been successfully registered. This can fail if there are
-   *     not enough ingredients in the inventory to satisfy the order.
-   */
-  public boolean registerOrder(Order order) {
-    if (inventory.confirmOrder(order)) {
-      orderController.registerOrder(order);
-      return true;
-    }
-
-    order.setStatus(OrderStatus.UNSATISFIABLE);
-    return false;
   }
 }

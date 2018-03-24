@@ -1,7 +1,7 @@
 package GUI;
+
 import controller.Restaurant;
 import parsing.Parser;
-
 
 /**
  * Manages starting up a {@link Restaurant} and {@link Parser} and coordinating their interaction.
@@ -10,10 +10,7 @@ public class Driver {
   private final Restaurant restaurant;
   private final Parser parser;
 
-
-  /**
-   * Constructs a driver with a default {@link Restaurant} and {@link Parser}.
-   */
+  /** Constructs a driver with a default {@link Restaurant} and {@link Parser}. */
   Driver() {
     restaurant = Restaurant.getInstance();
     parser = new Parser(restaurant);
@@ -46,17 +43,8 @@ public class Driver {
     parser.setFilesLocation(location);
   }
 
-  /**
-   * Reads and parses configuration files from the stored files location.
-   */
+  /** Reads and parses configuration files from the stored files location. */
   public void readConfiguration() {
     parser.parseConfiguration();
-  }
-
-  /**
-   * Reads and parses events from the stored files location.
-   */
-  public void readEvents() {
-    parser.parseEvents();
   }
 }

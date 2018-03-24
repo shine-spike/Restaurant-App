@@ -11,16 +11,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 
-
 /**
- * Controls all file input parsing from configuration files and provides an interface for parsing event files.
- * <p>
- * Passes on the parsed information to the respective Restaurant.
+ * Controls all file input parsing from configuration files and provides an interface for parsing
+ * event files.
+ *
+ * <p>Passes on the parsed information to the respective Restaurant.
  */
 public class Parser {
-  /**
-   * Flags that a line in a file should be ignored.
-   */
+  /** Flags that a line in a file should be ignored. */
   private static final char COMMENT_SYMBOL = '%';
 
   // Where to read the files from
@@ -30,11 +28,9 @@ public class Parser {
   private static final String EMPLOYEE_FILE_NAME = "employees.txt";
   private static final String INGREDIENTS_FILE_NAME = "ingredients.txt";
   private static final String MENUS_FILE_NAME = "menus.txt";
-  private static final String EVENTS_FILE_NAME = "events.txt";
   private static final String LOCALE_FILE_NAME = "locale.txt";
 
   private final Restaurant restaurant;
-
 
   /**
    * Constructs a Parser for a given restaurant.
@@ -55,8 +51,8 @@ public class Parser {
   }
 
   /**
-   * Verifies that the given configuration folder exists
-   * and creates it on the spot with a notification if not.
+   * Verifies that the given configuration folder exists and creates it on the spot with a
+   * notification if not.
    */
   private void verifyConfigurationFolder() {
     // Make sure that the configuration file location exists and
@@ -67,9 +63,7 @@ public class Parser {
     }
   }
 
-  /**
-   * Parses all the configuration files needed.
-   */
+  /** Parses all the configuration files needed. */
   public void parseConfiguration() {
     // Make sure the configuration folder exists
     verifyConfigurationFolder();
@@ -79,17 +73,6 @@ public class Parser {
     parseEmployeeConfiguration();
     parseIngredientConfiguration();
     parseMenuConfiguration();
-  }
-
-  /**
-   * Parses the event file and passes on the information.
-   */
-  public void parseEvents() {
-    // Make sure the configuration folder exists
-    verifyConfigurationFolder();
-
-    // Parse the events file
-    parseEventsFile();
   }
 
   /**
@@ -118,8 +101,8 @@ public class Parser {
   }
 
   /**
-   * Helper method for pre-parsing a given reader, splitting it up into parts and discarding any lines that
-   * have no impact such as comments.
+   * Helper method for pre-parsing a given reader, splitting it up into parts and discarding any
+   * lines that have no impact such as comments.
    *
    * @param reader the reader to generate the symbols from.
    * @return the array of symbols representing the different parts of the line read.
@@ -146,16 +129,14 @@ public class Parser {
           symbols = line.split("\\s+");
         }
       } else {
-        return new String[]{};
+        return new String[] {};
       }
     } while (symbols == null);
 
     return symbols;
   }
 
-  /**
-   * Parses the employee configuration file. Reads in the names of employees.
-   */
+  /** Parses the employee configuration file. Reads in the names of employees. */
   private void parseEmployeeConfiguration() {
     BufferedReader reader = getReader(EMPLOYEE_FILE_NAME);
     if (reader == null) {
@@ -165,18 +146,20 @@ public class Parser {
     String[] symbols;
     while ((symbols = preParse(reader)) != null && symbols.length != 0) {
       if (symbols.length != 4) {
-        System.out.println("Line in employees file should have four entries, "
-                + symbols.length + " were given. Skipping.");
+        System.out.println(
+            "Line in employees file should have four entries, "
+                + symbols.length
+                + " were given. Skipping.");
         continue;
       }
-      restaurant.getEmployeeController().registerEmployee(symbols[0], symbols[1], symbols[2],
-              EmployeeType.getEmployeeType(symbols[3]));
+      restaurant
+          .getEmployeeController()
+          .registerEmployee(
+              symbols[0], symbols[1], symbols[2], EmployeeType.getEmployeeType(symbols[3]));
     }
   }
 
-  /**
-   * Parses the ingredient configuration file. Reads in the names of ingredients.
-   */
+  /** Parses the ingredient configuration file. Reads in the names of ingredients. */
   private void parseIngredientConfiguration() {
     BufferedReader reader = getReader(INGREDIENTS_FILE_NAME);
     if (reader == null) {
@@ -186,13 +169,17 @@ public class Parser {
     String[] symbols;
     while ((symbols = preParse(reader)) != null && symbols.length != 0) {
       if (symbols.length != 3) {
-        System.out.println("Line in ingredients file should have three entries, "
-                + symbols.length + " were given. Skipping.");
+        System.out.println(
+            "Line in ingredients file should have three entries, "
+                + symbols.length
+                + " were given. Skipping.");
         continue;
       }
 
       try {
-        restaurant.getInventory().addIngredient(symbols[0], Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
+        restaurant
+            .getInventory()
+            .addIngredient(symbols[0], Integer.parseInt(symbols[1]), Integer.parseInt(symbols[2]));
       } catch (NumberFormatException e) {
         System.out.println("Final two entries in a line should be numbers. Skipping.");
       }
@@ -200,8 +187,8 @@ public class Parser {
   }
 
   /**
-   * Parses the menu configuration file. Reads in the names of menus, their menu items, what they are made of and
-   * what additions and subtractions can be added to each.
+   * Parses the menu configuration file. Reads in the names of menus, their menu items, what they
+   * are made of and what additions and subtractions can be added to each.
    */
   private void parseMenuConfiguration() {
     BufferedReader reader = getReader(MENUS_FILE_NAME);
@@ -231,7 +218,9 @@ public class Parser {
           ingredients.put(addition, 0);
         }
 
-        restaurant.getMenuController().addMenuItem(currentMenu, currentItem, Integer.parseInt(symbols[1]), ingredients);
+        restaurant
+            .getMenuController()
+            .addMenuItem(currentMenu, currentItem, Integer.parseInt(symbols[1]), ingredients);
       } else {
         currentMenu = symbols[1];
         restaurant.getMenuController().addMenu(currentMenu);
@@ -239,9 +228,7 @@ public class Parser {
     }
   }
 
-  /**
-   * Parses the localization file.
-   */
+  /** Parses the localization file. */
   private void parseLocale() {
     BufferedReader reader = getReader(LOCALE_FILE_NAME);
     if (reader == null) {
@@ -251,8 +238,10 @@ public class Parser {
     String[] symbols;
     while ((symbols = preParse(reader)) != null && symbols.length != 0) {
       if (symbols.length < 2) {
-        System.out.println("Line in localization file should have at least two entries, "
-                + symbols.length + " were given. Skipping.");
+        System.out.println(
+            "Line in localization file should have at least two entries, "
+                + symbols.length
+                + " were given. Skipping.");
         continue;
       }
 
@@ -264,24 +253,9 @@ public class Parser {
       }
 
       if (Localizer.register(unlocalizedName, localizedName.toString()) != null) {
-        System.out.println("Unlocalized name \'" + unlocalizedName + "\' was previously declared. Skipping.");
+        System.out.println(
+            "Unlocalized name \'" + unlocalizedName + "\' was previously declared. Skipping.");
       }
-    }
-  }
-
-  /**
-   * Parses the events file. Offloads work to {@link EventParser}.
-   */
-  private void parseEventsFile() {
-    BufferedReader reader = getReader(EVENTS_FILE_NAME);
-    if (reader == null) {
-      return;
-    }
-
-    String[] symbols;
-    while ((symbols = preParse(reader)) != null && symbols.length != 0) {
-      EventParser eventParser = new EventParser(restaurant);
-      eventParser.parseEvent(symbols);
     }
   }
 }

@@ -79,8 +79,13 @@ public class Inventory {
    * @param ingredientName the name of the ingredient to restock.
    * @param quantity the quantity of the ingredient to add.
    */
-  public void restockIngredient(String ingredientName, int quantity) {
-    getIngredient(ingredientName).modifyQuantity(quantity);
+  public boolean restockIngredient(String ingredientName, int quantity) {
+    Ingredient ingredient = getIngredient(ingredientName);
+    if (ingredient != null) {
+      ingredient.modifyQuantity(quantity);
+      return true;
+    }
+    return false;
   }
 
   /**
