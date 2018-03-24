@@ -3,12 +3,9 @@ package controller;
 import model.Order;
 import model.Table;
 
-/**
- * Controls all tables in this restaurant. Manages all interactions with tables or bills.
- */
+/** Controls all tables in this restaurant. Manages all interactions with tables or bills. */
 public class TableController {
   private final Table[] tables;
-
 
   /**
    * Construct a table controller with a given number of tables.
@@ -28,7 +25,9 @@ public class TableController {
    * @param tableNumber the number of the table to be accessed.
    * @return the table with the given table number.
    */
-  public Table getTable(int tableNumber){ return tables[tableNumber];}
+  public Table getTable(int tableNumber) {
+    return tables[tableNumber];
+  }
 
   /**
    * Clears the bill for the table with the given table number.
@@ -49,7 +48,8 @@ public class TableController {
   }
 
   /**
-   * Returns the formatted string representation of the bill for the table with the given table number.
+   * Returns the formatted string representation of the bill for the table with the given table
+   * number.
    *
    * @param tableNumber the number of the table for which to print the bill.
    * @return the string representation of the bill of the table with the given table number.

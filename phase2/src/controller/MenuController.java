@@ -13,7 +13,6 @@ import java.util.HashMap;
 public class MenuController {
   private final ArrayList<Menu> menus = new ArrayList<>();
 
-
   /**
    * Creates a menu with the given name and adds it to the collection of menus.
    *
@@ -43,16 +42,19 @@ public class MenuController {
    *
    * @return the instance variable menus
    */
-  public ArrayList<Menu> getMenuList(){return menus;}
+  public ArrayList<Menu> getMenuList() {
+    return menus;
+  }
 
   /**
    * Adds a menu item with a given price to a the menu with the given name.
    *
-   * @param menuName     the name of the menu to add the item to.
+   * @param menuName the name of the menu to add the item to.
    * @param menuItemName the name of the item to add.
-   * @param price        the price of the item.
+   * @param price the price of the item.
    */
-  public void addMenuItem(String menuName, String menuItemName, int price, HashMap<Ingredient, Integer> ingredients) {
+  public void addMenuItem(
+      String menuName, String menuItemName, int price, HashMap<Ingredient, Integer> ingredients) {
     Menu menu = getMenu(menuName);
     if (menu == null) {
       System.out.println("Given menu could not be found. Skipping.");
@@ -65,7 +67,7 @@ public class MenuController {
   /**
    * Gets the menu item with the given name from the menu with the given name.
    *
-   * @param menuName     the name of the menu to get the item from.
+   * @param menuName the name of the menu to get the item from.
    * @param menuItemName the name of the item.
    * @return the corresponding MenuItem with the given name in the menu with the given name.
    */

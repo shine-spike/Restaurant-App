@@ -3,11 +3,10 @@ package controller;
 import model.Order;
 import model.OrderStatus;
 
-
 /**
  * Restaurant in the system. Manages all interactions.
- * <p>
- * Contains all functional parts of a restaurant and provides an interface for interaction.
+ *
+ * <p>Contains all functional parts of a restaurant and provides an interface for interaction.
  */
 public final class Restaurant {
   // Singleton instance of the restaurant
@@ -23,10 +22,7 @@ public final class Restaurant {
   private final OrderController orderController = new OrderController();
   private final Inventory inventory = new Inventory();
 
-
-  /**
-   * Overrides default construction of restaurant.
-   */
+  /** Overrides default construction of restaurant. */
   private Restaurant() {}
 
   /**
@@ -37,7 +33,6 @@ public final class Restaurant {
   public static Restaurant getInstance() {
     return INSTANCE;
   }
-
 
   /**
    * Gets a controller for all table-related aspects of the restaurant including billing.
@@ -84,13 +79,12 @@ public final class Restaurant {
     return inventory;
   }
 
-
   /**
    * Registers a given order to be placed and changes its status accordingly.
    *
    * @param order the order to register.
-   * @return whether or not the order has been successfully registered. This can fail if there are not enough
-   * ingredients in the inventory to satisfy the order.
+   * @return whether or not the order has been successfully registered. This can fail if there are
+   *     not enough ingredients in the inventory to satisfy the order.
    */
   public boolean registerOrder(Order order) {
     if (inventory.confirmOrder(order)) {
