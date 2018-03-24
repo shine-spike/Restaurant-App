@@ -3,7 +3,7 @@ package GUI;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -20,11 +20,11 @@ public class LoginScene {
   private PasswordField passwordField;
   private Label incorrectPassword;
 
-  public LoginScene(RestaurantApplication application) {
+  LoginScene(RestaurantApplication application) {
     this.application = application;
   }
 
-  public Scene getScene() {
+  public Parent getRoot() {
     GridPane grid = new GridPane();
     grid.setAlignment(Pos.CENTER);
     grid.setHgap(100);
@@ -64,9 +64,8 @@ public class LoginScene {
     incorrectPassword.setStyle("-fx-font-weight: bold");
     grid.add(incorrectPassword, 0, 24, 2, 1);
 
-    Scene scene = new Scene(grid);
-    scene.getStylesheets().add(getClass().getResource("../application.css").toExternalForm());
-    return scene;
+
+    return grid;
   }
 
   private class LoginButtonHandler implements EventHandler<ActionEvent> {
@@ -77,8 +76,8 @@ public class LoginScene {
               .getEmployeeController()
               .login(userTextField.getText(), passwordField.getText());
       if (employee != null) {
-        application.setEmployeeNumber(employee.getEmployeeNumber());
-        application.startRestaurantScene(employee);
+        application.setEmployee(employee);
+        application.startRestaurantScene();
       } else {
         incorrectPassword.setText("Incorrect Username or Password");
       }

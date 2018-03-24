@@ -1,6 +1,10 @@
 package GUI;
 
 import javafx.application.Application;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import model.Employee;
@@ -8,7 +12,7 @@ import util.Logger;
 
 public class RestaurantApplication extends Application {
   private Stage stage;
-  private int employeeNumber;
+  private Employee employee;
 
   @Override
   public void start(Stage stage) {
@@ -19,17 +23,34 @@ public class RestaurantApplication extends Application {
     Logger.startLogger();
 
     this.stage = stage;
-    stage.setMaximized(true);
-    stage.setTitle("Restaurant");
-    stage.setScene(new LoginScene(this).getScene());
+    setupStage();
+    startLoginScene();
     stage.show();
   }
 
-  public void setEmployeeNumber(int employeeNumber) {
-    this.employeeNumber = employeeNumber;
+  public void setEmployee(Employee employee) {
+    this.employee = employee;
   }
 
-  public void startRestaurantScene(Employee employee) {
-    stage.setScene(new RestaurantScene(this, employee).getScene());
+  private void swapScenes(Parent newContent) {
+    stage.getScene().setRoot(newContent);
+  }
+
+  private void setupStage() {
+    Scene scene = new Scene(new GridPane());
+    scene.getStylesheets().add(getClass().getResource("../application.css").toExternalForm());
+    stage.setScene(scene);
+
+    stage.setMaximized(true);
+    stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+    stage.setTitle("Restaurant");
+  }
+
+  public void startLoginScene() {
+    swapScenes(new LoginScene(this).getRoot());
+  }
+
+  public void startRestaurantScene() {
+    swapScenes(new RestaurantScene(this, employee).getRoot());
   }
 }
