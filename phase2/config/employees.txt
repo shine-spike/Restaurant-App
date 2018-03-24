@@ -6,4 +6,5 @@
 Ziyad Edher bunny24 MANAGER
 Matthew Verreault bunny23 COOK
 a a a MANAGER
+Admin Admin admin ADMIN
 
