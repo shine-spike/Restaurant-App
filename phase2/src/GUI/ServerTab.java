@@ -24,17 +24,22 @@ public class ServerTab extends RestaurantTab{
     private TextField tableNumField;
     private int tableID;
     private ObservableList<Order> ordersList;
+    private ObservableList<MenuItem> menuList;
     private Label selectedTableNum;
     private Button tableButton;
     private Button billButton;
     private Button addOrderButton;
     private Button modifyOrderButton;
     private Button submitOrderButton;
-    private Button returnToMainButton;
+    private Button returnFromOrderButton;
+    private Button returnFromBillButton;
     private GridPane mainGrid;
     private GridPane addOrderGrid;
+    private GridPane makeBillGrid;
     private Tab serverTab;
     private MenuController menuController = restaurant.getMenuController();
+    private TextField menuItemField;
+    private Spinner<Integer> customerIDSpinner;
 
     /**
      * Constructs a ServerTab for the employee with the id employeeNumber
@@ -49,6 +54,7 @@ public class ServerTab extends RestaurantTab{
     public void initializeTab(){
         initializeMainGrid();
         initializeAddOrderGrid();
+        initializeMakeBillGrid();
 
         serverTab = new Tab("Server", mainGrid);
         serverTab.setClosable(false);
@@ -99,13 +105,13 @@ public class ServerTab extends RestaurantTab{
         mainGrid.add(tableNum, 0,0);
         mainGrid.add(tableNumField, 0, 1);
         mainGrid.add(tableButton, 0, 2);
-        mainGrid.add(selectedTableNum, 2, 1);
+        mainGrid.add(selectedTableNum, 1, 1,2,1);
         mainGrid.add(orderList, 1,2);
         mainGrid.add(ordersListView, 1, 3);
-        mainGrid.add(orderStatusList, 3,2);
-        mainGrid.add(ordersStatusListView, 3, 3);
+        mainGrid.add(orderStatusList, 2,2);
+        mainGrid.add(ordersStatusListView, 2, 3);
         mainGrid.add(addOrderButton, 1,4);
-        mainGrid.add(billButton, 3, 4);
+        mainGrid.add(billButton, 2, 4);
     }
 
     private void initializeAddOrderGrid(){
@@ -123,6 +129,21 @@ public class ServerTab extends RestaurantTab{
         addOrderGrid.setVgap(10);
         addOrderGrid.setPadding(new Insets(25, 25, 25, 25));
 
+        // Menu List
+        Label menuListLabel = new Label("Menu List:");
+        menuList = FXCollections.observableArrayList();
+        ListView<MenuItem> menuListView = new ListView<>(menuList);
+        Label menuSearchLabel = new Label("Search Item:");
+        menuItemField = new TextField();
+        menuItemField.setOnAction(new ServerTabHandler());
+
+        // Customer ID
+        Label customerIDLabel = new Label("Customer Number");
+        customerIDSpinner = new Spinner<>(0, 9, 0);
+        customerIDSpinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
+        customerIDSpinner.setEditable(true);
+        customerIDSpinner.setMaxWidth(70);
+
         // Modify Order Button
         modifyOrderButton = new Button("Modify Order");
         modifyOrderButton.setOnAction(new ServerTabHandler());
@@ -132,13 +153,34 @@ public class ServerTab extends RestaurantTab{
         submitOrderButton.setOnAction(new ServerTabHandler());
 
         // Return to Main Button
-        returnToMainButton = new Button("Back");
-        returnToMainButton.setOnAction(new ServerTabHandler());
+        returnFromOrderButton = new Button("Back");
+        returnFromOrderButton.setOnAction(new ServerTabHandler());
 
         // Grid Additions
-        addOrderGrid.add(returnToMainButton, 3, 1);
-        addOrderGrid.add(modifyOrderButton, 3,3);
-        addOrderGrid.add(submitOrderButton, 3, 4);
+        addOrderGrid.add(menuListLabel, 0, 0);
+        addOrderGrid.add(menuListView, 0, 2, 2, 7);
+        addOrderGrid.add(menuSearchLabel, 0, 1);
+        addOrderGrid.add(menuItemField, 0, 2, 2, 1);
+        addOrderGrid.add(customerIDLabel, 2, 3);
+        addOrderGrid.add(customerIDSpinner, 2, 4);
+        addOrderGrid.add(returnFromOrderButton, 2, 5);
+        addOrderGrid.add(modifyOrderButton, 2,6);
+        addOrderGrid.add(submitOrderButton, 2, 7);
+    }
+
+    private void initializeMakeBillGrid(){
+        makeBillGrid = new GridPane();
+        makeBillGrid.setAlignment(Pos.CENTER);
+        makeBillGrid.setHgap(10);
+        makeBillGrid.setVgap(10);
+        makeBillGrid.setPadding(new Insets(25, 25, 25, 25));
+
+        // Return to Main Button
+        returnFromBillButton = new Button("Back");
+        returnFromBillButton.setOnAction(new ServerTabHandler());
+
+        // Grid Additions
+        makeBillGrid.add(returnFromBillButton, 0, 0);
     }
 
     /**
@@ -163,14 +205,18 @@ public class ServerTab extends RestaurantTab{
                 }
 
                 else if(e.getSource().equals(billButton)){
-                    //new tab;
+                    serverTab.setContent(makeBillGrid);
                 }
 
                 else if(e.getSource().equals(addOrderButton)) {
                     serverTab.setContent(addOrderGrid);
                 }
 
-                else if(e.getSource().equals(returnToMainButton)){
+                else if(e.getSource().equals(returnFromBillButton)){
+                    serverTab.setContent(mainGrid);
+                }
+
+                else if(e.getSource().equals(returnFromOrderButton)){
                     serverTab.setContent(mainGrid);
                 }
             }
