@@ -42,7 +42,7 @@ public class RestaurantApplication extends Application {
     scene.getStylesheets().add(getClass().getResource("../application.css").toExternalForm());
     stage.setScene(scene);
 
-    stage.setMaximized(true);
+    stage.setFullScreen(true);
     stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
     stage.setTitle("Restaurant");
   }
