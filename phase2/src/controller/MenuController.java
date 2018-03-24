@@ -3,6 +3,8 @@ package controller;
 import model.Ingredient;
 import model.Menu;
 import model.MenuItem;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,6 +44,7 @@ public class MenuController {
    *
    * @return the list of menus.
    */
+  @NotNull
   public ArrayList<Menu> getMenuList() {
     return menus;
   }
@@ -70,6 +73,7 @@ public class MenuController {
    * @param menuItemName the name of the item.
    * @return the corresponding MenuItem with the given name in the menu with the given name.
    */
+  @Nullable
   public MenuItem getMenuItem(String menuName, String menuItemName) {
     Menu menu = getMenu(menuName);
     if (menu == null) {

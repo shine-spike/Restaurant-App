@@ -8,6 +8,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import model.Employee;
+import org.jetbrains.annotations.NotNull;
 import util.Logger;
 
 public class RestaurantApplication extends Application {
@@ -15,7 +16,7 @@ public class RestaurantApplication extends Application {
   private Employee employee;
 
   @Override
-  public void start(Stage stage) {
+  public void start(@NotNull Stage stage) {
     System.setProperty("prism.lcdtext", "false");
 
     Driver driver = new Driver();

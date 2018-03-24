@@ -1,5 +1,7 @@
 package model;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Employee {
   private static int currentEmployeeNumber = 0;
 
@@ -24,11 +26,12 @@ public class Employee {
     return employeeNumber;
   }
 
+  @NotNull
   public String getName() {
     return firstName + " " + lastName;
   }
 
-  public boolean checkPassword(String password) {
+  public boolean checkPassword(@NotNull String password) {
     return passwordHashCode == password.hashCode();
   }
 

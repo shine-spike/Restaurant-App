@@ -1,8 +1,8 @@
 package parsing;
 
-import model.EmployeeType;
-import model.Ingredient;
+import org.jetbrains.annotations.NotNull;
 import controller.Restaurant;
+import model.Ingredient;;
 import util.Localizer;
 
 import java.io.BufferedReader;
@@ -20,17 +20,14 @@ import java.util.HashMap;
 public class Parser {
   /** Flags that a line in a file should be ignored. */
   private static final char COMMENT_SYMBOL = '%';
-
-  // Where to read the files from
-  private String filesLocation = "phase2/config/";
-
   // The names of all the files we need to access.
   private static final String EMPLOYEE_FILE_NAME = "employees.txt";
   private static final String INGREDIENTS_FILE_NAME = "ingredients.txt";
   private static final String MENUS_FILE_NAME = "menus.txt";
   private static final String LOCALE_FILE_NAME = "locale.txt";
-
   private final Restaurant restaurant;
+  // Where to read the files from
+  private String filesLocation = "phase2/config/";
 
   /**
    * Constructs a Parser for a given restaurant.
@@ -107,6 +104,7 @@ public class Parser {
    * @param reader the reader to generate the symbols from.
    * @return the array of symbols representing the different parts of the line read.
    */
+  @NotNull
   private String[] preParse(BufferedReader reader) {
     String[] symbols;
 
@@ -144,7 +142,7 @@ public class Parser {
     }
 
     String[] symbols;
-    while ((symbols = preParse(reader)) != null && symbols.length != 0) {
+    while ((symbols = preParse(reader)).length != 0) {
       if (symbols.length != 4) {
         System.out.println(
             "Line in employees file should have four entries, "
@@ -154,8 +152,7 @@ public class Parser {
       }
       restaurant
           .getEmployeeController()
-          .registerEmployee(
-              symbols[0], symbols[1], symbols[2], EmployeeType.getEmployeeType(symbols[3]));
+          .registerEmployee(symbols[0], symbols[1], symbols[2], symbols[3]);
     }
   }
 
@@ -167,7 +164,7 @@ public class Parser {
     }
 
     String[] symbols;
-    while ((symbols = preParse(reader)) != null && symbols.length != 0) {
+    while ((symbols = preParse(reader)).length != 0) {
       if (symbols.length != 3) {
         System.out.println(
             "Line in ingredients file should have three entries, "
@@ -198,7 +195,7 @@ public class Parser {
     String currentMenu = null;
 
     String[] symbols;
-    while ((symbols = preParse(reader)) != null && symbols.length != 0) {
+    while ((symbols = preParse(reader)).length != 0) {
       if (currentMenu != null) {
         if (symbols[0].equals("END")) {
           currentMenu = null;
@@ -236,7 +233,7 @@ public class Parser {
     }
 
     String[] symbols;
-    while ((symbols = preParse(reader)) != null && symbols.length != 0) {
+    while ((symbols = preParse(reader)).length != 0) {
       if (symbols.length < 2) {
         System.out.println(
             "Line in localization file should have at least two entries, "

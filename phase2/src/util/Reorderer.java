@@ -1,6 +1,7 @@
 package util;
 
 import model.Ingredient;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -15,7 +16,7 @@ public class Reorderer {
    *
    * @param ingredient the ingredient to reorder.
    */
-  public static void reorder(Ingredient ingredient, int amount) {
+  public static void reorder(@NotNull Ingredient ingredient, int amount) {
     // Find the file we want to write to
     File file = new File(REORDER_REQUEST_FILE);
 

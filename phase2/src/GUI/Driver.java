@@ -1,13 +1,16 @@
 package GUI;
 
 import controller.Restaurant;
+import org.jetbrains.annotations.NotNull;
 import parsing.Parser;
 
 /**
  * Manages starting up a {@link Restaurant} and {@link Parser} and coordinating their interaction.
  */
 public class Driver {
+  @NotNull
   private final Restaurant restaurant;
+  @NotNull
   private final Parser parser;
 
   /** Constructs a driver with a default {@link Restaurant} and {@link Parser}. */
@@ -21,6 +24,7 @@ public class Driver {
    *
    * @return the managed {@link Restaurant}.
    */
+  @NotNull
   public Restaurant getRestaurant() {
     return restaurant;
   }
@@ -30,6 +34,7 @@ public class Driver {
    *
    * @return the associated {@link Parser}.
    */
+  @NotNull
   public Parser getParser() {
     return parser;
   }

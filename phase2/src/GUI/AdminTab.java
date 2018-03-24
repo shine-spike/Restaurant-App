@@ -1,7 +1,5 @@
 package GUI;
 
-import javafx.scene.control.Tab;
-
 public class AdminTab extends RestaurantTab {
   public AdminTab(int employeeNumber) {
     super("Admin", employeeNumber);

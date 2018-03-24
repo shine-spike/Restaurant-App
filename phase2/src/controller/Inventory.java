@@ -2,6 +2,8 @@ package controller;
 
 import model.Ingredient;
 import model.Order;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import util.Localizer;
 import util.Logger;
 import util.Reorderer;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 public class Inventory {
   private static final int DEFAULT_REORDER_AMOUNT = 20;
 
+  @NotNull
   private final ArrayList<Ingredient> ingredients;
 
   /** Constructs an inventory with an empty ingredient container. */
@@ -36,6 +39,7 @@ public class Inventory {
    * @param ingredientName the name of the ingredient.
    * @return the Ingredient with that name. If no ingredient has that name, returns {@code null}.
    */
+  @Nullable
   public Ingredient getIngredient(String ingredientName) {
     for (Ingredient ingredient : ingredients) {
       if (ingredient.getName().equals(ingredientName)) {
@@ -51,7 +55,7 @@ public class Inventory {
    * @param order the order to be checked.
    * @return whether or not it can be satisfied.
    */
-  public boolean confirmOrder(Order order) {
+  public boolean confirmOrder(@NotNull Order order) {
     for (Ingredient ingredient : order.getIngredients().keySet()) {
       if (ingredient.getQuantity() < order.getIngredients().get(ingredient)) {
         return false;
@@ -65,7 +69,7 @@ public class Inventory {
    *
    * @param order the order that has been prepared.
    */
-  public void consumeIngredients(Order order) {
+  public void consumeIngredients(@NotNull Order order) {
     for (Ingredient ingredient : order.getIngredients().keySet()) {
       int amount = order.getIngredients().get(ingredient);
       Logger.inventoryLog("CONSUME", amount, ingredient.getName(), "consumed");
@@ -100,7 +104,8 @@ public class Inventory {
    *
    * @param searchTerm the search term we're checking ingredient names for.
    */
-  public ArrayList<String> search(String searchTerm) {
+  @NotNull
+  public ArrayList<String> search(@NotNull String searchTerm) {
     ArrayList<String> foundNames = new ArrayList<>();
     for (Ingredient ingredient : ingredients) {
       String ingredientName = ingredient.getName();

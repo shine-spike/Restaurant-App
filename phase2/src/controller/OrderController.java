@@ -2,6 +2,8 @@ package controller;
 
 import model.Order;
 import model.OrderStatus;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import util.Logger;
 
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ public class OrderController {
    * @param orderNumber the order number to search for.
    * @return the order that has the given order number.
    */
+  @Nullable
   public Order getOrderFromNumber(int orderNumber) {
     for (Order order : orders) {
       if (order.getOrderNumber() == orderNumber) {
@@ -31,6 +34,7 @@ public class OrderController {
    * @param orderStatus the status of the orders to get.
    * @return the list of all orders with the given status.
    */
+  @NotNull
   public ArrayList<Order> ordersFromStatus(OrderStatus orderStatus) {
     ArrayList<Order> orders = new ArrayList<>();
 
@@ -60,7 +64,7 @@ public class OrderController {
    * @return whether or not the order has been successfully registered. This can fail if there are
    *     not enough ingredients in the inventory to satisfy the order.
    */
-  public boolean placeOrder(Order order) {
+  public boolean placeOrder(@NotNull Order order) {
     if (Restaurant.getInstance().getInventory().confirmOrder(order)) {
       Logger.orderLog(order.getOrderNumber(), "PLACE", "placed by table " + order.getTableNumber());
       registerOrder(order);
@@ -80,7 +84,7 @@ public class OrderController {
    *
    * @param order the order to cancel.
    */
-  public void cancelOrder(Order order) {
+  public void cancelOrder(@NotNull Order order) {
     Logger.orderLog(order.getOrderNumber(), "CANCEL", "cancelled");
     order.setStatus(OrderStatus.CANCELLED);
   }
@@ -90,7 +94,7 @@ public class OrderController {
    *
    * @param order the order to see.
    */
-  public void seeOrder(Order order) {
+  public void seeOrder(@NotNull Order order) {
     Logger.orderLog(order.getOrderNumber(), "SEE", "seen");
     order.setStatus(OrderStatus.SEEN);
   }
@@ -101,7 +105,7 @@ public class OrderController {
    *
    * @param order the order to ready.
    */
-  public void readyOrder(Order order) {
+  public void readyOrder(@NotNull Order order) {
     Logger.orderLog(order.getOrderNumber(), "READY", "prepared");
     Restaurant.getInstance().getInventory().consumeIngredients(order);
     order.setStatus(OrderStatus.READY);
@@ -112,7 +116,7 @@ public class OrderController {
    *
    * @param order the order to accept.
    */
-  public void acceptOrder(Order order) {
+  public void acceptOrder(@NotNull Order order) {
     Logger.orderLog(
         order.getOrderNumber(), "ACCEPT", "accepted by table " + order.getTableNumber());
     Restaurant.getInstance().getTableController().addToBill(order);
@@ -125,7 +129,7 @@ public class OrderController {
    * @param order the order to reject.
    * @param reason the reason of rejection.
    */
-  public void rejectOrder(Order order, String reason) {
+  public void rejectOrder(@NotNull Order order, String reason) {
     Logger.orderLog(
         order.getOrderNumber(),
         "REJECT",
@@ -142,7 +146,7 @@ public class OrderController {
    * @return whether or not the order can be redone. This can fail for any reason placing an order
    *     can fail.
    */
-  public boolean redoOrder(Order order, String reason) {
+  public boolean redoOrder(@NotNull Order order, String reason) {
     Logger.orderLog(
         order.getOrderNumber(),
         "REDO",

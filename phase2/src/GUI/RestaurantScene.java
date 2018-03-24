@@ -1,10 +1,8 @@
 package GUI;
 
-import controller.Restaurant;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.NodeOrientation;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TabPane;
@@ -12,6 +10,7 @@ import javafx.scene.control.ToolBar;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import model.Employee;
+import org.jetbrains.annotations.NotNull;
 
 public class RestaurantScene {
   private RestaurantApplication application;
@@ -22,6 +21,7 @@ public class RestaurantScene {
     this.employee = employee;
   }
 
+  @NotNull
   public Parent getRoot() {
     GridPane grid = new GridPane();
     ColumnConstraints column = new ColumnConstraints();

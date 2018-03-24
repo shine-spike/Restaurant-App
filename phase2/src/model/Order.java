@@ -1,5 +1,7 @@
 package model;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
 
 
@@ -86,6 +88,7 @@ public class Order {
    *
    * @return a deep copy of this order.
    */
+  @NotNull
   public Order duplicate() {
     return new Order(employeeNumber, tableNumber, customerIndex, menuItem, ingredients);
   }

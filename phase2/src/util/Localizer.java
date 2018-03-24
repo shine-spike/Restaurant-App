@@ -1,5 +1,7 @@
 package util;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -16,6 +18,7 @@ public class Localizer {
         return localization.getOrDefault(unlocalizedName, unlocalizedName);
     }
 
+    @NotNull
     public static ArrayList<String> localize(ArrayList<String> unlocalizedNames) {
         ArrayList<String> out = new ArrayList<>();
 

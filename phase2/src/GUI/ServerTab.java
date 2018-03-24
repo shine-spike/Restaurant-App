@@ -12,12 +12,17 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import model.Menu;
 import model.Order;
+import org.jetbrains.annotations.NotNull;
 
 import static java.lang.Integer.parseInt;
 
 public class ServerTab extends RestaurantTab {
 
+  @NotNull
   private Restaurant restaurant = Restaurant.getInstance();
+  @NotNull
+  private MenuController menuController = restaurant.getMenuController();
+
   private TextField tableNumField;
   private int tableID;
   private ObservableList<Order> ordersList;
@@ -34,7 +39,6 @@ public class ServerTab extends RestaurantTab {
   private GridPane addOrderGrid;
   private GridPane makeBillGrid;
   private Tab serverTab;
-  private MenuController menuController = restaurant.getMenuController();
   private TextField menuItemField;
   private Spinner<Integer> customerIDSpinner;
 
@@ -107,12 +111,10 @@ public class ServerTab extends RestaurantTab {
 
   private void initializeAddOrderGrid() {
     TabPane addOrderPanes = new TabPane();
-    if (menuController != null) {
-      for (Menu menu : menuController.getMenuList()) {
-        addOrderPanes.getTabs().add(new Tab(menu.getName()));
-      }
-      addOrderPanes.getTabs().add(new Tab());
+    for (Menu menu : Restaurant.getInstance().getMenuController().getMenuList()) {
+      addOrderPanes.getTabs().add(new Tab(menu.getName()));
     }
+    addOrderPanes.getTabs().add(new Tab());
 
     addOrderGrid = new GridPane();
     addOrderGrid.setAlignment(Pos.CENTER);
@@ -179,7 +181,7 @@ public class ServerTab extends RestaurantTab {
 
   private class ServerTabHandler implements EventHandler<ActionEvent> {
     @Override
-    public void handle(ActionEvent e) {
+    public void handle(@NotNull ActionEvent e) {
       if (e.getSource() instanceof Button) {
 
         if (e.getSource().equals(tableButton)) {
@@ -191,13 +193,13 @@ public class ServerTab extends RestaurantTab {
           }
           tableNumField.setText("");
         } else if (e.getSource().equals(billButton)) {
-          serverTab.setContent(makeBillGrid);
+          getTab().setContent(makeBillGrid);
         } else if (e.getSource().equals(addOrderButton)) {
-          serverTab.setContent(addOrderGrid);
+          getTab().setContent(addOrderGrid);
         } else if (e.getSource().equals(returnFromBillButton)) {
-          serverTab.setContent(mainGrid);
+          getTab().setContent(mainGrid);
         } else if (e.getSource().equals(returnFromOrderButton)) {
-          serverTab.setContent(mainGrid);
+          getTab().setContent(mainGrid);
         }
       }
     }

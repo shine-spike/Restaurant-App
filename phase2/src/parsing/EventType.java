@@ -1,5 +1,7 @@
 package parsing;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Stores all types of events that should be processed by the Parser and related information.
  */
@@ -42,7 +44,7 @@ public enum EventType {
    * @param keyword the corresponding keyword.
    * @return the event type corresponding to the given keyword or {@code null} if it does not exist.
    */
-  public static EventType getEventType(String keyword) {
+  public static EventType getEventType(@NotNull String keyword) {
     for (EventType e : EventType.values()) {
       if (keyword.equals(e.keyword)) {
         return e;
