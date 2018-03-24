@@ -33,7 +33,7 @@ public abstract class RestaurantTab {
      * Sets this RestaurantTab's JavaFX newTab
      * @param newTab The ne JavaFX newTab
      */
-    protected void setTab(Tab newTab){
+    void setTab(Tab newTab){
         this.tab = newTab;
     }
 

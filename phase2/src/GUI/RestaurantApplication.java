@@ -24,6 +24,7 @@ public class RestaurantApplication extends Application {
 
     this.stage = stage;
     setupStage();
+
     startLoginScene();
     stage.show();
   }

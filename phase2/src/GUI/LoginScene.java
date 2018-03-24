@@ -51,10 +51,10 @@ public class LoginScene {
     grid.add(passwordField, 1, 11);
 
     // Login button
-    Button button = new Button("Login");
-    button.setMinWidth(grid.getMinWidth());
-    button.setOnAction(new LoginButtonHandler());
-    grid.add(button, 0, 18, 2, 1);
+    Button loginButton = new Button("Login");
+    loginButton.setMinWidth(grid.getMinWidth());
+    loginButton.setOnAction(new LoginButtonHandler());
+    grid.add(loginButton, 0, 18, 2, 1);
 
     // Incorrect password warning
     incorrectPassword = new Label();
