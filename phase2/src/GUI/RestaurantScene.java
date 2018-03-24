@@ -37,6 +37,9 @@ public class RestaurantScene {
 
     TabPane restaurantTabPane = new TabPane();
     int employeeNumber = employee.getEmployeeNumber();
+    if (employee.hasAdminPermissions()) {
+      restaurantTabPane.getTabs().add(new AdminTab(employeeNumber).getTab());
+    }
     if (employee.hasManagerPermissions()) {
       restaurantTabPane.getTabs().add(new ManagerTab(employeeNumber).getTab());
     }

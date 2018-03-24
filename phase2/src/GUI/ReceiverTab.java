@@ -1,5 +1,7 @@
 package GUI;
 
+import controller.Inventory;
+import controller.Restaurant;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -12,9 +14,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-
-import controller.Inventory;
-import controller.Restaurant;
 import util.Localizer;
 
 import java.util.ArrayList;
@@ -29,12 +28,12 @@ public class ReceiverTab extends RestaurantTab {
   private Label warningString;
 
   /** Constructs a ReceiverTab for the employee with the id employeeNumber */
-  public ReceiverTab(int employeeNumber) {
-    super(employeeNumber);
+  ReceiverTab(int employeeNumber) {
+    super("Receiver", employeeNumber);
   }
 
   /** Initializes this ReceiverTab's JavaFX tab */
-  public void initializeTab() {
+  public void populateTab() {
     GridPane grid = new GridPane();
     ColumnConstraints columnOne = new ColumnConstraints();
     columnOne.setPercentWidth(75);
@@ -85,14 +84,11 @@ public class ReceiverTab extends RestaurantTab {
     grid.add(button, 0, 4, 2, 1);
     grid.add(warningString, 0, 5, 2, 1);
 
-    Tab receiverTab = new Tab("Receiver", grid);
-    receiverTab.setClosable(false);
-
-    setTab(receiverTab);
+    getTab().setContent(grid);
   }
 
   /** Updates all the nodes of this tab with the appropriate new information */
-  public void update() {}
+  public void updateTab() {}
 
   private class ReceiverTabHandler implements EventHandler<ActionEvent> {
     @Override
