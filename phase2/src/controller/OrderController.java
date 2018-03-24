@@ -2,6 +2,7 @@ package controller;
 
 import model.Order;
 import model.OrderStatus;
+import util.Logger;
 
 import java.util.ArrayList;
 
@@ -61,10 +62,15 @@ public class OrderController {
    */
   public boolean placeOrder(Order order) {
     if (Restaurant.getInstance().getInventory().confirmOrder(order)) {
+      Logger.orderLog(order.getOrderNumber(), "PLACE", "placed by table " + order.getTableNumber());
       registerOrder(order);
       return true;
     }
 
+    Logger.orderLog(
+        order.getOrderNumber(),
+        "UNSATISFIABLE",
+        "discarded because there are not enough ingredients to create it");
     order.setStatus(OrderStatus.UNSATISFIABLE);
     return false;
   }
@@ -75,6 +81,7 @@ public class OrderController {
    * @param order the order to cancel.
    */
   public void cancelOrder(Order order) {
+    Logger.orderLog(order.getOrderNumber(), "CANCEL", "cancelled");
     order.setStatus(OrderStatus.CANCELLED);
   }
 
@@ -84,6 +91,7 @@ public class OrderController {
    * @param order the order to see.
    */
   public void seeOrder(Order order) {
+    Logger.orderLog(order.getOrderNumber(), "SEE", "seen");
     order.setStatus(OrderStatus.SEEN);
   }
 
@@ -94,6 +102,7 @@ public class OrderController {
    * @param order the order to ready.
    */
   public void readyOrder(Order order) {
+    Logger.orderLog(order.getOrderNumber(), "READY", "prepared");
     Restaurant.getInstance().getInventory().consumeIngredients(order);
     order.setStatus(OrderStatus.READY);
   }
@@ -104,28 +113,47 @@ public class OrderController {
    * @param order the order to accept.
    */
   public void acceptOrder(Order order) {
+    Logger.orderLog(
+        order.getOrderNumber(), "ACCEPT", "accepted by table " + order.getTableNumber());
     Restaurant.getInstance().getTableController().addToBill(order);
     order.setStatus(OrderStatus.ACCEPTED);
   }
 
   /**
-   * Rejects a given order.
+   * Rejects a given order with a given reason.
    *
    * @param order the order to reject.
+   * @param reason the reason of rejection.
    */
-  public void rejectOrder(Order order) {
+  public void rejectOrder(Order order, String reason) {
+    Logger.orderLog(
+        order.getOrderNumber(),
+        "REJECT",
+        "rejected by table " + order.getTableNumber() + " for reason " + reason);
     order.setStatus(OrderStatus.REJECTED);
   }
 
   /**
-   * Redo a given order, which means that the order will be duplicated and put back into the system.
+   * Redo a given order with a given reason, which means that the order will be duplicated and put
+   * back into the system.
    *
    * @param order the order to redo.
+   * @param reason the reason of redoing.
    * @return whether or not the order can be redone. This can fail for any reason placing an order
    *     can fail.
    */
-  public boolean redoOrder(Order order) {
-    if (placeOrder(order.duplicate())) {
+  public boolean redoOrder(Order order, String reason) {
+    Logger.orderLog(
+        order.getOrderNumber(),
+        "REDO",
+        "requested for redo by table " + order.getTableNumber() + " for reason " + reason);
+
+    Order duplicate = order.duplicate();
+    if (placeOrder(duplicate)) {
+      Logger.orderLog(
+          duplicate.getOrderNumber(),
+          "REDO",
+          "assigned as a redo for order " + order.getOrderNumber());
       order.setStatus(OrderStatus.REDO);
       return true;
     }

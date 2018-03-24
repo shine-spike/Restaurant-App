@@ -3,6 +3,7 @@ package controller;
 import model.Ingredient;
 import model.Order;
 import util.Localizer;
+import util.Logger;
 import util.Reorderer;
 
 import java.util.ArrayList;
@@ -66,8 +67,12 @@ public class Inventory {
    */
   public void consumeIngredients(Order order) {
     for (Ingredient ingredient : order.getIngredients().keySet()) {
-      ingredient.modifyQuantity(-order.getIngredients().get(ingredient));
+      int amount = order.getIngredients().get(ingredient);
+      Logger.inventoryLog("CONSUME", amount, ingredient.getName(), "consumed");
+      ingredient.modifyQuantity(-amount);
+
       if (ingredient.shouldReorder()) {
+        Logger.reorderLog(ingredient.getName());
         Reorderer.reorder(ingredient, DEFAULT_REORDER_AMOUNT);
       }
     }
@@ -82,6 +87,7 @@ public class Inventory {
   public boolean restockIngredient(String ingredientName, int quantity) {
     Ingredient ingredient = getIngredient(ingredientName);
     if (ingredient != null) {
+      Logger.inventoryLog("RESTOCK", quantity, ingredientName, "restocked");
       ingredient.modifyQuantity(quantity);
       return true;
     }
