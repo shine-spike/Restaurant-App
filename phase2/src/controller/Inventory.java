@@ -19,6 +19,17 @@ public class Inventory {
   }
 
   /**
+   * Adds an ingredient with the given name to the inventory.
+   *
+   * @param name the name of the ingredient.
+   * @param quantity the initial amount of this ingredient.
+   * @param threshold the reordering threshold of this ingredient.
+   */
+  public void addIngredient(String name, int quantity, int threshold) {
+    ingredients.add(new Ingredient(name, quantity, threshold));
+  }
+
+  /**
    * Gets the Ingredient with the given name.
    *
    * @param ingredientName the name of the ingredient.
@@ -31,17 +42,6 @@ public class Inventory {
       }
     }
     return null;
-  }
-
-  /**
-   * Adds an ingredient with the given name to the inventory.
-   *
-   * @param name the name of the ingredient.
-   * @param quantity the initial amount of this ingredient.
-   * @param threshold the reordering threshold of this ingredient.
-   */
-  public void addIngredient(String name, int quantity, int threshold) {
-    ingredients.add(new Ingredient(name, quantity, threshold));
   }
 
   /**
@@ -84,19 +84,6 @@ public class Inventory {
   }
 
   /**
-   * Restocks a given list of ingredients with their respective quantities.
-   *
-   * @param ingredientNames the names of the ingredients to restock.
-   * @param quantities the quantities of the ingredients to add.
-   */
-  // DO NOT REMOVE, THIS IS TO SATISFY SPECIFICATIONS
-  public void restockIngredients(ArrayList<String> ingredientNames, ArrayList<Integer> quantities) {
-    for (int i = 0; i < ingredientNames.size(); i++) {
-      restockIngredient(ingredientNames.get(i), quantities.get(i));
-    }
-  }
-
-  /**
    * Returns an ArrayList of the names of items in the inventory whose names contain the search
    * term.
    *
@@ -107,6 +94,7 @@ public class Inventory {
     for (Ingredient ingredient : ingredients) {
       String ingredientName = ingredient.getName();
 
+      // Search both the regular name and the respective localized name
       if (ingredientName.contains(searchTerm)
           || Localizer.localize(ingredientName).contains(searchTerm)) {
         foundNames.add(ingredientName);

@@ -8,7 +8,7 @@ public class TableController {
   private final Table[] tables;
 
   /**
-   * Construct a table controller with a given number of tables.
+   * Constructs a table controller with a given number of tables.
    *
    * @param numTables the number of tables this table controller manages.
    */

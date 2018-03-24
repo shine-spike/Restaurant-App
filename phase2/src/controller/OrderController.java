@@ -13,7 +13,7 @@ public class OrderController {
    * Gets the order with a given order number from all the orders.
    *
    * @param orderNumber the order number to search for.
-   * @return the {@link Order} that has the given order number.
+   * @return the order that has the given order number.
    */
   public Order getOrderFromNumber(int orderNumber) {
     for (Order order : orders) {
@@ -24,23 +24,40 @@ public class OrderController {
     return null;
   }
 
-  public void cancelOrder(int employeeNumber, Order order) {
-    order.setStatus(OrderStatus.CANCELLED);
-  }
-
+  /**
+   * Registers a given order in the controller.
+   *
+   * @param order the order to register.
+   */
   public void registerOrder(Order order) {
+    order.setStatus(OrderStatus.PLACED);
     orders.add(order);
   }
 
-  public ArrayList<Order> ordersFromStatus(OrderStatus orderStatus) {
-    ArrayList<Order> out = new ArrayList<>();
+  /**
+   * Cancels a given order.
+   *
+   * @param order the order to cancel.
+   */
+  public void cancelOrder(Order order) {
+    order.setStatus(OrderStatus.CANCELLED);
+  }
 
-    for (Order i : orders) {
-      if (i.getStatus().equals(orderStatus)) {
-        out.add(i);
+  /**
+   * Gets all the orders with the given status.
+   *
+   * @param orderStatus the status of the orders to get.
+   * @return the list of all orders with the given status.
+   */
+  public ArrayList<Order> ordersFromStatus(OrderStatus orderStatus) {
+    ArrayList<Order> orders = new ArrayList<>();
+
+    for (Order order : orders) {
+      if (order.getStatus().equals(orderStatus)) {
+        orders.add(order);
       }
     }
 
-    return out;
+    return orders;
   }
 }

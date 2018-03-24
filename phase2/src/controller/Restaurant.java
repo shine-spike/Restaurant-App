@@ -88,7 +88,6 @@ public final class Restaurant {
    */
   public boolean registerOrder(Order order) {
     if (inventory.confirmOrder(order)) {
-      order.setStatus(OrderStatus.PLACED);
       orderController.registerOrder(order);
       return true;
     }

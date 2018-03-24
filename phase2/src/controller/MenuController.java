@@ -23,10 +23,10 @@ public class MenuController {
   }
 
   /**
-   * Gets the Menu with the given name.
+   * Gets the menu with the given name.
    *
    * @param menuName the name of the menu.
-   * @return the Menu with the given name.
+   * @return the menu with the given name.
    */
   private Menu getMenu(String menuName) {
     for (Menu menu : menus) {
@@ -38,9 +38,9 @@ public class MenuController {
   }
 
   /**
-   * Gets the ArrayList of Menus
+   * Gets all menus in the menu controller.
    *
-   * @return the instance variable menus
+   * @return the list of menus.
    */
   public ArrayList<Menu> getMenuList() {
     return menus;
@@ -53,8 +53,7 @@ public class MenuController {
    * @param menuItemName the name of the item to add.
    * @param price the price of the item.
    */
-  public void addMenuItem(
-      String menuName, String menuItemName, int price, HashMap<Ingredient, Integer> ingredients) {
+  public void addMenuItem(String menuName, String menuItemName, int price, HashMap<Ingredient, Integer> ingredients) {
     Menu menu = getMenu(menuName);
     if (menu == null) {
       System.out.println("Given menu could not be found. Skipping.");
