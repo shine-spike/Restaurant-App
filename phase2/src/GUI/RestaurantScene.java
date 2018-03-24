@@ -30,6 +30,8 @@ public class RestaurantScene {
             restaurantTabPane.getTabs().add(new ReceiverTab(id).getTab());
         }
 
-        return new Scene(restaurantTabPane);
+        Scene scene = new Scene(restaurantTabPane);
+        scene.getStylesheets().add(getClass().getResource("../application.css").toExternalForm());
+        return scene;
     }
 }

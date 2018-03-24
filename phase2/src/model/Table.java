@@ -46,24 +46,30 @@ public class Table {
   }
 
   /**
-   * Returns this table's unformatted bill.
+   * Gets this table's bill.
    *
-   * @return the unformatted bill.
+   * @return the total bill of this table.
    */
   public Bill getCurrentBill(){
     return currentBill;
   }
 
   /**
-   * Returns this table's formatted bill.
+   * Gets this table's formatted bill string.
    *
    * @return the formatted bill string.
    */
-  public String printBill() {
-    return currentBill.toString();
+  public String getBillString() {
+    return currentBill.getBillString();
   }
 
-  public String printBill(int customerNumber) {
-    return customerBills.get(customerNumber).toString();
+  /**
+   * Gets the formatted bill string of the customer with the given customer index on this table.
+   *
+   * @param customerIndex the index of the customer.
+   * @return the string representation of the customer's bill.
+   */
+  public String getBillString(int customerIndex) {
+    return customerBills.get(customerIndex).getBillString();
   }
 }

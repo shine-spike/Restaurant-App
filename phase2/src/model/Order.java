@@ -8,8 +8,7 @@ import java.util.HashMap;
  * with all required information to travel through the restaurant system.
  */
 public class Order {
-  // The largest order number stored for all orders
-  private static int currentOrderNum = 0;
+  private static int numOrders = 0;
 
   private final int orderNumber;
   private final int tableNumber;
@@ -32,7 +31,7 @@ public class Order {
    */
   public Order(int employeeNumber, int tableNumber, int customerIndex,
                MenuItem menuItem, HashMap<Ingredient, Integer> ingredients) {
-    this.orderNumber = currentOrderNum;
+    this.orderNumber = numOrders;
     this.tableNumber = tableNumber;
     this.customerIndex = customerIndex;
 
@@ -40,7 +39,7 @@ public class Order {
     this.menuItem = menuItem;
     this.ingredients = ingredients;
 
-    currentOrderNum++;
+    numOrders++;
   }
 
   /**
