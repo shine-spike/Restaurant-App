@@ -2,7 +2,7 @@ package GUI;
 
 import controller.Restaurant;
 import org.jetbrains.annotations.NotNull;
-import parsing.Parser;
+import util.Parser;
 
 /**
  * Manages starting up a {@link Restaurant} and {@link Parser} and coordinating their interaction.

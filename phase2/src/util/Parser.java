@@ -1,15 +1,14 @@
-package parsing;
+package util;
 
-import org.jetbrains.annotations.NotNull;
 import controller.Restaurant;
-import model.Ingredient;;
-import util.Localizer;
+import model.Ingredient;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.HashMap;;
 
 /**
  * Controls all file input parsing from configuration files and provides an interface for parsing

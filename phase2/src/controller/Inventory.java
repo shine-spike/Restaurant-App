@@ -77,7 +77,7 @@ public class Inventory {
 
       if (ingredient.shouldReorder()) {
         Logger.reorderLog(ingredient.getName());
-        Reorderer.reorder(ingredient, DEFAULT_REORDER_AMOUNT);
+        Reorderer.reorder(ingredient.getName(), DEFAULT_REORDER_AMOUNT);
       }
     }
   }
