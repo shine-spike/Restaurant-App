@@ -40,7 +40,6 @@ public class RestaurantApplication extends Application {
 
   private void setupStage() {
     Scene scene = new Scene(new GridPane());
-    scene.getStylesheets().add(getClass().getResource("../application.css").toExternalForm());
     stage.setScene(scene);
 
     stage.setFullScreen(true);
