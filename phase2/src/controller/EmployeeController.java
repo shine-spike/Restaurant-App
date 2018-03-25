@@ -23,9 +23,9 @@ public class EmployeeController {
    * @param employeeType the employee's type string identifier.
    */
   public void registerEmployee(
-      String firstName, String lastName,  String password, String employeeType) {
+      String firstName, String lastName,  String password, EmployeeType employeeType) {
     employees.add(
-        new Employee(firstName, lastName, password, EmployeeType.getEmployeeType(employeeType)));
+        new Employee(firstName, lastName, password, employeeType));
   }
 
   /**

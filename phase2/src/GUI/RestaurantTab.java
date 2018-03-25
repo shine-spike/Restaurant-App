@@ -1,7 +1,5 @@
 package GUI;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
 
 public abstract class RestaurantTab {
@@ -13,7 +11,7 @@ public abstract class RestaurantTab {
     /**
      * Constructs a restaurant tab for the employee with the id employeeNumber
      */
-    RestaurantTab(String tabName, int employeeNumber){
+    public RestaurantTab(String tabName, int employeeNumber){
         this.employeeNumber = employeeNumber;
         initializeTab(tabName);
     }

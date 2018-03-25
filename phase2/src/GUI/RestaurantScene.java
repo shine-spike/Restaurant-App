@@ -1,5 +1,6 @@
 package GUI;
 
+import GUI.elements.CustomGridPane;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.NodeOrientation;
@@ -22,10 +23,8 @@ public class RestaurantScene {
 
   
   public Parent getRoot() {
-    GridPane grid = new GridPane();
-    ColumnConstraints column = new ColumnConstraints();
-    column.setPercentWidth(100);
-    grid.getColumnConstraints().add(column);
+    CustomGridPane grid = new CustomGridPane(0);
+    grid.setPercentageColumns(100);
 
     Button logoutButton = new Button("Logout");
     logoutButton.setOnAction(new LogoutButtonHandler());
@@ -35,6 +34,7 @@ public class RestaurantScene {
     grid.add(toolbar, 0, 0);
 
     TabPane restaurantTabPane = new TabPane();
+    restaurantTabPane.setMinHeight(application.getStage().getHeight());
     int employeeNumber = employee.getEmployeeNumber();
     if (employee.hasAdminPermissions()) {
       restaurantTabPane.getTabs().add(new AdminTab(employeeNumber).getTab());

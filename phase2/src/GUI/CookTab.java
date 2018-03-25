@@ -31,7 +31,7 @@ public class CookTab extends RestaurantTab{
     /**
      * Constructs a CookTab for the employee with the id employeeNumber
      */
-    public CookTab(int employeeNumber){
+    CookTab(int employeeNumber){
         super("Cook", employeeNumber);
     }
 

@@ -29,6 +29,10 @@ public class RestaurantApplication extends Application {
     stage.show();
   }
 
+  public Stage getStage() {
+    return stage;
+  }
+
   public void setEmployee(Employee employee) {
     this.employee = employee;
   }

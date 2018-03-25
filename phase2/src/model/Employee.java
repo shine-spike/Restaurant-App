@@ -38,6 +38,10 @@ public class Employee {
     this.lastName = lastName;
   }
 
+  public void setPassword(String password) {
+    passwordHashCode = password.hashCode();
+  }
+
   public void setEmployeeType(EmployeeType employeeType) {
     this.employeeType = employeeType;
   }
