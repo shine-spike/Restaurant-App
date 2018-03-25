@@ -1,7 +1,6 @@
 package GUI;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import controller.Restaurant;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -10,8 +9,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-
-import controller.Restaurant;
 import model.Employee;
 import org.jetbrains.annotations.NotNull;
 
@@ -43,19 +40,21 @@ public class LoginScene {
     // Username area
     Label userName = new Label("Employee Name");
     userTextField = new TextField();
+    userTextField.setText("Admin account"); // TODO: remove
     grid.add(userName, 0, 10);
     grid.add(userTextField, 1, 10);
 
     // Password area
     Label password = new Label("Password");
     passwordField = new PasswordField();
+    passwordField.setText("adminaccount"); // TODO: remove
     grid.add(password, 0, 11);
     grid.add(passwordField, 1, 11);
 
     // Login button
     Button loginButton = new Button("Login");
     loginButton.setMinWidth(grid.getMinWidth());
-    loginButton.setOnAction(new LoginButtonHandler());
+    loginButton.setOnAction(e -> loginButtonPressed());
     grid.add(loginButton, 0, 18, 2, 1);
 
     // Incorrect password warning
@@ -66,23 +65,20 @@ public class LoginScene {
     incorrectPassword.setStyle("-fx-font-weight: bold");
     grid.add(incorrectPassword, 0, 24, 2, 1);
 
-
     return grid;
   }
 
-  private class LoginButtonHandler implements EventHandler<ActionEvent> {
-    @Override
-    public void handle(ActionEvent e) {
-      Employee employee =
-          Restaurant.getInstance()
-              .getEmployeeController()
-              .login(userTextField.getText(), passwordField.getText());
-      if (employee != null) {
-        application.setEmployee(employee);
-        application.startRestaurantScene();
-      } else {
-        incorrectPassword.setText("Incorrect Username or Password");
-      }
+  private void loginButtonPressed() {
+    Employee employee =
+        Restaurant.getInstance()
+            .getEmployeeController()
+            .login(userTextField.getText(), passwordField.getText());
+
+    if (employee != null) {
+      application.setEmployee(employee);
+      application.startRestaurantScene();
+    } else {
+      incorrectPassword.setText("Incorrect Username or Password");
     }
   }
 }

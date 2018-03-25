@@ -75,7 +75,7 @@ public class ReceiverTab extends RestaurantTab {
     // Add Ingredients Button
     Button button = new Button("Enter");
     button.setMaxWidth(Double.MAX_VALUE);
-    button.setOnAction(new ReceiverTabHandler());
+    button.setOnAction(e -> receiveButtonPressed());
 
     grid.add(nameLabel, 0, 0);
     grid.add(nameField, 0, 1);
@@ -91,33 +91,30 @@ public class ReceiverTab extends RestaurantTab {
   /** Updates all the nodes of this tab with the appropriate new information */
   public void updateTab() {}
 
-  private class ReceiverTabHandler implements EventHandler<ActionEvent> {
-    @Override
-    public void handle(ActionEvent e) {
-      warningString.setText("");
-      int num = amountSpinner.getValue();
-      int selectedIndex = ingredientsListView.getSelectionModel().getSelectedIndex();
+  private void receiveButtonPressed() {
+    warningString.setText("");
+    int num = amountSpinner.getValue();
+    int selectedIndex = ingredientsListView.getSelectionModel().getSelectedIndex();
 
-      if (selectedIndex != -1) {
-        boolean hasReceived = inventory.restockIngredient(ingredientsList.get(selectedIndex), num);
+    if (selectedIndex != -1) {
+      boolean hasReceived = inventory.restockIngredient(ingredientsList.get(selectedIndex), num);
 
-        if (hasReceived) {
-          warningString.setStyle("-fx-font-weight: normal");
-          warningString.setTextFill(Color.BLACK);
-          warningString.setText(
-              num + " " + displayIngredientsList.get(selectedIndex) + "(s) added to inventory");
-          amountSpinner.getValueFactory().setValue(1);
-          nameField.setText("");
-        } else {
-          warningString.setStyle("-fx-font-weight: bold");
-          warningString.setTextFill(Color.FIREBRICK);
-          warningString.setText("Unknown Error");
-        }
+      if (hasReceived) {
+        warningString.setStyle("-fx-font-weight: normal");
+        warningString.setTextFill(Color.BLACK);
+        warningString.setText(
+                num + " " + displayIngredientsList.get(selectedIndex) + "(s) added to inventory");
+        amountSpinner.getValueFactory().setValue(1);
+        nameField.setText("");
       } else {
         warningString.setStyle("-fx-font-weight: bold");
         warningString.setTextFill(Color.FIREBRICK);
-        warningString.setText("No ingredient selected");
+        warningString.setText("Unknown Error");
       }
+    } else {
+      warningString.setStyle("-fx-font-weight: bold");
+      warningString.setTextFill(Color.FIREBRICK);
+      warningString.setText("No ingredient selected");
     }
   }
 
