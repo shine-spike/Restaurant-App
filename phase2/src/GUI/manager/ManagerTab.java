@@ -1,8 +1,10 @@
-package GUI;
+package GUI.manager;
 
-public class ManagerTab extends RestaurantTab {
+import GUI.elements.CustomTab;
+
+public class ManagerTab extends CustomTab {
   /** Constructs a ManagerTab for the employee with the id employeeNumber */
-  ManagerTab(int employeeNumber) {
+  public ManagerTab(int employeeNumber) {
     super("Manager", employeeNumber);
   }
 

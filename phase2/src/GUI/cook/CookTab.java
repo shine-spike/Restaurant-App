@@ -1,5 +1,6 @@
-package GUI;
+package GUI.cook;
 
+import GUI.elements.CustomTab;
 import controller.OrderController;
 import controller.Restaurant;
 import javafx.collections.FXCollections;
@@ -11,7 +12,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Tab;
 import javafx.scene.layout.GridPane;
 import model.Ingredient;
 import model.Order;
@@ -21,7 +21,7 @@ import util.Localizer;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class CookTab extends RestaurantTab{
+public class CookTab extends CustomTab {
     private static OrderController orderController = Restaurant.getInstance().getOrderController();
     private ArrayList<Order> orders;
     private ObservableList<String> displayOrders;
@@ -31,7 +31,7 @@ public class CookTab extends RestaurantTab{
     /**
      * Constructs a CookTab for the employee with the id employeeNumber
      */
-    CookTab(int employeeNumber){
+    public CookTab(int employeeNumber){
         super("Cook", employeeNumber);
     }
 

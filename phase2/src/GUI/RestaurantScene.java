@@ -1,6 +1,11 @@
 package GUI;
 
+import GUI.admin.AdminTab;
+import GUI.cook.CookTab;
 import GUI.elements.CustomGridPane;
+import GUI.manager.ManagerTab;
+import GUI.receiver.ReceiverTab;
+import GUI.server.ServerTab;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.NodeOrientation;
@@ -8,8 +13,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.ToolBar;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
 import model.Employee;
 
 public class RestaurantScene {

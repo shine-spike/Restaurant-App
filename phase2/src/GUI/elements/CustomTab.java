@@ -1,8 +1,8 @@
-package GUI;
+package GUI.elements;
 
 import javafx.scene.control.Tab;
 
-public abstract class RestaurantTab {
+public abstract class CustomTab {
     // The JavaFX tab that this class represents
     private Tab tab;
     // The number of the employee using this tab
@@ -11,7 +11,7 @@ public abstract class RestaurantTab {
     /**
      * Constructs a restaurant tab for the employee with the id employeeNumber
      */
-    public RestaurantTab(String tabName, int employeeNumber){
+    public CustomTab(String tabName, int employeeNumber){
         this.employeeNumber = employeeNumber;
         initializeTab(tabName);
     }

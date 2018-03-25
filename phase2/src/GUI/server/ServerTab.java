@@ -1,5 +1,6 @@
-package GUI;
+package GUI.server;
 
+import GUI.elements.CustomTab;
 import controller.MenuController;
 import controller.Restaurant;
 import javafx.collections.FXCollections;
@@ -15,9 +16,7 @@ import model.Order;
 
 import static java.lang.Integer.parseInt;
 
-public class ServerTab extends RestaurantTab {
-
-  
+public class ServerTab extends CustomTab {
   private Restaurant restaurant = Restaurant.getInstance();
   
   private MenuController menuController = restaurant.getMenuController();
@@ -42,7 +41,7 @@ public class ServerTab extends RestaurantTab {
   private Spinner<Integer> customerIDSpinner;
 
   /** Constructs a ServerTab for the employee with the id employeeNumber */
-  ServerTab(int employeeNumber) {
+  public ServerTab(int employeeNumber) {
     super("Server", employeeNumber);
   }
 

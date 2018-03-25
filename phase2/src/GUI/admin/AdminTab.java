@@ -1,9 +1,9 @@
-package GUI;
+package GUI.admin;
 
-import GUI.admin.HomeAdminPage;
+import GUI.elements.CustomTab;
 
-public class AdminTab extends RestaurantTab {
-  AdminTab(int employeeNumber) {
+public class AdminTab extends CustomTab {
+  public AdminTab(int employeeNumber) {
     super("Admin", employeeNumber);
   }
 

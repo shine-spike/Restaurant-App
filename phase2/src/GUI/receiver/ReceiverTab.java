@@ -1,13 +1,12 @@
-package GUI;
+package GUI.receiver;
 
+import GUI.elements.CustomTab;
 import controller.Inventory;
 import controller.Restaurant;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -18,7 +17,7 @@ import util.Localizer;
 
 import java.util.ArrayList;
 
-public class ReceiverTab extends RestaurantTab {
+public class ReceiverTab extends CustomTab {
   private static final Inventory inventory = Restaurant.getInstance().getInventory();
   private Spinner<Integer> amountSpinner;
   private TextField nameField;
@@ -28,7 +27,7 @@ public class ReceiverTab extends RestaurantTab {
   private Label warningString;
 
   /** Constructs a ReceiverTab for the employee with the id employeeNumber */
-  ReceiverTab(int employeeNumber) {
+  public ReceiverTab(int employeeNumber) {
     super("Receiver", employeeNumber);
   }
 
