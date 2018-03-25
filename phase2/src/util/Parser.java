@@ -3,6 +3,7 @@ package util;
 import controller.Restaurant;
 import model.Ingredient;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,58 +14,30 @@ import java.util.HashMap;;
 /**
  * Controls all file input parsing from configuration files and provides an interface for parsing
  * event files.
- *
- * <p>Passes on the parsed information to the respective Restaurant.
  */
 public class Parser {
-  /** Flags that a line in a file should be ignored. */
   private static final char COMMENT_SYMBOL = '%';
-  // The names of all the files we need to access.
+
+  private static final String filesLocation = "phase2/config/";
   private static final String EMPLOYEE_FILE_NAME = "employees.txt";
   private static final String INGREDIENTS_FILE_NAME = "ingredients.txt";
   private static final String MENUS_FILE_NAME = "menus.txt";
   private static final String LOCALE_FILE_NAME = "locale.txt";
-  private final Restaurant restaurant;
-  // Where to read the files from
-  private String filesLocation = "phase2/config/";
 
-  /**
-   * Constructs a Parser for a given restaurant.
-   *
-   * @param restaurant the Restaurant to pass in the information to.
-   */
-  public Parser(Restaurant restaurant) {
-    this.restaurant = restaurant;
-  }
+  private static final Restaurant restaurant = Restaurant.getInstance();
 
-  /**
-   * Changes the location of the files that need to be parsed.
-   *
-   * @param filesLocation the new location of the files.
-   */
-  public void setFilesLocation(String filesLocation) {
-    this.filesLocation = filesLocation;
-  }
-
-  /**
-   * Verifies that the given configuration folder exists and creates it on the spot with a
-   * notification if not.
-   */
-  private void verifyConfigurationFolder() {
-    // Make sure that the configuration file location exists and
-    // notify if it was created right now
+  /** Creates the configuration folder if it does not exist. */
+  private static void verifyConfigurationFolder() {
     Boolean madeNew = new File(filesLocation).mkdirs();
     if (madeNew) {
+      // TODO: remove print
       System.out.println("Configuration folder not found. Created a new one.");
     }
   }
 
-  /** Parses all the configuration files needed. */
-  public void parseConfiguration() {
-    // Make sure the configuration folder exists
+  /** Parses all configuration files. */
+  public static void parseConfiguration() {
     verifyConfigurationFolder();
-
-    // Parse each type of configuration file
     parseLocale();
     parseEmployeeConfiguration();
     parseIngredientConfiguration();
@@ -77,21 +50,23 @@ public class Parser {
    * @param fileName the name of the file to generate a reader for.
    * @return the reader generated.
    */
-  private BufferedReader getReader(String fileName) {
+  @Nullable
+  private static BufferedReader getReader(String fileName) {
     // Find the file we want to get the reader for
     File file = new File(filesLocation + fileName);
 
     try {
       // Attempt to create the file and notify if it was created now
       if (file.createNewFile()) {
+        // TODO: remove print
         System.out.println(file.getName() + " not found. Created a new one.");
       }
 
       // Return the reader of the file whether or not we just created it
       return new BufferedReader(new FileReader(file));
     } catch (IOException e) {
+      // TODO; remove print
       System.out.println(file.getName() + " not found and could not be created.");
-
       return null;
     }
   }
@@ -104,7 +79,7 @@ public class Parser {
    * @return the array of symbols representing the different parts of the line read.
    */
   @NotNull
-  private String[] preParse(BufferedReader reader) {
+  private static String[] preParse(BufferedReader reader) {
     String[] symbols;
 
     // Keep trying to pre-parse a line until we actually read a line with usable information
@@ -114,6 +89,7 @@ public class Parser {
       try {
         line = reader.readLine();
       } catch (IOException e) {
+        // TODO: remove print
         System.out.println("Reading a line failed.");
       }
 
@@ -133,8 +109,8 @@ public class Parser {
     return symbols;
   }
 
-  /** Parses the employee configuration file. Reads in the names of employees. */
-  private void parseEmployeeConfiguration() {
+  /** Parses the employee configuration file and registers employees. */
+  private static void parseEmployeeConfiguration() {
     BufferedReader reader = getReader(EMPLOYEE_FILE_NAME);
     if (reader == null) {
       return;
@@ -143,6 +119,7 @@ public class Parser {
     String[] symbols;
     while ((symbols = preParse(reader)).length != 0) {
       if (symbols.length != 4) {
+        // TODO: remove print
         System.out.println(
             "Line in employees file should have four entries, "
                 + symbols.length
@@ -155,8 +132,8 @@ public class Parser {
     }
   }
 
-  /** Parses the ingredient configuration file. Reads in the names of ingredients. */
-  private void parseIngredientConfiguration() {
+  /** Parses the ingredient configuration file and adds ingredients to inventory. */
+  private static void parseIngredientConfiguration() {
     BufferedReader reader = getReader(INGREDIENTS_FILE_NAME);
     if (reader == null) {
       return;
@@ -182,11 +159,8 @@ public class Parser {
     }
   }
 
-  /**
-   * Parses the menu configuration file. Reads in the names of menus, their menu items, what they
-   * are made of and what additions and subtractions can be added to each.
-   */
-  private void parseMenuConfiguration() {
+  /** Parses the menu configuration file and registers populated menus. */
+  private static void parseMenuConfiguration() {
     BufferedReader reader = getReader(MENUS_FILE_NAME);
     if (reader == null) {
       return;
@@ -224,8 +198,8 @@ public class Parser {
     }
   }
 
-  /** Parses the localization file. */
-  private void parseLocale() {
+  /** Parses the localization file and registers unlocalized names. */
+  private static void parseLocale() {
     BufferedReader reader = getReader(LOCALE_FILE_NAME);
     if (reader == null) {
       return;

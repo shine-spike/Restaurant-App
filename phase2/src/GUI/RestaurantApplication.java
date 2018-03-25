@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import model.Employee;
 import org.jetbrains.annotations.NotNull;
 import util.Logger;
+import util.Parser;
 
 public class RestaurantApplication extends Application {
   private Stage stage;
@@ -19,8 +20,7 @@ public class RestaurantApplication extends Application {
   public void start(@NotNull Stage stage) {
     System.setProperty("prism.lcdtext", "false");
 
-    Driver driver = new Driver();
-    driver.readConfiguration();
+    Parser.parseConfiguration();
     Logger.startLogger();
 
     this.stage = stage;
