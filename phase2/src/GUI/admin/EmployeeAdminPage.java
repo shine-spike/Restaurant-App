@@ -7,6 +7,8 @@ import GUI.elements.CustomPage;
 import controller.EmployeeController;
 import controller.Restaurant;
 import javafx.collections.FXCollections;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import model.Employee;
 import model.EmployeeType;
@@ -71,7 +73,8 @@ public class EmployeeAdminPage extends CustomPage {
     modificationLabel.setBold();
     grid.add(modificationLabel, 1, 10, 5, 1);
 
-    CustomButton modifyButton = new CustomButton("Modify", true);
+    CustomButton modifyButton = new CustomButton("Modify");
+    modifyButton.maximize();
     modifyButton.setOnAction(
         e -> {
           Employee employee = employeeListView.getSelectionModel().getSelectedItem();
@@ -118,7 +121,8 @@ public class EmployeeAdminPage extends CustomPage {
     additionLabel.setBold();
     grid.add(additionLabel, 1, 20, 5, 1);
 
-    CustomButton addButton = new CustomButton("Register", true);
+    CustomButton addButton = new CustomButton("Register");
+    addButton.maximize();
     addButton.setOnAction(
         e -> {
           String newFirstName = newFirstNameField.getText();
