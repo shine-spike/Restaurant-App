@@ -12,21 +12,29 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import model.Ingredient;
 import model.Order;
 import model.OrderStatus;
 import util.Localizer;
+import util.OrderFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class CookTab extends CustomTab {
+public class CookTab extends CustomTab{
     private static OrderController orderController = Restaurant.getInstance().getOrderController();
     private ArrayList<Order> orders;
     private ObservableList<String> displayOrders;
     private ListView<String> orderListView;
-    private Label activeOrderInfo;
+    private TextArea activeOrderInfo;
+    private Text warningText;
+    private Button readyButton, seenButton, cancelButton;
+    private int selectedOrderIndex = -1;
 
     /**
      * Constructs a CookTab for the employee with the id employeeNumber
@@ -50,10 +58,8 @@ public class CookTab extends CustomTab {
         Label activeOrderLabel = new Label("Active Orders");
 
         // TODO Remove, this is just for testing
-        HashMap<String, Integer> ingred = new HashMap<>();
-        ingred.put("burger_patty", 1);
-        // PlaceOrderEvent placeOrderEvent = new PlaceOrderEvent(1, 1, 1,"lunch", "burger", ingred);
-        // placeOrderEvent.process();
+        orderController.placeOrder(OrderFactory.createOrder(1, 1, 1,"lunch", "burger", new HashMap<String, Integer>()));
+        System.out.println(orderController.getOrderFromNumber(0).getStatus());
 
         orders = new ArrayList<>();
         orders.addAll(orderController.ordersFromStatus(OrderStatus.PLACED));
@@ -63,21 +69,43 @@ public class CookTab extends CustomTab {
         displayOrders = FXCollections.observableArrayList(activeOrdersFormat(orders));
 
         orderListView = new ListView<>(displayOrders);
+        orderListView.setOnMouseClicked(new CookTabClickHandler());
 
-        // Select Button
-        Button button = new Button("Select");
-        button.setOnAction(new CookTabHandler());
+        // Active Order grid
+        GridPane activeOrderGrid = new GridPane();
+        activeOrderGrid.setAlignment(Pos.CENTER);
+        activeOrderGrid.setHgap(10);
+        activeOrderGrid.setVgap(10);
+        activeOrderGrid.setPadding(new Insets(25, 25, 25, 25));
+
+        // Active Order grid buttons
+        seenButton = new Button("Seen");
+        seenButton.setOnAction(new CookTabButtonHandler());
+
+        readyButton = new Button("Ready");
+        readyButton.setOnAction(new CookTabButtonHandler());
+
+        cancelButton = new Button("Cancel");
+        cancelButton.setOnAction(new CookTabButtonHandler());
 
         // Active Order
-        activeOrderInfo = new Label("");
+        activeOrderInfo = new TextArea();
+        activeOrderInfo.setEditable(false);
+        activeOrderInfo.setMaxWidth(200);
+
+        // Warning Text
+        warningText = new Text();
+        warningText.setFill(Color.FIREBRICK);
+
+        activeOrderGrid.add(activeOrderInfo, 0, 0, 3, 1);
+        activeOrderGrid.add(seenButton, 0, 1);
+        activeOrderGrid.add(readyButton, 1, 1);
+        activeOrderGrid.add(cancelButton, 2, 1);
+        activeOrderGrid.add(warningText, 0, 3, 3, 1);
 
         grid.add(activeOrderLabel, 0, 0);
         grid.add(orderListView, 0, 1, 1, 2);
-        grid.add(button, 0, 3);
-        grid.add(activeOrderInfo, 1, 1);
-
-        // Tab cookTab = new Tab("Cook", grid);
-        // cookTab.setClosable(false);
+        grid.add(activeOrderGrid, 1, 1, 1, 2);
 
         getTab().setContent(grid);
     }
@@ -103,39 +131,99 @@ public class CookTab extends CustomTab {
      * @return a formatted string for this active order
      */
     public String activeOrdersFormat(Order order){
-        return order.getOrderNumber() + " " + order.getMenuItem().getName();
+        StringBuilder out = new StringBuilder();
+
+        if(order.getStatus().equals(OrderStatus.PLACED)) {
+            out.append("NEW ");
+        } else if(order.getStatus().equals(OrderStatus.REDO)){
+            out.append("REDO ");
+        }
+
+        out.append(order.getOrderNumber());
+        out.append(" ");
+        out.append(order.getMenuItem().getName());
+
+        return out.toString();
     }
 
     /**
      * Returns formatted Order String for selected orders list
      * @param order The Order to be formatted
-     * @return a formatted string for this active order
-     */
+     * @return a formatted string for this active order*/
     public String selectedOrdersFormat(Order order){
-        StringBuilder out = new StringBuilder(order.getMenuItem().getName());
+        StringBuilder out = new StringBuilder(order.getOrderNumber() + " " + order.getMenuItem().getName());
 
         HashMap<Ingredient, Integer> ingredients = order.getIngredients();
 
         for(Ingredient i: ingredients.keySet()){
-            out.append("\n - " + Localizer.localize(i.getName()) + " " + ingredients.get(i));
+            out.append("\n - ");
+            out.append(Localizer.localize(i.getName()));
+            out.append(" ");
+            out.append(ingredients.get(i));
         }
 
         return out.toString();
     }
 
     /**
+     * Returns whether all orders have been seen
+     * @return True iff all orders have been seen
+     */
+    private boolean allOrdersSeen(){
+        for(Order i: orders){
+            if(!i.getStatus().equals(OrderStatus.SEEN))
+                return false;
+        }
+        return true;
+    }
+
+    /**
      * Updates all the nodes of this tab with the appropriate new information
      */
     public void updateTab(){
+        orders = new ArrayList<>();
+        orders.addAll(orderController.ordersFromStatus(OrderStatus.PLACED));
+        orders.addAll(orderController.ordersFromStatus(OrderStatus.SEEN));
+        orders.addAll(orderController.ordersFromStatus(OrderStatus.REDO));
+
+        displayOrders.setAll(activeOrdersFormat(orders));
 
     }
 
-    private class CookTabHandler implements EventHandler<ActionEvent> {
+    private class CookTabButtonHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent e) {
-            int selectedOrderIndex = orderListView.getSelectionModel().getSelectedIndex();
+            warningText.setText("");
 
-            if(selectedOrderIndex != -1){
+            if(selectedOrderIndex != -1) {
+                Order selectedOrder = orders.get(selectedOrderIndex);
+
+                if (e.getSource() == seenButton) {
+                    orderController.seeOrder(selectedOrder);
+                } else if (allOrdersSeen()) {
+                    if (e.getSource() == readyButton) {
+                        orderController.readyOrder(selectedOrder);
+                    } else if (e.getSource() == cancelButton) {
+                        orderController.cancelOrder(selectedOrder);
+                    }
+                }
+                else {
+                    warningText.setText("Acknowledge all orders first");
+                }
+            } else {
+                warningText.setText("No Order Selected");
+            }
+
+            updateTab();
+        }
+    }
+
+    private  class CookTabClickHandler implements EventHandler<MouseEvent>{
+        @Override
+        public void handle(MouseEvent e) {
+            selectedOrderIndex = orderListView.getSelectionModel().getSelectedIndex();
+
+            if(selectedOrderIndex != -1) {
                 activeOrderInfo.setText(selectedOrdersFormat(orders.get(selectedOrderIndex)));
             }
         }

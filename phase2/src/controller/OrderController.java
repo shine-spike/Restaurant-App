@@ -34,15 +34,15 @@ public class OrderController {
    */
   
   public ArrayList<Order> ordersFromStatus(OrderStatus orderStatus) {
-    ArrayList<Order> orders = new ArrayList<>();
+    ArrayList<Order> out = new ArrayList<>();
 
     for (Order order : orders) {
       if (order.getStatus().equals(orderStatus)) {
-        orders.add(order);
+        out.add(order);
       }
     }
 
-    return orders;
+    return out;
   }
 
   /**
