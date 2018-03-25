@@ -22,7 +22,6 @@ import model.Order;
 import model.OrderStatus;
 import util.Localizer;
 import util.OrderFactory;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
