@@ -2,6 +2,7 @@ package util;
 
 import controller.Restaurant;
 import model.Ingredient;
+import model.MenuItem;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -176,21 +177,18 @@ public class Parser {
         }
 
         String currentItem = symbols[0];
-        HashMap<Ingredient, Integer> ingredients = new HashMap<>();
+        HashMap<String, Integer> ingredientNames = new HashMap<>();
 
         for (String ingredientName : preParse(reader)) {
-          Ingredient ingredient = restaurant.getInventory().getIngredient(ingredientName);
-          ingredients.put(ingredient, 1);
+          ingredientNames.put(ingredientName, 1);
         }
 
-        for (String additionName : preParse(reader)) {
-          Ingredient addition = restaurant.getInventory().getIngredient(additionName);
-          ingredients.put(addition, 0);
+        for (String ingredientName : preParse(reader)) {
+          ingredientNames.put(ingredientName, 0);
         }
 
-        restaurant
-            .getMenuController()
-            .addMenuItem(currentMenu, currentItem, Integer.parseInt(symbols[1]), ingredients);
+        MenuItem menuItem = MenuItemFactory.createMenuItem(currentItem, Integer.parseInt(symbols[1]), ingredientNames);
+        restaurant.getMenuController().addMenuItem(currentMenu, menuItem);
       } else {
         currentMenu = symbols[1];
         restaurant.getMenuController().addMenu(currentMenu);

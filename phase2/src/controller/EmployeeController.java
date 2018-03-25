@@ -9,13 +9,11 @@ import java.util.ArrayList;
 
 /** Controls all aspects of employees in the restaurant. */
 public class EmployeeController {
-  // List of employees indexed by employee number
-  @NotNull private final ArrayList<Employee> employees;
+  private final ArrayList<Employee> employees = new ArrayList<>();
 
   /** Creates an employee controller with only the administrator account. */
   EmployeeController() {
-    employees = new ArrayList<>();
-    employees.add(new Employee("", "", "admin", EmployeeType.ADMIN));
+    employees.add(new Employee("Admin", "account", "adminaccount", EmployeeType.ADMIN));
   }
 
   /**
@@ -27,16 +25,16 @@ public class EmployeeController {
    * @param employeeType the employee's type string identifier.
    */
   public void registerEmployee(
-      String firstName, String lastName, @NotNull String password, @NotNull String employeeType) {
+      String firstName, String lastName, @NotNull String password, String employeeType) {
     employees.add(
         new Employee(firstName, lastName, password, EmployeeType.getEmployeeType(employeeType)));
   }
 
   /**
-   * Gets the employee object
+   * Gets the employee with the given name.
    *
-   * @param name the name of the desired Employee
-   * @return the Employee object with the given name
+   * @param name the name of the employee.
+   * @return the employee with the given name or {@code null} if no such employee exists.
    */
   @Nullable
   public Employee getEmployee(String name) {
@@ -45,7 +43,6 @@ public class EmployeeController {
         return employee;
       }
     }
-
     return null;
   }
 

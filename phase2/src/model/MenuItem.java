@@ -18,7 +18,7 @@ public class MenuItem {
    * @param name  the name of the menu item.
    * @param price the price of the menu item.
    */
-  MenuItem(String name, int price, HashMap<Ingredient, Integer> ingredients) {
+  public MenuItem(String name, int price, HashMap<Ingredient, Integer> ingredients) {
     this.price = price;
     this.name = name;
     this.ingredients = ingredients;

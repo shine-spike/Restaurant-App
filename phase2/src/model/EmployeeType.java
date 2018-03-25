@@ -16,9 +16,9 @@ public enum EmployeeType {
   }
 
   @NotNull
-  public static EmployeeType getEmployeeType(@NotNull String keyword) {
+  public static EmployeeType getEmployeeType(String keyword) {
     for (EmployeeType type : EmployeeType.values()) {
-      if (keyword.equals(type.keyword)) {
+      if (type.keyword.equals(keyword)) {
         return type;
       }
     }

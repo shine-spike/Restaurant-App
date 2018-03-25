@@ -3,9 +3,7 @@ package controller;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Restaurant in the system. Manages all interactions.
- *
- * <p>Contains all functional parts of a restaurant and provides an interface for interaction.
+ * Main controller of the system, only contains hooks to sub-controllers.
  */
 public final class Restaurant {
   // Singleton instance of the restaurant

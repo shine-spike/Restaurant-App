@@ -31,13 +31,10 @@ public class Menu {
   }
 
   /**
-   * Adds a new menu item with the given name and price to this menu.
-   *
-   * @param menuItemName the name of the new menu item.
-   * @param price        the price of the new menu item.
+   * Adds the given menu item to the menu.
    */
-  public void addMenuItem(String menuItemName, int price, HashMap<Ingredient, Integer> ingredients) {
-    menuItems.add(new MenuItem(menuItemName, price, ingredients));
+  public void addMenuItem(MenuItem menuItem) {
+    menuItems.add(menuItem);
   }
 
   /**

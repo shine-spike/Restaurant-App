@@ -14,13 +14,10 @@ import java.util.ArrayList;
 public class Inventory {
   private static final int DEFAULT_REORDER_AMOUNT = 20;
 
-  @NotNull
-  private final ArrayList<Ingredient> ingredients;
+  private final ArrayList<Ingredient> ingredients = new ArrayList<>();
 
-  /** Constructs an inventory with an empty ingredient container. */
-  Inventory() {
-    this.ingredients = new ArrayList<>();
-  }
+  /** Constructs an empty inventory. */
+  Inventory() {}
 
   /**
    * Adds an ingredient with the given name to the inventory.
@@ -34,10 +31,10 @@ public class Inventory {
   }
 
   /**
-   * Gets the Ingredient with the given name.
+   * Gets the ingredient with the given name.
    *
    * @param ingredientName the name of the ingredient.
-   * @return the Ingredient with that name. If no ingredient has that name, returns {@code null}.
+   * @return the ingredient with that name or {@code null} if no such ingredient exists.
    */
   @Nullable
   public Ingredient getIngredient(String ingredientName) {
@@ -50,10 +47,10 @@ public class Inventory {
   }
 
   /**
-   * Confirms an order can be satisfied.
+   * Confirms a given order can be satisfied with the current inventory.
    *
    * @param order the order to be checked.
-   * @return whether or not it can be satisfied.
+   * @return whether or not the order can be satisfied.
    */
   public boolean confirmOrder(@NotNull Order order) {
     for (Ingredient ingredient : order.getIngredients().keySet()) {
@@ -72,6 +69,7 @@ public class Inventory {
   public void consumeIngredients(@NotNull Order order) {
     for (Ingredient ingredient : order.getIngredients().keySet()) {
       int amount = order.getIngredients().get(ingredient);
+
       Logger.inventoryLog("CONSUME", amount, ingredient.getName(), "consumed");
       ingredient.modifyQuantity(-amount);
 
@@ -99,10 +97,10 @@ public class Inventory {
   }
 
   /**
-   * Returns an ArrayList of the names of items in the inventory whose names contain the search
-   * term.
+   * Returns a list of the names of items in the inventory whose names contain the search term, both
+   * localized and unlocalized.
    *
-   * @param searchTerm the search term we're checking ingredient names for.
+   * @param searchTerm the search term we are checking ingredient names for.
    */
   @NotNull
   public ArrayList<String> search(@NotNull String searchTerm) {

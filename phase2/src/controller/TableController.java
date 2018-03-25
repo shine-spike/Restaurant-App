@@ -6,8 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 /** Controls all tables in this restaurant. Manages all interactions with tables or bills. */
 public class TableController {
-  @NotNull
-  private final Table[] tables;
+  @NotNull private final Table[] tables;
 
   /**
    * Constructs a table controller with a given number of tables.
@@ -50,8 +49,7 @@ public class TableController {
   }
 
   /**
-   * Gets the formatted string representation of the bill for the table with the given table
-   * number.
+   * Gets the formatted string representation of the bill for the table with the given table number.
    *
    * @param tableNumber the number of the table.
    * @return the string representation of the bill.
@@ -62,8 +60,8 @@ public class TableController {
   }
 
   /**
-   * Gets the formatted string representation of the bill for the customer with the given index
-   * on the table with the given table number
+   * Gets the formatted string representation of the bill for the customer with the given index on
+   * the table with the given table number
    *
    * @param tableNumber the number of the table.
    * @param customerIndex the index of the customer.

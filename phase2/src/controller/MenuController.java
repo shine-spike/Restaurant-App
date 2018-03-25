@@ -1,13 +1,11 @@
 package controller;
 
-import model.Ingredient;
 import model.Menu;
 import model.MenuItem;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Controls all aspects of all the menus in a restaurant. Main interface for interaction with menus.
@@ -28,8 +26,9 @@ public class MenuController {
    * Gets the menu with the given name.
    *
    * @param menuName the name of the menu.
-   * @return the menu with the given name.
+   * @return the menu with the given name or {@code null} if no such menu exists.
    */
+  @Nullable
   private Menu getMenu(String menuName) {
     for (Menu menu : menus) {
       if (menu.getName().equals(menuName)) {
@@ -42,7 +41,7 @@ public class MenuController {
   /**
    * Gets all menus in the menu controller.
    *
-   * @return the list of menus.
+   * @return the list of held menus.
    */
   @NotNull
   public ArrayList<Menu> getMenuList() {
@@ -50,37 +49,37 @@ public class MenuController {
   }
 
   /**
-   * Adds a menu item with a given price to a the menu with the given name.
+   * Adds the given menu item to the menu with the given name.
    *
    * @param menuName the name of the menu to add the item to.
-   * @param menuItemName the name of the item to add.
-   * @param price the price of the item.
+   * @param menuItem the menu item to add.
    */
-  public void addMenuItem(String menuName, String menuItemName, int price, HashMap<Ingredient, Integer> ingredients) {
+  public void addMenuItem(String menuName, MenuItem menuItem) {
     Menu menu = getMenu(menuName);
     if (menu == null) {
+      // TODO: remove print
       System.out.println("Given menu could not be found. Skipping.");
       return;
     }
-
-    menu.addMenuItem(menuItemName, price, ingredients);
+    menu.addMenuItem(menuItem);
   }
 
   /**
    * Gets the menu item with the given name from the menu with the given name.
    *
-   * @param menuName the name of the menu to get the item from.
-   * @param menuItemName the name of the item.
-   * @return the corresponding MenuItem with the given name in the menu with the given name.
+   * @param menuName the name of the menu to get the menu item from.
+   * @param menuItemName the name of the menu item.
+   * @return the menu with the given name in the menu with the given name, or {@code null} if no
+   *     corresponding menu item exists.
    */
   @Nullable
   public MenuItem getMenuItem(String menuName, String menuItemName) {
     Menu menu = getMenu(menuName);
     if (menu == null) {
+      // TODO: remove print
       System.out.println("Given menu could not be found. Skipping.");
       return null;
     }
-
     return menu.getMenuItem(menuItemName);
   }
 }
