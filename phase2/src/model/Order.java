@@ -4,10 +4,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 
-
 /**
- * Represent an order of a single menu item with any additions or subtractions
- * with all required information to travel through the restaurant system.
+ * Represent an order of a single menu item with any additions or subtractions with all required
+ * information to travel through the restaurant system.
  */
 public class Order {
   private static int numOrders = 0;
@@ -17,29 +16,32 @@ public class Order {
   private final int customerIndex;
   private final int employeeNumber;
   private final MenuItem menuItem;
-  private final HashMap<Ingredient, Integer> ingredients;
+  private final HashMap<Ingredient, Integer> ingredientChanges;
 
   // Whether or not this order has been seen and is being prepared
   private OrderStatus status = OrderStatus.CREATED;
 
-
   /**
-   * Constructs an order consisting of a given menu item at a given table,
-   * taken by the employee with the given number.
+   * Constructs an order consisting of a given menu item at a given table, taken by the employee
+   * with the given number.
    *
    * @param employeeNumber the number of the employee who took this order.
-   * @param tableNumber    the number of the table which placed this order.
-   * @param menuItem       the MenuItem ordered.
+   * @param tableNumber the number of the table which placed this order.
+   * @param menuItem the MenuItem ordered.
    */
-  public Order(int employeeNumber, int tableNumber, int customerIndex,
-               MenuItem menuItem, HashMap<Ingredient, Integer> ingredients) {
+  public Order(
+      int employeeNumber,
+      int tableNumber,
+      int customerIndex,
+      MenuItem menuItem,
+      HashMap<Ingredient, Integer> ingredientChanges) {
     this.orderNumber = numOrders;
     this.tableNumber = tableNumber;
     this.customerIndex = customerIndex;
 
     this.employeeNumber = employeeNumber;
     this.menuItem = menuItem;
-    this.ingredients = ingredients;
+    this.ingredientChanges = ingredientChanges;
 
     numOrders++;
   }
@@ -90,16 +92,21 @@ public class Order {
    */
   @NotNull
   public Order duplicate() {
-    return new Order(employeeNumber, tableNumber, customerIndex, menuItem, ingredients);
+    return new Order(employeeNumber, tableNumber, customerIndex, menuItem, ingredientChanges);
   }
 
   /**
-   * Returns the list of ingredients needed to make this order
-   * including the additions and excluding the subtractions.
+   * Returns the list of ingredients needed to make this order including the additions and excluding
+   * the subtractions.
    *
    * @return the list of ingredients to make this order.
    */
+  @NotNull
   public HashMap<Ingredient, Integer> getIngredients() {
+    HashMap<Ingredient, Integer> ingredients = new HashMap<>(menuItem.getIngredients());
+    for (Ingredient ingredientChange : ingredientChanges.keySet()) {
+      ingredients.put(ingredientChange, ingredientChanges.getOrDefault(ingredientChange, 0) + 1);
+    }
     return ingredients;
   }
 }

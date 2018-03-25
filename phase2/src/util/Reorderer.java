@@ -1,8 +1,5 @@
 package util;
 
-import model.Ingredient;
-import org.jetbrains.annotations.NotNull;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,9 +11,9 @@ public class Reorderer {
   /**
    * Prints to file the need to reorder the given ingredient.
    *
-   * @param ingredient the ingredient to reorder.
+   * @param ingredientName the name of the ingredient to reorder.
    */
-  public static void reorder(@NotNull Ingredient ingredient, int amount) {
+  public static void reorder(String ingredientName, int amount) {
     // Find the file we want to write to
     File file = new File(REORDER_REQUEST_FILE);
 
@@ -28,9 +25,10 @@ public class Reorderer {
 
       // Write out to the file
       PrintWriter out = new PrintWriter(new FileWriter(file));
-      out.println("Reorder request for " + amount + " of " + ingredient.getName() + ".");
+      out.println("Reorder request for " + amount + " of " + ingredientName + ".");
       out.close();
     } catch (IOException e) {
+      // TODO: remove print
       System.out.println(file.getName() + " not found and could not be created.");
     }
   }
