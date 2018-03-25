@@ -2,8 +2,6 @@ package controller;
 
 import model.Employee;
 import model.EmployeeType;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 
@@ -25,7 +23,7 @@ public class EmployeeController {
    * @param employeeType the employee's type string identifier.
    */
   public void registerEmployee(
-      String firstName, String lastName, @NotNull String password, String employeeType) {
+      String firstName, String lastName,  String password, String employeeType) {
     employees.add(
         new Employee(firstName, lastName, password, EmployeeType.getEmployeeType(employeeType)));
   }
@@ -36,7 +34,7 @@ public class EmployeeController {
    * @param name the name of the employee.
    * @return the employee with the given name or {@code null} if no such employee exists.
    */
-  @Nullable
+  
   public Employee getEmployee(String name) {
     for (Employee employee : employees) {
       if (employee.getFullName().equals(name)) {
@@ -51,7 +49,7 @@ public class EmployeeController {
    *
    * @return the list of employees in this controller.
    */
-  @NotNull
+  
   public ArrayList<Employee> getEmployees() {
     return employees;
   }
@@ -64,8 +62,8 @@ public class EmployeeController {
    * @return the employee with the given login information, or {@code null} if the username-password
    *     combination does not exist in the controller.
    */
-  @Nullable
-  public Employee login(String name, @NotNull String password) {
+  
+  public Employee login(String name,  String password) {
     Employee employee = getEmployee(name);
     return employee != null && employee.checkPassword(password) ? employee : null;
   }

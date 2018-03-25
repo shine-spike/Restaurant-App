@@ -1,7 +1,5 @@
 package controller;
 
-import org.jetbrains.annotations.NotNull;
-
 /**
  * Main controller of the system, only contains hooks to sub-controllers.
  */
@@ -27,7 +25,7 @@ public final class Restaurant {
    *
    * @return the instance of the restaurant.
    */
-  @NotNull
+  
   public static Restaurant getInstance() {
     return INSTANCE;
   }
@@ -37,7 +35,7 @@ public final class Restaurant {
    *
    * @return the table controller of the restaurant.
    */
-  @NotNull
+  
   public TableController getTableController() {
     return tableController;
   }
@@ -47,7 +45,7 @@ public final class Restaurant {
    *
    * @return the employee controller of the restaurant.
    */
-  @NotNull
+  
   public EmployeeController getEmployeeController() {
     return employeeController;
   }
@@ -57,7 +55,7 @@ public final class Restaurant {
    *
    * @return the menu controller of the restaurant.
    */
-  @NotNull
+  
   public MenuController getMenuController() {
     return menuController;
   }
@@ -67,7 +65,7 @@ public final class Restaurant {
    *
    * @return the order controller of the restaurant.
    */
-  @NotNull
+  
   public OrderController getOrderController() {
     return orderController;
   }
@@ -77,7 +75,7 @@ public final class Restaurant {
    *
    * @return the inventory of the restaurant.
    */
-  @NotNull
+  
   public Inventory getInventory() {
     return inventory;
   }

@@ -2,11 +2,10 @@ package controller;
 
 import model.Order;
 import model.Table;
-import org.jetbrains.annotations.NotNull;
 
 /** Controls all tables in this restaurant. Manages all interactions with tables or bills. */
 public class TableController {
-  @NotNull private final Table[] tables;
+   private final Table[] tables;
 
   /**
    * Constructs a table controller with a given number of tables.
@@ -44,7 +43,7 @@ public class TableController {
    *
    * @param order the order to add to bill.
    */
-  public void addToBill(@NotNull Order order) {
+  public void addToBill( Order order) {
     tables[order.getTableNumber()].addToBill(order);
   }
 
@@ -54,7 +53,7 @@ public class TableController {
    * @param tableNumber the number of the table.
    * @return the string representation of the bill.
    */
-  @NotNull
+  
   public String getBillString(int tableNumber) {
     return tables[tableNumber].getBillString();
   }
@@ -67,7 +66,7 @@ public class TableController {
    * @param customerIndex the index of the customer.
    * @return the string representation of the bill.
    */
-  @NotNull
+  
   public String getBillString(int tableNumber, int customerIndex) {
     return tables[tableNumber].getBillString(customerIndex);
   }

@@ -2,8 +2,6 @@ package controller;
 
 import model.Menu;
 import model.MenuItem;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 
@@ -28,7 +26,7 @@ public class MenuController {
    * @param menuName the name of the menu.
    * @return the menu with the given name or {@code null} if no such menu exists.
    */
-  @Nullable
+  
   private Menu getMenu(String menuName) {
     for (Menu menu : menus) {
       if (menu.getName().equals(menuName)) {
@@ -43,7 +41,7 @@ public class MenuController {
    *
    * @return the list of held menus.
    */
-  @NotNull
+  
   public ArrayList<Menu> getMenuList() {
     return menus;
   }
@@ -72,7 +70,7 @@ public class MenuController {
    * @return the menu with the given name in the menu with the given name, or {@code null} if no
    *     corresponding menu item exists.
    */
-  @Nullable
+  
   public MenuItem getMenuItem(String menuName, String menuItemName) {
     Menu menu = getMenu(menuName);
     if (menu == null) {

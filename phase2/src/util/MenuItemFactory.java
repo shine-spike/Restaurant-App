@@ -3,7 +3,6 @@ package util;
 import controller.Restaurant;
 import model.Ingredient;
 import model.MenuItem;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 
@@ -20,7 +19,7 @@ public class MenuItemFactory {
    * @param ingredientAmounts the map of ingredient names to amounts in the item.
    * @return the menu item created.
    */
-  @NotNull
+  
   public static MenuItem createMenuItem(String name, int price, HashMap<String, Integer> ingredientAmounts) {
     HashMap<Ingredient, Integer> ingredients = new HashMap<>();
     for (String ingredientName : ingredientAmounts.keySet()) {

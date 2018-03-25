@@ -1,8 +1,5 @@
 package util;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -21,7 +18,7 @@ public class Localizer {
    * @return the string to which the unlocalized string was previously localized, or {@code null} if
    *     it was not previously localized.
    */
-  @Nullable
+  
   public static String register(String unlocalizedName, String localizedName) {
     return localization.putIfAbsent(unlocalizedName, localizedName);
   }
@@ -34,7 +31,7 @@ public class Localizer {
    * @return the respective localized name or the given unlocalized name if the name has not been
    *     localized.
    */
-  @NotNull
+  
   public static String localize(String unlocalizedName) {
     return localization.getOrDefault(unlocalizedName, unlocalizedName);
   }
@@ -46,7 +43,7 @@ public class Localizer {
    * @param unlocalizedNames the string representing the unlocalized name.
    * @return a list of the respective localized names.
    */
-  @NotNull
+  
   public static ArrayList<String> localize(ArrayList<String> unlocalizedNames) {
     ArrayList<String> localized = new ArrayList<>();
     for (String unlocalizedName : unlocalizedNames) {

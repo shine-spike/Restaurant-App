@@ -2,8 +2,6 @@ package controller;
 
 import model.Ingredient;
 import model.Order;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import util.Localizer;
 import util.Logger;
 import util.Reorderer;
@@ -36,7 +34,7 @@ public class Inventory {
    * @param ingredientName the name of the ingredient.
    * @return the ingredient with that name or {@code null} if no such ingredient exists.
    */
-  @Nullable
+  
   public Ingredient getIngredient(String ingredientName) {
     for (Ingredient ingredient : ingredients) {
       if (ingredient.getName().equals(ingredientName)) {
@@ -52,7 +50,7 @@ public class Inventory {
    * @param order the order to be checked.
    * @return whether or not the order can be satisfied.
    */
-  public boolean confirmOrder(@NotNull Order order) {
+  public boolean confirmOrder( Order order) {
     for (Ingredient ingredient : order.getIngredients().keySet()) {
       if (ingredient.getQuantity() < order.getIngredients().get(ingredient)) {
         return false;
@@ -66,7 +64,7 @@ public class Inventory {
    *
    * @param order the order that has been prepared.
    */
-  public void consumeIngredients(@NotNull Order order) {
+  public void consumeIngredients( Order order) {
     for (Ingredient ingredient : order.getIngredients().keySet()) {
       int amount = order.getIngredients().get(ingredient);
 
@@ -102,8 +100,8 @@ public class Inventory {
    *
    * @param searchTerm the search term we are checking ingredient names for.
    */
-  @NotNull
-  public ArrayList<String> search(@NotNull String searchTerm) {
+  
+  public ArrayList<String> search( String searchTerm) {
     ArrayList<String> foundNames = new ArrayList<>();
     for (Ingredient ingredient : ingredients) {
       String ingredientName = ingredient.getName();

@@ -14,7 +14,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import org.jetbrains.annotations.NotNull;
 import util.Localizer;
 
 import java.util.ArrayList;
@@ -120,7 +119,7 @@ public class ReceiverTab extends RestaurantTab {
   private class IngredientNameChangeListener implements ChangeListener<String> {
     @Override
     public void changed(
-        ObservableValue<? extends String> observable, String oldValue, @NotNull String newValue) {
+        ObservableValue<? extends String> observable, String oldValue,  String newValue) {
       ingredientsList = inventory.search(newValue);
       displayIngredientsList.setAll(Localizer.localize(ingredientsList));
     }

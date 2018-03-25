@@ -8,7 +8,6 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import model.Employee;
-import org.jetbrains.annotations.NotNull;
 import util.Logger;
 import util.Parser;
 
@@ -17,7 +16,7 @@ public class RestaurantApplication extends Application {
   private Employee employee;
 
   @Override
-  public void start(@NotNull Stage stage) {
+  public void start(Stage stage) {
     System.setProperty("prism.lcdtext", "false");
 
     Parser.parseConfiguration();

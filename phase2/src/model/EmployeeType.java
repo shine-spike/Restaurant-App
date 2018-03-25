@@ -1,7 +1,5 @@
 package model;
 
-import org.jetbrains.annotations.NotNull;
-
 public enum EmployeeType {
   ADMIN("ADMIN"),
   DEFAULT("DEFAULT"),
@@ -15,7 +13,7 @@ public enum EmployeeType {
     this.keyword = keyword;
   }
 
-  @NotNull
+  
   public static EmployeeType getEmployeeType(String keyword) {
     for (EmployeeType type : EmployeeType.values()) {
       if (type.keyword.equals(keyword)) {

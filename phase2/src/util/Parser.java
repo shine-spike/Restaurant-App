@@ -3,8 +3,6 @@ package util;
 import controller.Restaurant;
 import model.Ingredient;
 import model.MenuItem;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -51,7 +49,7 @@ public class Parser {
    * @param fileName the name of the file to generate a reader for.
    * @return the reader generated.
    */
-  @Nullable
+  
   private static BufferedReader getReader(String fileName) {
     // Find the file we want to get the reader for
     File file = new File(filesLocation + fileName);
@@ -79,7 +77,7 @@ public class Parser {
    * @param reader the reader to generate the symbols from.
    * @return the array of symbols representing the different parts of the line read.
    */
-  @NotNull
+  
   private static String[] preParse(BufferedReader reader) {
     String[] symbols;
 

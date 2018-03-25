@@ -12,15 +12,14 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import model.Menu;
 import model.Order;
-import org.jetbrains.annotations.NotNull;
 
 import static java.lang.Integer.parseInt;
 
 public class ServerTab extends RestaurantTab {
 
-  @NotNull
+  
   private Restaurant restaurant = Restaurant.getInstance();
-  @NotNull
+  
   private MenuController menuController = restaurant.getMenuController();
 
   private TextField tableNumField;
@@ -181,7 +180,7 @@ public class ServerTab extends RestaurantTab {
 
   private class ServerTabHandler implements EventHandler<ActionEvent> {
     @Override
-    public void handle(@NotNull ActionEvent e) {
+    public void handle( ActionEvent e) {
       if (e.getSource() instanceof Button) {
 
         if (e.getSource().equals(tableButton)) {

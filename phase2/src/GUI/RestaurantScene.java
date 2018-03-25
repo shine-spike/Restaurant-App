@@ -10,7 +10,6 @@ import javafx.scene.control.ToolBar;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import model.Employee;
-import org.jetbrains.annotations.NotNull;
 
 public class RestaurantScene {
   private RestaurantApplication application;
@@ -21,7 +20,7 @@ public class RestaurantScene {
     this.employee = employee;
   }
 
-  @NotNull
+  
   public Parent getRoot() {
     GridPane grid = new GridPane();
     ColumnConstraints column = new ColumnConstraints();

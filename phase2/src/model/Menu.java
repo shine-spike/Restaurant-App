@@ -1,7 +1,5 @@
 package model;
 
-import org.jetbrains.annotations.Nullable;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -43,7 +41,6 @@ public class Menu {
    * @param itemName the name of the menu item.
    * @return the menu item in this menu with the given name, or {@code null} if the item with the name does not exist.
    */
-  @Nullable
   public MenuItem getMenuItem(String itemName) {
     for (MenuItem item : menuItems) {
       if (item.getName().equals(itemName)) {

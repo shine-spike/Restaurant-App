@@ -10,7 +10,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import model.Employee;
-import org.jetbrains.annotations.NotNull;
 
 public class LoginScene {
   private RestaurantApplication application;
@@ -22,7 +21,7 @@ public class LoginScene {
     this.application = application;
   }
 
-  @NotNull
+  
   public Parent getRoot() {
     GridPane grid = new GridPane();
     grid.setAlignment(Pos.CENTER);

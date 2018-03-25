@@ -4,7 +4,6 @@ import controller.Restaurant;
 import model.Ingredient;
 import model.MenuItem;
 import model.Order;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 
@@ -24,7 +23,7 @@ public class OrderFactory {
    * @param ingredientChanges the map of ingredient name to change from the default menu item.
    * @return the order created.
    */
-  @NotNull
+  
   public static Order createOrder(
       int employeeNumber,
       int tableNumber,

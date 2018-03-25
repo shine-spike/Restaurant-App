@@ -1,7 +1,5 @@
 package model;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 
 /** Bill for a customer or table. */
@@ -18,7 +16,7 @@ public class Bill {
    *
    * @param order the order to add to the bill.
    */
-  public void addOrder(@NotNull Order order) {
+  public void addOrder(Order order) {
     orders.add(order);
     runningBasePrice += order.getPrice();
   }
@@ -28,7 +26,6 @@ public class Bill {
    *
    * @return the current ArrayList of orders.
    */
-  @NotNull
   public ArrayList<Order> getOrders() {
     return orders;
   }
@@ -38,7 +35,6 @@ public class Bill {
    *
    * @return the formatted bill string.
    */
-  @NotNull
   public String getBillString() {
     StringBuilder str = new StringBuilder();
 

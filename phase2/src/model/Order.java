@@ -1,7 +1,5 @@
 package model;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.HashMap;
 
 /**
@@ -90,7 +88,6 @@ public class Order {
    *
    * @return a deep copy of this order.
    */
-  @NotNull
   public Order duplicate() {
     return new Order(employeeNumber, tableNumber, customerIndex, menuItem, ingredientChanges);
   }
@@ -101,12 +98,20 @@ public class Order {
    *
    * @return the list of ingredients to make this order.
    */
-  @NotNull
   public HashMap<Ingredient, Integer> getIngredients() {
     HashMap<Ingredient, Integer> ingredients = new HashMap<>(menuItem.getIngredients());
     for (Ingredient ingredientChange : ingredientChanges.keySet()) {
       ingredients.put(ingredientChange, ingredientChanges.getOrDefault(ingredientChange, 0) + 1);
     }
     return ingredients;
+  }
+
+  /**
+   * Returns this order's menuItem
+   *
+   * @return the menuItem of this Order
+   */
+  public MenuItem getMenuItem() {
+    return menuItem;
   }
 }
