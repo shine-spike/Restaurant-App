@@ -61,8 +61,7 @@ public class ReceiverTab extends RestaurantTab {
 
     // Lists of Ingredients
     ingredientsList = inventory.search(nameField.getText());
-    displayIngredientsList = FXCollections.observableArrayList();
-    displayIngredientsList.setAll(Localizer.localize(ingredientsList));
+    displayIngredientsList = FXCollections.observableArrayList(Localizer.localize(ingredientsList));
     ingredientsListView = new ListView<>(displayIngredientsList);
     ingredientsListView.setMaxHeight(Double.MAX_VALUE);
 

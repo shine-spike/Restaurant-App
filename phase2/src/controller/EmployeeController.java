@@ -39,11 +39,21 @@ public class EmployeeController {
   @Nullable
   public Employee getEmployee(String name) {
     for (Employee employee : employees) {
-      if (employee.getName().equals(name)) {
+      if (employee.getFullName().equals(name)) {
         return employee;
       }
     }
     return null;
+  }
+
+  /**
+   * Gets the entire catalogue of employees.
+   *
+   * @return the list of employees in this controller.
+   */
+  @NotNull
+  public ArrayList<Employee> getEmployees() {
+    return employees;
   }
 
   /**

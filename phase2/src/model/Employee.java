@@ -26,9 +26,22 @@ public class Employee {
     return employeeNumber;
   }
 
-  @NotNull
-  public String getName() {
+  public String getFullName() {
     return firstName + " " + lastName;
+  }
+
+  @NotNull
+  public String[] getName() {
+    return new String[]{firstName, lastName};
+  }
+
+  public void setName(String firstName, String lastName) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
+
+  public void setEmployeeType(EmployeeType employeeType) {
+    this.employeeType = employeeType;
   }
 
   public boolean checkPassword(@NotNull String password) {
@@ -57,5 +70,10 @@ public class Employee {
 
   public boolean hasReceiverPermissions() {
     return true;
+  }
+
+  @Override
+  public String toString() {
+    return String.format("[%02d] %s %s", employeeNumber, firstName, lastName);
   }
 }

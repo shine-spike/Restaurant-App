@@ -19,6 +19,7 @@ public abstract class RestaurantTab {
     private void initializeTab(String tabName) {
         Tab tab = new Tab(tabName);
         tab.setClosable(false);
+
         this.tab = tab;
         populateTab();
     }
