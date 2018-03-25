@@ -11,6 +11,5 @@ public class AdminTab extends CustomTab {
     new HomeAdminPage().populateTab(getTab());
   }
 
-  /** Updates all the nodes of this tab with the appropriate new information */
   public void updateTab() {}
 }
