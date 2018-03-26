@@ -3,14 +3,17 @@ package controller;
 import model.Ingredient;
 import model.Menu;
 import model.MenuItem;
+import util.Serializer;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
  * Controls all aspects of all the menus in a restaurant. Main interface for interaction with menus.
  */
-public class MenuController {
+public class MenuController implements SerializableContents<Menu> {
   private final ArrayList<Menu> menus = new ArrayList<>();
 
   /**
@@ -50,7 +53,7 @@ public class MenuController {
     }
     return menuStrings;
   }
-  
+
   /**
    * Gets the menu items from the menu with the given name.
    *
@@ -120,5 +123,23 @@ public class MenuController {
       return null;
     }
     return menu.getMenuItem(menuItemName);
+  }
+
+  @Override
+  public Menu[] getContents() {
+    Menu[] menuArray = new Menu[menus.size()];
+    menus.toArray(menuArray);
+    return menuArray;
+  }
+
+  @Override
+  public void setContents(Menu[] contents) {
+    menus.clear();
+    menus.addAll(Arrays.asList(contents));
+  }
+
+  @Override
+  public String getName() {
+    return "menus";
   }
 }

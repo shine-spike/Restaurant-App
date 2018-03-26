@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 /** Controls all tables in this restaurant. Manages all interactions with tables or bills. */
 public class TableController {
-   private final Table[] tables;
+  private final Table[] tables;
 
   /**
    * Constructs a table controller with a given number of tables.
@@ -46,7 +46,6 @@ public class TableController {
    * @param tableNumber the number of the table.
    * @return the string representation of the bill.
    */
-
   public String getBillString(int tableNumber) {
     return tables[tableNumber].getBillString();
   }
@@ -59,7 +58,6 @@ public class TableController {
    * @param customerIndex the index of the customer.
    * @return the string representation of the bill.
    */
-
   public String getBillString(int tableNumber, int customerIndex) {
     return tables[tableNumber].getBillString(customerIndex);
   }

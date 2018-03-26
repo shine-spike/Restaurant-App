@@ -2,10 +2,10 @@ package model;
 
 import util.Localizer;
 
-/**
- * Ingredient in the restaurant. Has all information it needs to stand alone.
- */
-public class Ingredient {
+import java.io.Serializable;
+
+/** Ingredient in the restaurant. Has all information it needs to stand alone. */
+public class Ingredient implements Serializable {
   private final String name;
   private final int threshold;
   private int quantity;
@@ -13,9 +13,9 @@ public class Ingredient {
   /**
    * Constructs a new ingredient with the given name, reordering threshold, and starting quantity.
    *
-   * @param name      the name of this ingredient.
+   * @param name the name of this ingredient.
    * @param threshold the threshold to reorder.
-   * @param quantity  the starting quantity.
+   * @param quantity the starting quantity.
    */
   public Ingredient(String name, int threshold, int quantity) {
     this.name = name;

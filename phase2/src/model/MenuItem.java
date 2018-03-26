@@ -2,22 +2,23 @@ package model;
 
 import util.Localizer;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
- * A menu item in a menu, it is basically a list of ingredients with available additions and a price.
+ * A menu item in a menu, it is basically a list of ingredients with available additions and a
+ * price.
  */
-public class MenuItem {
+public class MenuItem implements Serializable {
   private final int price;
   private final String name;
 
   private final HashMap<Ingredient, Integer> ingredients;
 
-
   /**
    * Constructs a new menu item with the given name and price.
    *
-   * @param name  the name of the menu item.
+   * @param name the name of the menu item.
    * @param price the price of the menu item.
    */
   public MenuItem(String name, int price, HashMap<Ingredient, Integer> ingredients) {
