@@ -128,7 +128,7 @@ public class Parser {
       }
       restaurant
           .getEmployeeController()
-          .registerEmployee(symbols[0], symbols[1], symbols[2], EmployeeType.getEmployeeType(symbols[3]));
+          .registerEmployee(symbols[0], symbols[1], symbols[2], symbols[3]);
     }
   }
 

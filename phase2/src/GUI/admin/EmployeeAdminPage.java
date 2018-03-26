@@ -8,26 +8,23 @@ import controller.EmployeeController;
 import controller.Restaurant;
 import javafx.collections.FXCollections;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
-import model.Employee;
-import model.EmployeeType;
 
 import java.util.Arrays;
 
 public class EmployeeAdminPage extends CustomPage {
   private EmployeeController employeeController = Restaurant.getInstance().getEmployeeController();
 
-  private ChoiceBox<EmployeeType> employeeTypeField = new ChoiceBox<>();
-  private ChoiceBox<EmployeeType> newEmployeeTypeField = new ChoiceBox<>();
-  private ListView<Employee> employeeListView = new ListView<>();
+  private ChoiceBox<String> employeeTypeField = new ChoiceBox<>();
+  private ChoiceBox<String> newEmployeeTypeField = new ChoiceBox<>();
+  private ListView<String> employeeListView = new ListView<>();
 
   EmployeeAdminPage() {
     update();
   }
 
   @Override
-  public void populateTab(Tab tab) {
+  public void populateTab(Tab tab, Node previous) {
     CustomGridPane grid = new CustomGridPane(50);
     grid.setHgap(25);
     grid.setVgap(25);
@@ -77,12 +74,17 @@ public class EmployeeAdminPage extends CustomPage {
     modifyButton.maximize();
     modifyButton.setOnAction(
         e -> {
-          Employee employee = employeeListView.getSelectionModel().getSelectedItem();
-          if (employee != null) {
-            employee.setName(firstNameField.getText(), lastNameField.getText());
-            employee.setEmployeeType(employeeTypeField.getSelectionModel().getSelectedItem());
-            if (passwordField.getText().length() > 0) {
-              employee.setPassword(passwordLabel.getText());
+          int employeeNumber = employeeListView.getSelectionModel().getSelectedIndex();
+          if (employeeNumber != -1) {
+            String firstName = firstNameField.getText();
+            String lastName = lastNameField.getText();
+            String password = passwordField.getText();
+            String employeeType = employeeTypeField.getSelectionModel().getSelectedItem();
+
+            employeeController.updateEmployeeName(employeeNumber, firstName, lastName);
+            employeeController.updateEmployeeType(employeeNumber, employeeType);
+            if (password.length() > 0) {
+              employeeController.updateEmployeePassword(employeeNumber, password);
             }
 
             modificationLabel.setText("Employee has been modified.");
@@ -128,17 +130,14 @@ public class EmployeeAdminPage extends CustomPage {
           String newFirstName = newFirstNameField.getText();
           String newLastName = newLastNameField.getText();
           String newPassword = newPasswordField.getText();
-          EmployeeType newEmployeeType = newEmployeeTypeField.getSelectionModel().getSelectedItem();
+          String newEmployeeType = newEmployeeTypeField.getSelectionModel().getSelectedItem();
 
           if (newFirstName.length() > 0
               && newLastName.length() > 0
               && newPassword.length() > 0
               && newEmployeeType != null) {
             employeeController.registerEmployee(
-                newFirstNameField.getText(),
-                newLastNameField.getText(),
-                newPasswordField.getText(),
-                newEmployeeTypeField.getSelectionModel().getSelectedItem());
+                newFirstName, newLastName, newPassword, newEmployeeType);
             additionLabel.setInfo();
             additionLabel.setText("New employee has been registered.");
           } else {
@@ -158,34 +157,42 @@ public class EmployeeAdminPage extends CustomPage {
 
     employeeListView
         .getSelectionModel()
-        .selectedItemProperty()
+        .selectedIndexProperty()
         .addListener(
             (obs, oldSelection, newSelection) -> {
-              if (newSelection != null) {
-                employeeNameField.setText(newSelection.getFullName());
-                employeeNumberField.setText(Integer.toString(newSelection.getEmployeeNumber()));
-                firstNameField.setText(newSelection.getName()[0]);
-                lastNameField.setText(newSelection.getName()[1]);
-                newPasswordField.setText("");
-                employeeTypeField.setValue(newSelection.getEmployeeType());
+              if (newSelection.intValue() != -1) {
+                int employeeNumber = newSelection.intValue();
+                String[] employee = employeeController.getEmployeeInformation(employeeNumber);
 
-                if (oldSelection != null
-                    && newSelection.getEmployeeNumber() != oldSelection.getEmployeeNumber()) {
+                employeeNameField.setText(employee[0] + " " + employee[1]);
+                employeeNumberField.setText(Integer.toString(employeeNumber));
+                firstNameField.setText(employee[0]);
+                lastNameField.setText(employee[1]);
+                newPasswordField.setText("");
+                employeeTypeField.setValue(employee[2]);
+
+                if (newSelection.intValue() != oldSelection.intValue()) {
                   modificationLabel.setText("");
                 }
               }
             });
     grid.add(employeeListView, 0, 1, 1, 20);
 
+    if (previous != null) {
+      grid.add(getBackButton(tab, previous), 0, 21, 6, 3);
+    }
+
     tab.setContent(grid);
   }
 
   @Override
   public void update() {
-    employeeTypeField.setItems(FXCollections.observableList(Arrays.asList(EmployeeType.values())));
-    newEmployeeTypeField.setItems(
-        FXCollections.observableList(Arrays.asList(EmployeeType.values())));
-    employeeListView.setItems(FXCollections.observableArrayList(employeeController.getEmployees()));
+    String[] employeeTypeStrings = employeeController.getEmployeeTypeStrings();
+
+    employeeTypeField.setItems(FXCollections.observableList(Arrays.asList(employeeTypeStrings)));
+    newEmployeeTypeField.setItems(FXCollections.observableList(Arrays.asList(employeeTypeStrings)));
+    employeeListView.setItems(
+        FXCollections.observableArrayList(employeeController.getEmployeeStrings()));
 
     employeeListView.refresh();
   }

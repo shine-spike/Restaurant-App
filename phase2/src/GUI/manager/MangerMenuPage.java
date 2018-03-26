@@ -1,41 +1,44 @@
 package GUI.manager;
 
+import GUI.admin.EmployeeAdminPage;
+import GUI.admin.IngredientAdminPage;
+import GUI.admin.MenuAdminPage;
+import GUI.elements.CustomButton;
 import GUI.elements.CustomGridPane;
+import GUI.elements.CustomLabel;
 import GUI.elements.CustomPage;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
+import javafx.scene.Node;
 import javafx.scene.control.Tab;
-import javafx.scene.layout.GridPane;
 
 public class MangerMenuPage extends CustomPage {
-    private Button inventoryButton, itemRequestsButton;
+  @Override
+  public void populateTab(Tab tab, Node previous) {
+    CustomGridPane grid = new CustomGridPane(0);
+    grid.setPercentageRows(10);
+    grid.setPercentageColumns(25, 50, 25);
+    grid.setVgap(50);
 
-    @Override
-    public void populateTab(Tab tab) {
-        GridPane grid = new GridPane();
-        grid.setAlignment(Pos.CENTER);
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(25, 25, 25, 25));
+    CustomLabel headerLabel = new CustomLabel("Management");
+    headerLabel.setFontSize(30);
+    headerLabel.center();
+    headerLabel.setBold();
+    grid.add(headerLabel, 1, 1);
 
+    CustomButton manageEmployeesButton = new CustomButton("View Inventory");
+    manageEmployeesButton.maximize();
+    manageEmployeesButton.setFontSize(20);
+    manageEmployeesButton.setOnAction(e -> new InventoryPage().populateTab(tab, grid));
+    grid.add(manageEmployeesButton, 1, 3);
 
-        // Panel Selection Button
-        inventoryButton = new Button("Inventory");
-        inventoryButton.setMinSize(200, 100);
-        inventoryButton.setOnAction(e -> new InventoryPage().populateTab(tab));
+    CustomButton manageMenusButton = new CustomButton("Request Inventory");
+    manageMenusButton.maximize();
+    manageMenusButton.setFontSize(20);
+    manageMenusButton.setOnAction(e -> new ItemRequestsPage().populateTab(tab, grid));
+    grid.add(manageMenusButton, 1, 4);
 
-        itemRequestsButton = new Button("Request Ingredients");
-        itemRequestsButton.setMinSize(200, 100);
-        itemRequestsButton.setOnAction(e -> new ItemRequestsPage().populateTab(tab));
+    tab.setContent(grid);
+  }
 
-
-        grid.add(inventoryButton, 0, 0);
-        grid.add(itemRequestsButton, 0, 1);
-
-        tab.setContent(grid);
-    }
-
-    @Override
-    public void update() {}
+  @Override
+  public void update() {}
 }

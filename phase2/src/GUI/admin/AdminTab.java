@@ -8,7 +8,7 @@ public class AdminTab extends CustomTab {
   }
 
   public void populateTab() {
-    new HomeAdminPage().populateTab(getTab());
+    new HomeAdminPage().populateTab(getTab(), null);
   }
 
   public void updateTab() {}

@@ -1,5 +1,7 @@
 package model;
 
+import util.Localizer;
+
 /**
  * Ingredient in the restaurant. Has all information it needs to stand alone.
  */
@@ -60,5 +62,10 @@ public class Ingredient {
   @Override
   public int hashCode() {
     return name.hashCode();
+  }
+
+  @Override
+  public String toString() {
+    return Localizer.localize(name);
   }
 }

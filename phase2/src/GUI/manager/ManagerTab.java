@@ -11,7 +11,7 @@ public class ManagerTab extends CustomTab {
 
   /** Initializes this ManagerTab's JavaFX tab */
   public void populateTab() {
-    new MangerMenuPage().populateTab(getTab());
+    new MangerMenuPage().populateTab(getTab(), null);
   }
 
   /** Updates all the nodes of this tab with the appropriate new information */

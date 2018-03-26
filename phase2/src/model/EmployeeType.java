@@ -23,4 +23,12 @@ public enum EmployeeType {
 
     return DEFAULT;
   }
+
+  public static String[] getEmployeeTypeStrings() {
+    String[] typeStrings = new String[EmployeeType.values().length];
+    for (int i = 0; i < EmployeeType.values().length; i++) {
+      typeStrings[i] = EmployeeType.values()[i].keyword;
+    }
+    return typeStrings;
+  }
 }

@@ -3,6 +3,7 @@ package controller;
 import model.Employee;
 import model.EmployeeType;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /** Controls all aspects of employees in the restaurant. */
@@ -20,38 +21,11 @@ public class EmployeeController {
    * @param firstName the employee's first name.
    * @param lastName the employee's last name.
    * @param password the employee's password.
-   * @param employeeType the employee's type string identifier.
+   * @param employeeType the employee's type string.
    */
   public void registerEmployee(
-      String firstName, String lastName,  String password, EmployeeType employeeType) {
-    employees.add(
-        new Employee(firstName, lastName, password, employeeType));
-  }
-
-  /**
-   * Gets the employee with the given name.
-   *
-   * @param name the name of the employee.
-   * @return the employee with the given name or {@code null} if no such employee exists.
-   */
-  
-  public Employee getEmployee(String name) {
-    for (Employee employee : employees) {
-      if (employee.getFullName().equals(name)) {
-        return employee;
-      }
-    }
-    return null;
-  }
-
-  /**
-   * Gets the entire catalogue of employees.
-   *
-   * @return the list of employees in this controller.
-   */
-  
-  public ArrayList<Employee> getEmployees() {
-    return employees;
+      String firstName, String lastName, String password, String employeeType) {
+    employees.add(new Employee(firstName, lastName, password, EmployeeType.getEmployeeType(employeeType)));
   }
 
   /**
@@ -62,9 +36,117 @@ public class EmployeeController {
    * @return the employee with the given login information, or {@code null} if the username-password
    *     combination does not exist in the controller.
    */
-  
-  public Employee login(String name,  String password) {
+  public Employee login(String name, String password) {
     Employee employee = getEmployee(name);
     return employee != null && employee.checkPassword(password) ? employee : null;
+  }
+
+  /**
+   * Updates an employees name or does nothing if the employee with the given number does not exist.
+   *
+   * @param employeeNumber the number of the employee.
+   * @param firstName the employee's first name.
+   * @param lastName the employee's last name.
+   */
+  public void updateEmployeeName(int employeeNumber, String firstName, String lastName) {
+    Employee employee = getEmployee(employeeNumber);
+    if (employee != null) {
+      employee.setName(firstName, lastName);
+    }
+  }
+
+  /**
+   * Updates an employees password or does nothing if the employee with the given number does not exist.
+   *
+   * @param employeeNumber the number of the employee.
+   * @param password the employee's new password.
+   */
+  public void updateEmployeePassword(int employeeNumber, String password) {
+    Employee employee = getEmployee(employeeNumber);
+    if (employee != null) {
+      employee.setPassword(password);
+    }
+  }
+
+  /**
+   * Updates an employees type or does nothing if the employee with the given number does not exist.
+   *
+   * @param employeeNumber the number of the employee.
+   * @param type the new type string of the employee.
+   */
+  public void updateEmployeeType(int employeeNumber, String type) {
+    Employee employee = getEmployee(employeeNumber);
+    if (employee != null) {
+      employee.setEmployeeType(EmployeeType.getEmployeeType(type));
+    }
+  }
+
+  /**
+   * Gets the employee with the given name.
+   *
+   * @param name the name of the employee.
+   * @return the employee with the given name or {@code null} if no such employee exists.
+   */
+  public Employee getEmployee(String name) {
+    for (Employee employee : employees) {
+      if (employee.getFullName().equals(name)) {
+        return employee;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Gets the employee with the given number.
+   *
+   * @param employeeNumber the number of the employee.
+   * @return the employee with the given number or {@code null} if no such employee exists.
+   */
+  public Employee getEmployee(int employeeNumber) {
+    for (Employee employee : employees) {
+      if (employee.getEmployeeNumber() == employeeNumber) {
+        return employee;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Gets the entire catalogue of employees.
+   *
+   * @return the list of employees in string format.
+   */
+  public ArrayList<String> getEmployeeStrings() {
+    ArrayList<String> employeeStrings = new ArrayList<>();
+    for (Employee employee : employees) {
+      employeeStrings.add(employee.toString());
+    }
+    return employeeStrings;
+  }
+
+  /**
+   * Gets the information of the employee with the given employee number.
+   *
+   * @param employeeNumber the number of the employee.
+   * @return an array containing information about the employee.
+   */
+  public String[] getEmployeeInformation(int employeeNumber) {
+    String[] info = new String[4];
+    Employee employee = getEmployee(employeeNumber);
+
+    info[0] = employee.getName()[0];
+    info[1] = employee.getName()[1];
+    info[2] = employee.getEmployeeType().toString();
+
+    return info;
+  }
+
+  /**
+   * Gets the different types of employees.
+   *
+   * @return an array containing the different types of employees.
+   */
+  public String[] getEmployeeTypeStrings() {
+    return EmployeeType.getEmployeeTypeStrings();
   }
 }

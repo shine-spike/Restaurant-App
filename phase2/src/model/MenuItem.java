@@ -1,5 +1,7 @@
 package model;
 
+import util.Localizer;
+
 import java.util.HashMap;
 
 /**
@@ -49,5 +51,10 @@ public class MenuItem {
    */
   public HashMap<Ingredient, Integer> getIngredients() {
     return ingredients;
+  }
+
+  @Override
+  public String toString() {
+    return Localizer.localize(name);
   }
 }

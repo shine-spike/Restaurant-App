@@ -1,5 +1,7 @@
 package model;
 
+import util.Localizer;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -28,6 +30,10 @@ public class Menu {
     return name;
   }
 
+  public ArrayList<MenuItem> getMenuItems() {
+    return menuItems;
+  }
+
   /**
    * Adds the given menu item to the menu.
    */
@@ -48,5 +54,10 @@ public class Menu {
       }
     }
     return null;
+  }
+
+  @Override
+  public String toString() {
+    return Localizer.localize(name);
   }
 }

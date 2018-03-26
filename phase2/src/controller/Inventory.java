@@ -29,6 +29,15 @@ public class Inventory {
   }
 
   /**
+   * Gets all ingredients in the inventory.
+   *
+   * @return the list of all ingredients in the inventory.
+   */
+  public ArrayList<Ingredient> getIngredients() {
+    return ingredients;
+  }
+
+  /**
    * Gets the ingredient with the given name.
    *
    * @param ingredientName the name of the ingredient.
@@ -50,7 +59,7 @@ public class Inventory {
    * @param order the order to be checked.
    * @return whether or not the order can be satisfied.
    */
-  public boolean confirmOrder( Order order) {
+  public boolean confirmOrder(Order order) {
     for (Ingredient ingredient : order.getIngredients().keySet()) {
       if (ingredient.getQuantity() < order.getIngredients().get(ingredient)) {
         return false;
@@ -64,7 +73,7 @@ public class Inventory {
    *
    * @param order the order that has been prepared.
    */
-  public void consumeIngredients( Order order) {
+  public void consumeIngredients(Order order) {
     for (Ingredient ingredient : order.getIngredients().keySet()) {
       int amount = order.getIngredients().get(ingredient);
 
@@ -95,23 +104,23 @@ public class Inventory {
   }
 
   /**
-   * Returns a list of the names of items in the inventory whose names contain the search term, both
+   * Returns a list of the items in the inventory whose names contain the search term, both
    * localized and unlocalized.
    *
    * @param searchTerm the search term we are checking ingredient names for.
+   * @return the list of ingredients matching the search term.
    */
-  
-  public ArrayList<String> search( String searchTerm) {
-    ArrayList<String> foundNames = new ArrayList<>();
+  public ArrayList<Ingredient> search(String searchTerm) {
+    ArrayList<Ingredient> foundIngredients = new ArrayList<>();
     for (Ingredient ingredient : ingredients) {
       String ingredientName = ingredient.getName();
 
       // Search both the regular name and the respective localized name
       if (ingredientName.contains(searchTerm)
           || Localizer.localize(ingredientName).contains(searchTerm)) {
-        foundNames.add(ingredientName);
+        foundIngredients.add(ingredient);
       }
     }
-    return foundNames;
+    return foundIngredients;
   }
 }

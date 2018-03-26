@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import model.Ingredient;
 import util.Localizer;
 
 import java.util.ArrayList;
@@ -21,9 +22,9 @@ public class ReceiverTab extends CustomTab {
   private static final Inventory inventory = Restaurant.getInstance().getInventory();
   private Spinner<Integer> amountSpinner;
   private TextField nameField;
-  private ListView<String> ingredientsListView;
-  private ObservableList<String> displayIngredientsList;
-  private ArrayList<String> ingredientsList;
+  private ListView<Ingredient> ingredientsListView;
+  private ObservableList<Ingredient> displayIngredientsList;
+  private ArrayList<Ingredient> ingredientsList;
   private Label warningString;
 
   /** Constructs a ReceiverTab for the employee with the id employeeNumber */
@@ -59,7 +60,7 @@ public class ReceiverTab extends CustomTab {
 
     // Lists of Ingredients
     ingredientsList = inventory.search(nameField.getText());
-    displayIngredientsList = FXCollections.observableArrayList(Localizer.localize(ingredientsList));
+    displayIngredientsList = FXCollections.observableArrayList(ingredientsList);
     ingredientsListView = new ListView<>(displayIngredientsList);
     ingredientsListView.setMaxHeight(Double.MAX_VALUE);
 
@@ -90,17 +91,17 @@ public class ReceiverTab extends CustomTab {
 
   private void receiveButtonPressed() {
     warningString.setText("");
-    int num = amountSpinner.getValue();
-    int selectedIndex = ingredientsListView.getSelectionModel().getSelectedIndex();
+    int amount = amountSpinner.getValue();
+    Ingredient ingredient = ingredientsListView.getSelectionModel().getSelectedItem();
 
-    if (selectedIndex != -1) {
-      boolean hasReceived = inventory.restockIngredient(ingredientsList.get(selectedIndex), num);
+    if (ingredient != null) {
+      boolean hasReceived = inventory.restockIngredient(ingredient.getName(), amount);
 
       if (hasReceived) {
         warningString.setStyle("-fx-font-weight: normal");
         warningString.setTextFill(Color.BLACK);
         warningString.setText(
-                num + " " + displayIngredientsList.get(selectedIndex) + "(s) added to inventory");
+                amount + " " + ingredient + "(s) added to inventory");
         amountSpinner.getValueFactory().setValue(1);
         nameField.setText("");
       } else {
@@ -120,7 +121,7 @@ public class ReceiverTab extends CustomTab {
     public void changed(
         ObservableValue<? extends String> observable, String oldValue,  String newValue) {
       ingredientsList = inventory.search(newValue);
-      displayIngredientsList.setAll(Localizer.localize(ingredientsList));
+      displayIngredientsList.setAll(ingredientsList);
     }
   }
 }
