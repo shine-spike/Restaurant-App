@@ -23,30 +23,6 @@ public class MenuController {
   }
 
   /**
-   * Gets the menu with the given name.
-   *
-   * @param menuName the name of the menu.
-   * @return the menu with the given name or {@code null} if no such menu exists.
-   */
-  public Menu getMenu(String menuName) {
-    for (Menu menu : menus) {
-      if (menu.getName().equals(menuName)) {
-        return menu;
-      }
-    }
-    return null;
-  }
-
-  /**
-   * Gets all menus in the menu controller.
-   *
-   * @return the list of held menus.
-   */
-  public ArrayList<Menu> getMenuList() {
-    return menus;
-  }
-
-  /**
    * Adds the given menu item to the menu with the given name.
    *
    * @param menuName the name of the menu to add the item to.
@@ -63,24 +39,6 @@ public class MenuController {
   }
 
   /**
-   * Gets the menu item with the given name from the menu with the given name.
-   *
-   * @param menuName the name of the menu to get the menu item from.
-   * @param menuItemName the name of the menu item.
-   * @return the menu with the given name in the menu with the given name, or {@code null} if no
-   *     corresponding menu item exists.
-   */
-  public MenuItem getMenuItem(String menuName, String menuItemName) {
-    Menu menu = getMenu(menuName);
-    if (menu == null) {
-      // TODO: remove print
-      System.out.println("Given menu could not be found. Skipping.");
-      return null;
-    }
-    return menu.getMenuItem(menuItemName);
-  }
-
-  /**
    * Gets the menus in this controller.
    *
    * @return a list of strings representing the menus.
@@ -88,11 +46,11 @@ public class MenuController {
   public ArrayList<String> getMenuStrings() {
     ArrayList<String> menuStrings = new ArrayList<>();
     for (Menu menu : menus) {
-        menuStrings.add(menu.getName());
+      menuStrings.add(menu.getName());
     }
     return menuStrings;
   }
-
+  
   /**
    * Gets the menu items from the menu with the given name.
    *
@@ -129,5 +87,38 @@ public class MenuController {
     }
 
     return ingredientStrings;
+  }
+
+  /**
+   * Gets the menu with the given name.
+   *
+   * @param menuName the name of the menu.
+   * @return the menu with the given name or {@code null} if no such menu exists.
+   */
+  public Menu getMenu(String menuName) {
+    for (Menu menu : menus) {
+      if (menu.getName().equals(menuName)) {
+        return menu;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Gets the menu item with the given name from the menu with the given name.
+   *
+   * @param menuName the name of the menu to get the menu item from.
+   * @param menuItemName the name of the menu item.
+   * @return the menu with the given name in the menu with the given name, or {@code null} if no
+   *     corresponding menu item exists.
+   */
+  private MenuItem getMenuItem(String menuName, String menuItemName) {
+    Menu menu = getMenu(menuName);
+    if (menu == null) {
+      // TODO: remove print
+      System.out.println("Given menu could not be found. Skipping.");
+      return null;
+    }
+    return menu.getMenuItem(menuItemName);
   }
 }

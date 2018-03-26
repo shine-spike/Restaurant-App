@@ -13,7 +13,7 @@ public class OrderController {
   private final ArrayList<Order> orders = new ArrayList<>();
 
   /**
-   * Gets the order with a given order number from all the orders.
+   * Gets the information of the order with a given order number.
    *
    * @param orderNumber the order number to search for.
    * @return the order information of the order that has the given order number or {@code null} if
@@ -28,10 +28,10 @@ public class OrderController {
   }
 
   /**
-   * Gets the order information from the given order numbers.
+   * Gets the order information of the orders with the given order numbers.
    *
    * @param orderNumbers the numbers of the orders to get.
-   * @return a two-dimensional array of order information.
+   * @return an array of order information.
    */
   public String[][] getOrderInformationFromNumbers(Integer... orderNumbers) {
     int numOrders = orderNumbers.length;

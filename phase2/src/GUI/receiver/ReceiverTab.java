@@ -13,7 +13,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import model.Ingredient;
 import util.Localizer;
 
 import java.util.ArrayList;
@@ -60,7 +59,7 @@ public class ReceiverTab extends CustomTab {
 
     // Lists of Ingredients
     ingredientsList = inventory.search(nameField.getText());
-    displayIngredientsList = FXCollections.observableArrayList(ingredientsList);
+    displayIngredientsList = FXCollections.observableArrayList(Localizer.localize(ingredientsList));
     ingredientsListView = new ListView<>(displayIngredientsList);
     ingredientsListView.setMaxHeight(Double.MAX_VALUE);
 
@@ -92,16 +91,17 @@ public class ReceiverTab extends CustomTab {
   private void receiveButtonPressed() {
     warningString.setText("");
     int amount = amountSpinner.getValue();
-    String ingredient = ingredientsListView.getSelectionModel().getSelectedItem();
+    int ingredientIndex = ingredientsListView.getSelectionModel().getSelectedIndex();
 
-    if (ingredient != null) {
+    if (ingredientIndex != -1) {
+      String ingredient = ingredientsList.get(ingredientIndex);
       boolean hasReceived = inventory.restockIngredient(ingredient, amount);
 
       if (hasReceived) {
         warningString.setStyle("-fx-font-weight: normal");
         warningString.setTextFill(Color.BLACK);
         warningString.setText(
-                amount + " " + ingredient + "(s) added to inventory");
+                amount + " " + Localizer.localize(ingredient) + "(s) added to inventory");
         amountSpinner.getValueFactory().setValue(1);
         nameField.setText("");
       } else {
@@ -121,7 +121,7 @@ public class ReceiverTab extends CustomTab {
     public void changed(
         ObservableValue<? extends String> observable, String oldValue,  String newValue) {
       ingredientsList = inventory.search(newValue);
-      displayIngredientsList.setAll(ingredientsList);
+      displayIngredientsList.setAll(Localizer.localize(ingredientsList));
     }
   }
 }

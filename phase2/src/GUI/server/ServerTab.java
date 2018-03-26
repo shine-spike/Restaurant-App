@@ -186,7 +186,7 @@ public class ServerTab extends CustomTab {
             tableID = parseInt(tableNumField.getText());
             selectedTableNum.setText("Table " + tableID + ":");
             ordersList.setAll(
-                orderListFormat(restaurant.getTableController().getOrderStrings(tableID)));
+                orderListFormat(restaurant.getTableController().getTableOrderInformation(tableID)));
           }
           tableNumField.setText("");
         } else if (e.getSource().equals(billButton)) {

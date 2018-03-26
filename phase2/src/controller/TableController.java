@@ -22,12 +22,12 @@ public class TableController {
   }
 
   /**
-   * Gets the order strings representing
+   * Gets the order information of all orders in the current bill of the given table.
    *
-   * @param tableNumber
-   * @return
+   * @param tableNumber the number of the table.
+   * @return an array of order information.
    */
-  public ArrayList<String[]> getOrderStrings(int tableNumber) {
+  public ArrayList<String[]> getTableOrderInformation(int tableNumber) {
     Table table = getTable(tableNumber);
     ArrayList<String[]> orderStrings = new ArrayList<>();
 
