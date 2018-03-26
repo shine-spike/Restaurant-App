@@ -1,9 +1,6 @@
 package util;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -96,6 +93,35 @@ public class Localizer {
         System.out.println(
             "Unlocalized name \'" + unlocalizedName + "\' was previously declared. Skipping.");
       }
+    }
+  }
+
+  /**
+   * Writes the current registered localization to the locale file.
+   */
+  public static void storeLocale() {
+    File file = new File(LOCALE_LOCATION + LOCALE_NAME);
+    if (!file.delete()) {
+      System.out.println("No localization file found, creating.");
+    }
+
+    BufferedWriter writer;
+    try {
+      writer = new BufferedWriter(new FileWriter(file));
+    } catch (IOException e) {
+      // TODO: remove print
+      System.out.println("Something went wrong.");
+      return;
+    }
+
+    try {
+      for (String unlocalizedName : localization.keySet()) {
+        writer.write(unlocalizedName + " " + localize(unlocalizedName) + "\n");
+      }
+      writer.close();
+    } catch (IOException e) {
+      // TODO: remove print
+      System.out.println("Something went wrong.");
     }
   }
 

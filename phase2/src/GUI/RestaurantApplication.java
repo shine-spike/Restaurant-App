@@ -33,6 +33,7 @@ public class RestaurantApplication extends Application {
   @Override
   public void stop() throws Exception {
     Restaurant.getInstance().storeModel();
+    Localizer.storeLocale();
     super.stop();
   }
 
