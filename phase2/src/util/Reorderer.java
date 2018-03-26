@@ -1,6 +1,10 @@
 package util;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.io.*;
+import java.util.Properties;
 
 public class Reorderer {
   private static final String REORDER_REQUEST_FILE = "phase2/requests.txt";
@@ -64,6 +68,42 @@ public class Reorderer {
       return new BufferedReader(new FileReader(file));
     } catch (IOException e) {
       return null;
+    }
+  }
+
+  /**
+   * Sends an email to reorder ingredients
+   * @param host the host sending the email
+   * @param to the email's recipient
+   * @param from the email's sender
+   * @param content the content of the email
+   */
+  public static void sendEmail(String host, String to, String from, String content){
+    Properties properties = System.getProperties();
+    properties.put("mail.smtp.auth", "true");
+    properties.put("mail.smtp.starttls.enable", "true");
+    properties.put("mail.smtp.host", "smtp.gmail.com");
+    properties.put("mail.smtp.port", "587");
+
+    Session session = Session.getDefaultInstance(properties,
+            new javax.mail.Authenticator() {
+              protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(from,"+<E;d^Jk+,c:[8`m");
+              }
+            });
+
+    try{
+      MimeMessage email = new MimeMessage(session);
+      email.setFrom(new InternetAddress(from));
+      email.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+      email.setSubject("Reorder Request");
+      email.setText(content);
+
+      Transport.send(email);
+      // TODO add logging
+    } catch (MessagingException e){
+      // TODO add logging
+      e.printStackTrace();
     }
   }
 }
