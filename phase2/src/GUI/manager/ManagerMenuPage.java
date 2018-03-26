@@ -10,7 +10,7 @@ import GUI.elements.CustomPage;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
 
-public class MangerMenuPage extends CustomPage {
+public class ManagerMenuPage extends CustomPage {
   @Override
   public void populateTab(Tab tab, Node previous) {
     CustomGridPane grid = new CustomGridPane(0);
