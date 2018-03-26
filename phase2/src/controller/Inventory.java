@@ -79,6 +79,9 @@ public class Inventory {
   public void consumeIngredients(Order order) {
     for (Ingredient ingredient : order.getIngredients().keySet()) {
       int amount = order.getIngredients().get(ingredient);
+      if (amount == 0) {
+        continue;
+      }
 
       Logger.inventoryLog("CONSUME", amount, ingredient.getName(), "consumed");
       ingredient.modifyQuantity(-amount);

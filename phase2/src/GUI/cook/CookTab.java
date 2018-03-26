@@ -1,21 +1,17 @@
 package GUI.cook;
 
+import GUI.elements.CustomButton;
 import GUI.elements.CustomGridPane;
+import GUI.elements.CustomLabel;
 import GUI.elements.CustomTab;
 import controller.OrderController;
 import controller.Restaurant;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
+import javafx.scene.control.*;
+import javafx.scene.text.Font;
 import util.Localizer;
 import util.OrderFactory;
 
@@ -28,8 +24,8 @@ public class CookTab extends CustomTab {
   private ArrayList<Integer> orderNumbers;
   private ListView<String> orderListView;
   private TextArea activeOrderInfo;
-  private Text warningText;
-  private Button readyButton, seenButton, cancelButton;
+  private CustomLabel warningText;
+  private CustomButton readyButton, seenButton, cancelButton;
 
   /** Constructs a CookTab for the employee with the id employeeNumber */
   public CookTab(int employeeNumber) {
@@ -43,12 +39,35 @@ public class CookTab extends CustomTab {
     grid.setAlignment(Pos.CENTER);
     grid.setHgap(10);
     grid.setVgap(10);
+    grid.setPercentageColumns(50, 10, 10, 10, 10, 10);
+    grid.setPercentageRows(10, 70, 5, 5);
 
-    // Active Orders
-    Label activeOrderLabel = new Label("Active Orders");
+    CustomLabel ingredientListLabel = new CustomLabel("Active Orders");
+    ingredientListLabel.setFontSize(20);
+    ingredientListLabel.setBold();
+    ingredientListLabel.center();
+    grid.add(ingredientListLabel, 0, 0);
+
 
     orderNumbers = new ArrayList<>();
     orderListView = new ListView<>();
+
+    orderListView.setStyle("-fx-font-size: 20px");
+    orderListView
+            .getSelectionModel()
+            .selectedIndexProperty()
+            .addListener(
+                    (obs, oldSelection, newSelection) -> {
+                      int selectedOrder = newSelection.intValue();
+                      if (selectedOrder != -1) {
+                        String[] order =
+                                orderController.getOrderInformationFromNumber(orderNumbers.get(selectedOrder));
+                        activeOrderInfo.setText(selectedOrdersFormat(order));
+                      } else {
+                        activeOrderInfo.setText("");
+                      }
+                    });
+    grid.add(orderListView, 0, 1, 1, 3);
 
     // TODO Remove, this is just for testing
     orderController.registerOrder(
@@ -56,54 +75,42 @@ public class CookTab extends CustomTab {
     orderController.placeOrder(0);
     updateTab();
 
-    orderListView
-        .getSelectionModel()
-        .selectedIndexProperty()
-        .addListener(
-            (obs, oldSelection, newSelection) -> {
-              int selectedOrder = newSelection.intValue();
-              if (selectedOrder != -1) {
-                String[] order =
-                    orderController.getOrderInformationFromNumber(orderNumbers.get(selectedOrder));
-                activeOrderInfo.setText(selectedOrdersFormat(order));
-              }
-            });
 
-    // Active Order grid
-    GridPane activeOrderGrid = new GridPane();
-    activeOrderGrid.setAlignment(Pos.CENTER);
-    activeOrderGrid.setHgap(10);
-    activeOrderGrid.setVgap(10);
-    activeOrderGrid.setPadding(new Insets(25, 25, 25, 25));
-
-    // Active Order grid buttons
-    seenButton = new Button("Seen");
-    seenButton.setOnAction(new CookTabButtonHandler());
-
-    readyButton = new Button("Ready");
-    readyButton.setOnAction(new CookTabButtonHandler());
-
-    cancelButton = new Button("Cancel");
-    cancelButton.setOnAction(new CookTabButtonHandler());
+    CustomLabel activeOrderLabel = new CustomLabel("Current Order");
+    activeOrderLabel.setFontSize(20);
+    activeOrderLabel.setBold();
+    activeOrderLabel.center();
+    grid.add(activeOrderLabel, 1, 0, 5, 1);
 
     // Active Order
     activeOrderInfo = new TextArea();
+    activeOrderInfo.setFont(new Font(20));
+    activeOrderInfo.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
     activeOrderInfo.setEditable(false);
-    activeOrderInfo.setMaxWidth(200);
+    grid.add(activeOrderInfo, 1, 1, 5, 1);
+
+    // Active Order grid buttons
+    seenButton = new CustomButton("Seen");
+    seenButton.maximize();
+    seenButton.setOnAction(new CookTabButtonHandler());
+    grid.add(seenButton, 1, 2);
+
+    readyButton = new CustomButton("Ready");
+    readyButton.maximize();
+    readyButton.setOnAction(new CookTabButtonHandler());
+    grid.add(readyButton, 2, 2, 3, 1);
+
+    cancelButton = new CustomButton("Cancel");
+    cancelButton.maximize();
+    cancelButton.setOnAction(new CookTabButtonHandler());
+    grid.add(cancelButton, 5, 2);
 
     // Warning Text
-    warningText = new Text();
-    warningText.setFill(Color.FIREBRICK);
-
-    activeOrderGrid.add(activeOrderInfo, 0, 0, 3, 1);
-    activeOrderGrid.add(seenButton, 0, 1);
-    activeOrderGrid.add(readyButton, 1, 1);
-    activeOrderGrid.add(cancelButton, 2, 1);
-    activeOrderGrid.add(warningText, 0, 3, 3, 1);
-
-    grid.add(activeOrderLabel, 0, 0);
-    grid.add(orderListView, 0, 1, 1, 2);
-    grid.add(activeOrderGrid, 1, 1, 1, 2);
+    warningText = new CustomLabel();
+    warningText.setBold();
+    warningText.setWarning();
+    warningText.center();
+    grid.add(warningText, 1, 3, 5, 1);
 
     getTab().setContent(grid);
   }
@@ -168,7 +175,15 @@ public class CookTab extends CustomTab {
    * @return a formatted string for this active order
    */
   private String activeOrdersFormat(String[] order) {
-    return order[2] + " " + order[0] + " " + Localizer.localize(order[1]);
+    return "["
+        + order[0]
+        + " : "
+        + order[1]
+        + "]"
+        + " "
+        + Localizer.localize(order[2])
+        + " "
+        + Localizer.localize(order[3]);
   }
 
   /**
@@ -178,15 +193,20 @@ public class CookTab extends CustomTab {
    * @return a formatted string for this active order
    */
   private String selectedOrdersFormat(String[] order) {
-    StringBuilder out = new StringBuilder(order[0] + " " + order[2]);
+    StringBuilder out =
+        new StringBuilder(
+            "[" + order[0] + "]" + " " + Localizer.localize(order[2]) + " " + Localizer.localize(order[3]));
 
     HashMap<String, Integer> ingredients =
         orderController.getOrderIngredientStrings(Integer.parseInt(order[0]));
     for (String ingredient : ingredients.keySet()) {
+      if (ingredients.get(ingredient) == 0) {
+        continue;
+      }
       out.append("\n - ");
-      out.append(Localizer.localize(ingredient));
-      out.append(" ");
       out.append(ingredients.get(ingredient));
+      out.append(" ");
+      out.append(Localizer.localize(ingredient));
     }
 
     return out.toString();
