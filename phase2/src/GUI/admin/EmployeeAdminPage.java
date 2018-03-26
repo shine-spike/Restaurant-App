@@ -29,6 +29,7 @@ public class EmployeeAdminPage extends CustomPage {
     grid.setHgap(25);
     grid.setVgap(25);
     grid.setPercentageColumns(50, 10, 10, 10, 10, 10);
+    grid.setEvenRows(21);
 
     CustomLabel employeeInformationLabel = new CustomLabel("Employee Information");
     employeeInformationLabel.setFontSize(20);

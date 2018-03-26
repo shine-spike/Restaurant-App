@@ -49,4 +49,18 @@ public class CustomGridPane extends GridPane {
       getRowConstraints().add(row);
     }
   }
+
+  /**
+   * Sets all of the rows of the grid to have the same percentage of the screen.
+   *
+   * @param numRows number of rows.
+   */
+  public void setEvenRows(int numRows) {
+    int eachRow = 100 / numRows;
+    int[] rowPercentages = new int[numRows];
+    for (int i = 0; i < numRows; i++) {
+      rowPercentages[i] = eachRow;
+    }
+    setPercentageRows(rowPercentages);
+  }
 }
