@@ -9,7 +9,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import model.Employee;
 
 public class LoginScene {
   private RestaurantApplication application;
@@ -68,13 +67,13 @@ public class LoginScene {
   }
 
   private void loginButtonPressed() {
-    Employee employee =
+    int employeeNumber =
         Restaurant.getInstance()
             .getEmployeeController()
             .login(userTextField.getText(), passwordField.getText());
 
-    if (employee != null) {
-      application.setEmployee(employee);
+    if (employeeNumber != -1) {
+      application.setEmployeeNumber(employeeNumber);
       application.startRestaurantScene();
     } else {
       incorrectPassword.setText("Incorrect Username or Password");

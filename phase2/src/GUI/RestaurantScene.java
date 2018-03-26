@@ -6,6 +6,7 @@ import GUI.elements.CustomGridPane;
 import GUI.manager.ManagerTab;
 import GUI.receiver.ReceiverTab;
 import GUI.server.ServerTab;
+import controller.Restaurant;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.NodeOrientation;
@@ -17,11 +18,11 @@ import model.Employee;
 
 public class RestaurantScene {
   private RestaurantApplication application;
-  private Employee employee;
+  private int employeeNumber;
 
-  RestaurantScene(RestaurantApplication application, Employee employee) {
+  RestaurantScene(RestaurantApplication application, int employeeNumber) {
     this.application = application;
-    this.employee = employee;
+    this.employeeNumber = employeeNumber;
   }
 
   
@@ -38,20 +39,21 @@ public class RestaurantScene {
 
     TabPane restaurantTabPane = new TabPane();
     restaurantTabPane.setMinHeight(application.getStage().getHeight());
-    int employeeNumber = employee.getEmployeeNumber();
-    if (employee.hasAdminPermissions()) {
+
+    boolean[] permissions = Restaurant.getInstance().getEmployeeController().getEmployeePermissions(employeeNumber);
+    if (permissions[0]) {
       restaurantTabPane.getTabs().add(new AdminTab(employeeNumber).getTab());
     }
-    if (employee.hasManagerPermissions()) {
+    if (permissions[1]) {
       restaurantTabPane.getTabs().add(new ManagerTab(employeeNumber).getTab());
     }
-    if (employee.hasServerPermissions()) {
+    if (permissions[2]) {
       restaurantTabPane.getTabs().add(new ServerTab(employeeNumber).getTab());
     }
-    if (employee.hasCookPermissions()) {
+    if (permissions[3]) {
       restaurantTabPane.getTabs().add(new CookTab(employeeNumber).getTab());
     }
-    if (employee.hasReceiverPermissions()) {
+    if (permissions[4]) {
       restaurantTabPane.getTabs().add(new ReceiverTab(employeeNumber).getTab());
     }
     grid.add(restaurantTabPane, 0 ,1);

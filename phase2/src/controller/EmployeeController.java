@@ -3,7 +3,6 @@ package controller;
 import model.Employee;
 import model.EmployeeType;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /** Controls all aspects of employees in the restaurant. */
@@ -29,16 +28,16 @@ public class EmployeeController {
   }
 
   /**
-   * Gets the employee with the given login information.
+   * Gets the number of the employee with the given login information.
    *
    * @param name the name of the employee to login.
    * @param password the password of the employee to login.
-   * @return the employee with the given login information, or {@code null} if the username-password
+   * @return the number of the employee with the given login information, or {@code -1} if the username-password
    *     combination does not exist in the controller.
    */
-  public Employee login(String name, String password) {
+  public int login(String name, String password) {
     Employee employee = getEmployee(name);
-    return employee != null && employee.checkPassword(password) ? employee : null;
+    return employee != null && employee.checkPassword(password) ? employee.getEmployeeNumber() : -1;
   }
 
   /**
@@ -82,36 +81,6 @@ public class EmployeeController {
   }
 
   /**
-   * Gets the employee with the given name.
-   *
-   * @param name the name of the employee.
-   * @return the employee with the given name or {@code null} if no such employee exists.
-   */
-  public Employee getEmployee(String name) {
-    for (Employee employee : employees) {
-      if (employee.getFullName().equals(name)) {
-        return employee;
-      }
-    }
-    return null;
-  }
-
-  /**
-   * Gets the employee with the given number.
-   *
-   * @param employeeNumber the number of the employee.
-   * @return the employee with the given number or {@code null} if no such employee exists.
-   */
-  public Employee getEmployee(int employeeNumber) {
-    for (Employee employee : employees) {
-      if (employee.getEmployeeNumber() == employeeNumber) {
-        return employee;
-      }
-    }
-    return null;
-  }
-
-  /**
    * Gets the entire catalogue of employees.
    *
    * @return the list of employees in string format.
@@ -134,11 +103,29 @@ public class EmployeeController {
     String[] info = new String[4];
     Employee employee = getEmployee(employeeNumber);
 
-    info[0] = employee.getName()[0];
-    info[1] = employee.getName()[1];
-    info[2] = employee.getEmployeeType().toString();
+    if (employee != null) {
+      info[0] = employee.getName()[0];
+      info[1] = employee.getName()[1];
+      info[2] = employee.getEmployeeType().toString();
+    }
 
     return info;
+  }
+
+  /**
+   * Gets the permissions of the employee with the given number.
+   *
+   * @param employeeNumber the number of the employee.
+   * @return an array of booleans representing the permissions.
+   */
+  public boolean[] getEmployeePermissions(int employeeNumber) {
+    Employee employee = getEmployee(employeeNumber);
+
+    if (employee != null) {
+      return employee.getPermissions();
+    }
+
+    return new boolean[]{};
   }
 
   /**
@@ -148,5 +135,35 @@ public class EmployeeController {
    */
   public String[] getEmployeeTypeStrings() {
     return EmployeeType.getEmployeeTypeStrings();
+  }
+
+  /**
+   * Gets the employee with the given name.
+   *
+   * @param name the name of the employee.
+   * @return the employee with the given name or {@code null} if no such employee exists.
+   */
+  private Employee getEmployee(String name) {
+    for (Employee employee : employees) {
+      if (employee.getFullName().equals(name)) {
+        return employee;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Gets the employee with the given number.
+   *
+   * @param employeeNumber the number of the employee.
+   * @return the employee with the given number or {@code null} if no such employee exists.
+   */
+  private Employee getEmployee(int employeeNumber) {
+    for (Employee employee : employees) {
+      if (employee.getEmployeeNumber() == employeeNumber) {
+        return employee;
+      }
+    }
+    return null;
   }
 }

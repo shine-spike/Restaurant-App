@@ -65,6 +65,6 @@ public class IngredientAdminPage extends CustomPage {
 
   @Override
   public void update() {
-    ingredientListView.setItems(FXCollections.observableArrayList(inventory.getIngredients()));
+    ingredientListView.setItems(FXCollections.observableArrayList(inventory.getIngredientStrings()));
   }
 }

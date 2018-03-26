@@ -54,23 +54,33 @@ public class Employee {
     return employeeType;
   }
 
-  public boolean hasAdminPermissions() {
+  public boolean[] getPermissions() {
+    return new boolean[] {
+            hasAdminPermissions(),
+            hasManagerPermissions(),
+            hasServerPermissions(),
+            hasCookPermissions(),
+            hasReceiverPermissions()
+    };
+  }
+
+  private boolean hasAdminPermissions() {
     return employeeType == EmployeeType.ADMIN;
   }
 
-  public boolean hasManagerPermissions() {
+  private boolean hasManagerPermissions() {
     return employeeType == EmployeeType.ADMIN || employeeType == EmployeeType.MANAGER;
   }
 
-  public boolean hasServerPermissions() {
+  private boolean hasServerPermissions() {
     return employeeType == EmployeeType.ADMIN || employeeType == EmployeeType.SERVER;
   }
 
-  public boolean hasCookPermissions() {
+  private boolean hasCookPermissions() {
     return employeeType == EmployeeType.ADMIN || employeeType == EmployeeType.COOK;
   }
 
-  public boolean hasReceiverPermissions() {
+  private boolean hasReceiverPermissions() {
     return true;
   }
 

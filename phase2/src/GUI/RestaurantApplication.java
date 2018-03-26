@@ -13,7 +13,7 @@ import util.Parser;
 
 public class RestaurantApplication extends Application {
   private Stage stage;
-  private Employee employee;
+  private int employeeNumber;
 
   @Override
   public void start(Stage stage) {
@@ -33,8 +33,8 @@ public class RestaurantApplication extends Application {
     return stage;
   }
 
-  public void setEmployee(Employee employee) {
-    this.employee = employee;
+  public void setEmployeeNumber(int employeeNumber) {
+    this.employeeNumber = employeeNumber;
   }
 
   private void swapScenes(Parent newContent) {
@@ -55,6 +55,6 @@ public class RestaurantApplication extends Application {
   }
 
   public void startRestaurantScene() {
-    swapScenes(new RestaurantScene(this, employee).getRoot());
+    swapScenes(new RestaurantScene(this, employeeNumber).getRoot());
   }
 }

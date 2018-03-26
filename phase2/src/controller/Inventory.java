@@ -33,64 +33,12 @@ public class Inventory {
    *
    * @return the list of strings representing all ingredients in the inventory.
    */
-  public ArrayList<String> getIngredients() {
+  public ArrayList<String> getIngredientStrings() {
     ArrayList<String> ingredientStrings = new ArrayList<>();
     for (Ingredient ingredient : ingredients) {
       ingredientStrings.add(ingredient.getName());
     }
     return ingredientStrings;
-  }
-
-  /**
-   * Gets the ingredient with the given name.
-   *
-   * @param ingredientName the name of the ingredient.
-   * @return the ingredient with that name or {@code null} if no such ingredient exists.
-   */
-  public Ingredient getIngredient(String ingredientName) {
-    for (Ingredient ingredient : ingredients) {
-      if (ingredient.getName().equals(ingredientName)) {
-        return ingredient;
-      }
-    }
-    return null;
-  }
-
-  /**
-   * Confirms a given order can be satisfied with the current inventory.
-   *
-   * @param order the order to be checked.
-   * @return whether or not the order can be satisfied.
-   */
-  public boolean confirmOrder(Order order) {
-    for (Ingredient ingredient : order.getIngredients().keySet()) {
-      if (ingredient.getQuantity() < order.getIngredients().get(ingredient)) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  /**
-   * Consumes ingredients from the inventory according to what is in the given order.
-   *
-   * @param order the order that has been prepared.
-   */
-  public void consumeIngredients(Order order) {
-    for (Ingredient ingredient : order.getIngredients().keySet()) {
-      int amount = order.getIngredients().get(ingredient);
-      if (amount == 0) {
-        continue;
-      }
-
-      Logger.inventoryLog("CONSUME", amount, ingredient.getName(), "consumed");
-      ingredient.modifyQuantity(-amount);
-
-      if (ingredient.shouldReorder()) {
-        Logger.reorderLog(ingredient.getName());
-        Reorderer.reorder(ingredient.getName(), DEFAULT_REORDER_AMOUNT);
-      }
-    }
   }
 
   /**
@@ -123,10 +71,62 @@ public class Inventory {
 
       // Search both the regular name and the respective localized name
       if (ingredientName.contains(searchTerm)
-          || Localizer.localize(ingredientName).contains(searchTerm)) {
+              || Localizer.localize(ingredientName).contains(searchTerm)) {
         foundIngredients.add(ingredient.getName());
       }
     }
     return foundIngredients;
+  }
+
+  /**
+   * Gets the ingredient with the given name.
+   *
+   * @param ingredientName the name of the ingredient.
+   * @return the ingredient with that name or {@code null} if no such ingredient exists.
+   */
+  public Ingredient getIngredient(String ingredientName) {
+    for (Ingredient ingredient : ingredients) {
+      if (ingredient.getName().equals(ingredientName)) {
+        return ingredient;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Confirms a given order can be satisfied with the current inventory.
+   *
+   * @param order the order to be checked.
+   * @return whether or not the order can be satisfied.
+   */
+  boolean confirmOrder(Order order) {
+    for (Ingredient ingredient : order.getIngredients().keySet()) {
+      if (ingredient.getQuantity() < order.getIngredients().get(ingredient)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
+   * Consumes ingredients from the inventory according to what is in the given order.
+   *
+   * @param order the order that has been prepared.
+   */
+  void consumeIngredients(Order order) {
+    for (Ingredient ingredient : order.getIngredients().keySet()) {
+      int amount = order.getIngredients().get(ingredient);
+      if (amount == 0) {
+        continue;
+      }
+
+      Logger.inventoryLog("CONSUME", amount, ingredient.getName(), "consumed");
+      ingredient.modifyQuantity(-amount);
+
+      if (ingredient.shouldReorder()) {
+        Logger.reorderLog(ingredient.getName());
+        Reorderer.reorder(ingredient.getName(), DEFAULT_REORDER_AMOUNT);
+      }
+    }
   }
 }
