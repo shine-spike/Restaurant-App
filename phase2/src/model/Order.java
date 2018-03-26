@@ -13,6 +13,7 @@ public class Order {
   private final int tableNumber;
   private final int customerIndex;
   private final int employeeNumber;
+  private final Menu menu;
   private final MenuItem menuItem;
   private final HashMap<Ingredient, Integer> ingredientChanges;
 
@@ -31,6 +32,7 @@ public class Order {
       int employeeNumber,
       int tableNumber,
       int customerIndex,
+      Menu menu,
       MenuItem menuItem,
       HashMap<Ingredient, Integer> ingredientChanges) {
     this.orderNumber = numOrders;
@@ -38,6 +40,7 @@ public class Order {
     this.customerIndex = customerIndex;
 
     this.employeeNumber = employeeNumber;
+    this.menu = menu;
     this.menuItem = menuItem;
     this.ingredientChanges = ingredientChanges;
 
@@ -89,7 +92,7 @@ public class Order {
    * @return a deep copy of this order.
    */
   public Order duplicate() {
-    return new Order(employeeNumber, tableNumber, customerIndex, menuItem, ingredientChanges);
+    return new Order(employeeNumber, tableNumber, customerIndex, menu, menuItem, ingredientChanges);
   }
 
   /**
@@ -113,5 +116,9 @@ public class Order {
    */
   public MenuItem getMenuItem() {
     return menuItem;
+  }
+
+  public Menu getMenu() {
+    return menu;
   }
 }

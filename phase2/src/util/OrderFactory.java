@@ -2,6 +2,7 @@ package util;
 
 import controller.Restaurant;
 import model.Ingredient;
+import model.Menu;
 import model.MenuItem;
 import model.Order;
 
@@ -32,15 +33,27 @@ public class OrderFactory {
       String menuItemString,
       HashMap<String, Integer> ingredientChanges) {
     Restaurant restaurant = Restaurant.getInstance();
-    MenuItem menuItem = restaurant.getMenuController().getMenuItem(menuNameString, menuItemString);
-    HashMap<Ingredient, Integer> ingredients = new HashMap<>();
+    Menu menu = restaurant.getMenuController().getMenu(menuNameString);
 
-    for (String ingredientString : ingredientChanges.keySet()) {
-      ingredients.put(
-          restaurant.getInventory().getIngredient(ingredientString),
-          ingredientChanges.get(ingredientString));
+    MenuItem menuItem;
+    if (menu != null) {
+      menuItem = menu.getMenuItem(menuItemString);
+    } else {
+      return null;
     }
 
-    return new Order(employeeNumber, tableNumber, customerIndex, menuItem, ingredients);
+    if (menuItem != null) {
+      HashMap<Ingredient, Integer> ingredients = new HashMap<>();
+
+      for (String ingredientString : ingredientChanges.keySet()) {
+        ingredients.put(
+                restaurant.getInventory().getIngredient(ingredientString),
+                ingredientChanges.get(ingredientString));
+      }
+
+      return new Order(employeeNumber, tableNumber, customerIndex, menu, menuItem, ingredients);
+    }
+
+    return null;
   }
 }

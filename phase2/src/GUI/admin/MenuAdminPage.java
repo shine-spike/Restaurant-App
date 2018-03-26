@@ -46,7 +46,7 @@ public class MenuAdminPage extends CustomPage {
               if (newSelection.intValue() != -1) {
                 String menu = menuList.get(newSelection.intValue());
 
-                menuItemList = menuController.getMenuItems(menu);
+                menuItemList = menuController.getMenuItemStrings(menu);
                 menuItemListView.setItems(
                     FXCollections.observableArrayList(Localizer.localize(menuItemList)));
               }
@@ -75,7 +75,7 @@ public class MenuAdminPage extends CustomPage {
 
   @Override
   public void update() {
-    menuList = menuController.getMenus();
+    menuList = menuController.getMenuStrings();
     menuListView.setItems(FXCollections.observableList(Localizer.localize(menuList)));
   }
 }

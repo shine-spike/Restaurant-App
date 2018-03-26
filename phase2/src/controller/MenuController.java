@@ -1,9 +1,11 @@
 package controller;
 
+import model.Ingredient;
 import model.Menu;
 import model.MenuItem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Controls all aspects of all the menus in a restaurant. Main interface for interaction with menus.
@@ -26,7 +28,7 @@ public class MenuController {
    * @param menuName the name of the menu.
    * @return the menu with the given name or {@code null} if no such menu exists.
    */
-  private Menu getMenu(String menuName) {
+  public Menu getMenu(String menuName) {
     for (Menu menu : menus) {
       if (menu.getName().equals(menuName)) {
         return menu;
@@ -83,7 +85,7 @@ public class MenuController {
    *
    * @return a list of strings representing the menus.
    */
-  public ArrayList<String> getMenus() {
+  public ArrayList<String> getMenuStrings() {
     ArrayList<String> menuStrings = new ArrayList<>();
     for (Menu menu : menus) {
         menuStrings.add(menu.getName());
@@ -97,7 +99,7 @@ public class MenuController {
    * @param menuName the name of the menu.
    * @return a list of strings representing the menu items.
    */
-  public ArrayList<String> getMenuItems(String menuName) {
+  public ArrayList<String> getMenuItemStrings(String menuName) {
     Menu menu = getMenu(menuName);
     ArrayList<String> menuItemStrings = new ArrayList<>();
 
@@ -108,5 +110,24 @@ public class MenuController {
     }
 
     return menuItemStrings;
+  }
+
+  /**
+   * Gets the menu items from the menu with the given name.
+   *
+   * @param menuName the name of the menu.
+   * @return a list of strings representing the menu items.
+   */
+  public HashMap<String, Integer> getIngredientStrings(String menuName, String menuItemName) {
+    MenuItem menuItem = getMenuItem(menuName, menuItemName);
+    HashMap<String, Integer> ingredientStrings = new HashMap<>();
+
+    if (menuItem != null) {
+      for (Ingredient ingredient : menuItem.getIngredients().keySet()) {
+        ingredientStrings.put(menuItem.getName(), menuItem.getIngredients().get(ingredient));
+      }
+    }
+
+    return ingredientStrings;
   }
 }
