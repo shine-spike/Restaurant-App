@@ -9,14 +9,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import util.Reorderer;
 
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import java.util.Properties;
-
 public class ItemRequestsPage extends CustomPage {
-  private TextArea email;
-
   @Override
   public void populateTab(Tab tab, Node previous) {
     CustomGridPane grid = new CustomGridPane(25);
@@ -25,7 +18,7 @@ public class ItemRequestsPage extends CustomPage {
     grid.setVgap(10);
 
     // Text Area
-    email = new TextArea(Reorderer.getReorders());
+    TextArea email = new TextArea(Reorderer.getReorders());
     grid.add(email, 0, 0, 2, 1);
 
     // Buttons
@@ -35,42 +28,14 @@ public class ItemRequestsPage extends CustomPage {
     CustomButton sendButton = new CustomButton("Send");
     sendButton.setOnAction(
         e ->
-            sendEmail(
-                "localhost", "matthewverreault@yahoo.com", "csc207restaurantmarch2018@gmail.com"));
+            Reorderer.sendEmail(
+                "localhost",
+                "matthewverreault@yahoo.com",
+                "csc207restaurantmarch2018@gmail.com",
+                email.getText()));
     grid.add(sendButton, 0, 1);
 
     tab.setContent(grid);
-  }
-
-  private void sendEmail(String host, String to, String from) {
-    Properties properties = System.getProperties();
-    properties.put("mail.smtp.auth", "true");
-    properties.put("mail.smtp.starttls.enable", "true");
-    properties.put("mail.smtp.host", "smtp.gmail.com");
-    properties.put("mail.smtp.port", "587");
-
-    Session session =
-        Session.getDefaultInstance(
-            properties,
-            new javax.mail.Authenticator() {
-              protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(from, "+<E;d^Jk+,c:[8`m");
-              }
-            });
-
-    try {
-      MimeMessage email = new MimeMessage(session);
-      email.setFrom(new InternetAddress(from));
-      email.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-      email.setSubject("Reorder Request");
-      email.setText(this.email.getText());
-
-      Transport.send(email);
-      // TODO add logging
-    } catch (MessagingException e) {
-      // TODO add logging
-      e.printStackTrace();
-    }
   }
 
   @Override
