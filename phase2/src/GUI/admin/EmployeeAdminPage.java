@@ -27,9 +27,8 @@ public class EmployeeAdminPage extends CustomPage {
   public void populateTab(Tab tab, Node previous) {
     CustomGridPane grid = new CustomGridPane(50);
     grid.setHgap(25);
-    grid.setVgap(25);
     grid.setPercentageColumns(50, 10, 10, 10, 10, 10);
-    grid.setEvenRows(21);
+    grid.setEvenRows(24);
 
     CustomLabel employeeInformationLabel = new CustomLabel("Employee Information");
     employeeInformationLabel.setFontSize(20);
@@ -92,7 +91,7 @@ public class EmployeeAdminPage extends CustomPage {
             update();
           }
         });
-    grid.add(modifyButton, 1, 7, 5, 3);
+    grid.add(modifyButton, 1, 8, 5, 2);
 
     CustomLabel newEmployeeLabel = new CustomLabel("New Employee Registration");
     newEmployeeLabel.setFontSize(20);
@@ -148,7 +147,7 @@ public class EmployeeAdminPage extends CustomPage {
 
           update();
         });
-    grid.add(addButton, 1, 17, 5, 3);
+    grid.add(addButton, 1, 18, 5, 2);
 
     CustomLabel employeeListLabel = new CustomLabel("Employee List");
     employeeListLabel.setFontSize(20);
@@ -169,7 +168,7 @@ public class EmployeeAdminPage extends CustomPage {
                 employeeNumberField.setText(Integer.toString(employeeNumber));
                 firstNameField.setText(employee[0]);
                 lastNameField.setText(employee[1]);
-                newPasswordField.setText("");
+                passwordField.setText("");
                 employeeTypeField.setValue(employee[2]);
 
                 if (newSelection.intValue() != oldSelection.intValue()) {
@@ -180,7 +179,7 @@ public class EmployeeAdminPage extends CustomPage {
     grid.add(employeeListView, 0, 1, 1, 20);
 
     if (previous != null) {
-      grid.add(getBackButton(tab, previous), 0, 21, 6, 3);
+      grid.add(getBackButton(tab, previous), 0, 22, 6, 2);
     }
 
     tab.setContent(grid);
