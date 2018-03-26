@@ -22,12 +22,7 @@ public class OrderController {
   public String[] getOrderInformationFromNumber(int orderNumber) {
     Order order = getOrderFromNumber(orderNumber);
     if (order != null) {
-      return new String[] {
-        Integer.toString(order.getOrderNumber()),
-        order.getStatus().toString(),
-        order.getMenu().getName(),
-        order.getMenuItem().getName()
-      };
+      return order.getOrderInformation();
     }
     return null;
   }

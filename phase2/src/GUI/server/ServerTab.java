@@ -11,8 +11,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import model.Menu;
-import model.Order;
+
+import java.util.ArrayList;
 
 import static java.lang.Integer.parseInt;
 
@@ -23,8 +23,8 @@ public class ServerTab extends CustomTab {
 
   private TextField tableNumField;
   private int tableID;
-  private ObservableList<Order> ordersList;
-  private ObservableList<MenuItem> menuList;
+  private ObservableList<String> ordersList;
+  private ObservableList<String> menuList;
   private Label selectedTableNum;
   private Button tableButton;
   private Button billButton;
@@ -79,12 +79,12 @@ public class ServerTab extends CustomTab {
     // Order List
     Label orderList = new Label("Order List:");
     ordersList = FXCollections.observableArrayList();
-    ListView<Order> ordersListView = new ListView<>(ordersList);
+    ListView<String> ordersListView = new ListView<>(ordersList);
 
     // Order Status List
     Label orderStatusList = new Label("Order Status:");
-    ObservableList<Order> ordersStatusList = FXCollections.observableArrayList();
-    ListView<Order> ordersStatusListView = new ListView<>(ordersStatusList);
+    ObservableList<String> ordersStatusList = FXCollections.observableArrayList();
+    ListView<String> ordersStatusListView = new ListView<>(ordersStatusList);
 
     // Add Order Button
     addOrderButton = new Button("Add Order");
@@ -109,8 +109,8 @@ public class ServerTab extends CustomTab {
 
   private void initializeAddOrderGrid() {
     TabPane addOrderPanes = new TabPane();
-    for (Menu menu : Restaurant.getInstance().getMenuController().getMenuList()) {
-      addOrderPanes.getTabs().add(new Tab(menu.getName()));
+    for (String menu : Restaurant.getInstance().getMenuController().getMenuStrings()) {
+      addOrderPanes.getTabs().add(new Tab(menu));
     }
     addOrderPanes.getTabs().add(new Tab());
 
@@ -123,7 +123,7 @@ public class ServerTab extends CustomTab {
     // Menu List
     Label menuListLabel = new Label("Menu List:");
     menuList = FXCollections.observableArrayList();
-    ListView<MenuItem> menuListView = new ListView<>(menuList);
+    ListView<String> menuListView = new ListView<>(menuList);
     Label menuSearchLabel = new Label("Search Item:");
     menuItemField = new TextField();
     menuItemField.setOnAction(new ServerTabHandler());
@@ -179,15 +179,14 @@ public class ServerTab extends CustomTab {
 
   private class ServerTabHandler implements EventHandler<ActionEvent> {
     @Override
-    public void handle( ActionEvent e) {
+    public void handle(ActionEvent e) {
       if (e.getSource() instanceof Button) {
-
         if (e.getSource().equals(tableButton)) {
           if (tableNumField.getText().matches("\\d+")) {
             tableID = parseInt(tableNumField.getText());
             selectedTableNum.setText("Table " + tableID + ":");
             ordersList.setAll(
-                restaurant.getTableController().getTable(tableID).getCurrentBill().getOrders());
+                orderListFormat(restaurant.getTableController().getOrderStrings(tableID)));
           }
           tableNumField.setText("");
         } else if (e.getSource().equals(billButton)) {
@@ -204,5 +203,17 @@ public class ServerTab extends CustomTab {
 
     // Populates the orders list
     // table.getCurrentBill().getOrders()
+  }
+
+  private ArrayList<String> orderListFormat(ArrayList<String[]> orders) {
+    ArrayList<String> orderStrings = new ArrayList<>();
+    for (String[] order : orders) {
+      orderStrings.add(orderListFormat(order));
+    }
+    return orderStrings;
+  }
+
+  private String orderListFormat(String[] order) {
+    return order[0] + order[1] + order[2] + order[3];
   }
 }

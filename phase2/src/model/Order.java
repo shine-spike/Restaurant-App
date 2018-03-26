@@ -86,6 +86,15 @@ public class Order {
     this.status = status;
   }
 
+  public String[] getOrderInformation() {
+    return new String[] {
+            Integer.toString(orderNumber),
+            status.toString(),
+            menu.getName(),
+            menuItem.getName()
+    };
+  }
+
   /**
    * Deeply duplicates this order and returns the copy.
    *
