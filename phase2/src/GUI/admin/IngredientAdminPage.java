@@ -10,12 +10,15 @@ import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
-import model.Ingredient;
+import util.Localizer;
+
+import java.util.ArrayList;
 
 public class IngredientAdminPage extends CustomPage {
   private Inventory inventory = Restaurant.getInstance().getInventory();
 
-  private ListView<Ingredient> ingredientListView = new ListView<>();
+  private ArrayList<String> ingredientList = new ArrayList<>();
+  private ListView<String> ingredientListView = new ListView<>();
 
   IngredientAdminPage() {
     update();
@@ -39,18 +42,18 @@ public class IngredientAdminPage extends CustomPage {
     searchBarField
         .textProperty()
         .addListener(
-            e ->
-                ingredientListView.setItems(
-                    FXCollections.observableArrayList(inventory.search(searchBarField.getText()))));
+            e -> {
+              ingredientList = inventory.search(searchBarField.getText());
+              ingredientListView.setItems(FXCollections.observableArrayList(Localizer.localize(ingredientList)));
+            });
     grid.add(searchBarLabel, 0, 1);
     grid.add(searchBarField, 1, 1);
 
     ingredientListView
         .getSelectionModel()
         .selectedItemProperty()
-        .addListener((obs, oldSelection, newSelection) -> {
+        .addListener((obs, oldSelection, newSelection) -> {});
 
-        });
     grid.add(ingredientListView, 0, 2, 2, 1);
 
     //    if (previous != null) {

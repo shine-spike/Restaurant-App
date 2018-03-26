@@ -22,9 +22,9 @@ public class ReceiverTab extends CustomTab {
   private static final Inventory inventory = Restaurant.getInstance().getInventory();
   private Spinner<Integer> amountSpinner;
   private TextField nameField;
-  private ListView<Ingredient> ingredientsListView;
-  private ObservableList<Ingredient> displayIngredientsList;
-  private ArrayList<Ingredient> ingredientsList;
+  private ListView<String> ingredientsListView;
+  private ObservableList<String> displayIngredientsList;
+  private ArrayList<String> ingredientsList;
   private Label warningString;
 
   /** Constructs a ReceiverTab for the employee with the id employeeNumber */
@@ -92,10 +92,10 @@ public class ReceiverTab extends CustomTab {
   private void receiveButtonPressed() {
     warningString.setText("");
     int amount = amountSpinner.getValue();
-    Ingredient ingredient = ingredientsListView.getSelectionModel().getSelectedItem();
+    String ingredient = ingredientsListView.getSelectionModel().getSelectedItem();
 
     if (ingredient != null) {
-      boolean hasReceived = inventory.restockIngredient(ingredient.getName(), amount);
+      boolean hasReceived = inventory.restockIngredient(ingredient, amount);
 
       if (hasReceived) {
         warningString.setStyle("-fx-font-weight: normal");
