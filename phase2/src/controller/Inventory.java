@@ -29,6 +29,20 @@ public class Inventory {
   }
 
   /**
+   * Gets the quantity of the ingredient with the given name,
+   *
+   * @param ingredientName the name of the ingredient.
+   * @return the integer amount or {@code -1} if such an ingredient does not exist.
+   */
+  public int getIngredientQuantity(String ingredientName) {
+    Ingredient ingredient = getIngredient(ingredientName);
+    if (ingredient != null) {
+      return ingredient.getQuantity();
+    }
+    return -1;
+  }
+
+  /**
    * Gets strings representing all ingredients in the inventory.
    *
    * @return the list of strings representing all ingredients in the inventory.
@@ -47,14 +61,12 @@ public class Inventory {
    * @param ingredientName the name of the ingredient to restock.
    * @param quantity the quantity of the ingredient to add.
    */
-  public boolean restockIngredient(String ingredientName, int quantity) {
+  public void restockIngredient(String ingredientName, int quantity) {
     Ingredient ingredient = getIngredient(ingredientName);
     if (ingredient != null) {
       Logger.inventoryLog("RESTOCK", quantity, ingredientName, "restocked");
       ingredient.modifyQuantity(quantity);
-      return true;
     }
-    return false;
   }
 
   /**
