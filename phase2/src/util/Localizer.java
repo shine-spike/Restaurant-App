@@ -26,7 +26,7 @@ public class Localizer {
    * @return the string to which the unlocalized string was previously localized, or {@code null} if
    *     it was not previously localized.
    */
-  public static String register(String unlocalizedName, String localizedName) {
+  private static String register(String unlocalizedName, String localizedName) {
     return localization.putIfAbsent(unlocalizedName, localizedName);
   }
 

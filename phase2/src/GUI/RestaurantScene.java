@@ -14,7 +14,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.ToolBar;
-import model.Employee;
 
 public class RestaurantScene {
   private RestaurantApplication application;
@@ -25,7 +24,6 @@ public class RestaurantScene {
     this.employeeNumber = employeeNumber;
   }
 
-  
   public Parent getRoot() {
     CustomGridPane grid = new CustomGridPane(0);
     grid.setPercentageColumns(100);
@@ -40,7 +38,8 @@ public class RestaurantScene {
     TabPane restaurantTabPane = new TabPane();
     restaurantTabPane.setMinHeight(application.getStage().getHeight());
 
-    boolean[] permissions = Restaurant.getInstance().getEmployeeController().getEmployeePermissions(employeeNumber);
+    boolean[] permissions =
+        Restaurant.getInstance().getEmployeeController().getEmployeePermissions(employeeNumber);
     if (permissions[0]) {
       restaurantTabPane.getTabs().add(new AdminTab(employeeNumber).getTab());
     }
@@ -56,7 +55,7 @@ public class RestaurantScene {
     if (permissions[4]) {
       restaurantTabPane.getTabs().add(new ReceiverTab(employeeNumber).getTab());
     }
-    grid.add(restaurantTabPane, 0 ,1);
+    grid.add(restaurantTabPane, 0, 1);
 
     return grid;
   }

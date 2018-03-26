@@ -30,9 +30,8 @@ public class Employee implements Serializable {
     return firstName + " " + lastName;
   }
 
-  
   public String[] getName() {
-    return new String[]{firstName, lastName};
+    return new String[] {firstName, lastName};
   }
 
   public void setName(String firstName, String lastName) {
@@ -44,11 +43,7 @@ public class Employee implements Serializable {
     passwordHashCode = password.hashCode();
   }
 
-  public void setEmployeeType(EmployeeType employeeType) {
-    this.employeeType = employeeType;
-  }
-
-  public boolean checkPassword( String password) {
+  public boolean checkPassword(String password) {
     return passwordHashCode == password.hashCode();
   }
 
@@ -56,13 +51,17 @@ public class Employee implements Serializable {
     return employeeType;
   }
 
+  public void setEmployeeType(EmployeeType employeeType) {
+    this.employeeType = employeeType;
+  }
+
   public boolean[] getPermissions() {
     return new boolean[] {
-            hasAdminPermissions(),
-            hasManagerPermissions(),
-            hasServerPermissions(),
-            hasCookPermissions(),
-            hasReceiverPermissions()
+      hasAdminPermissions(),
+      hasManagerPermissions(),
+      hasServerPermissions(),
+      hasCookPermissions(),
+      hasReceiverPermissions()
     };
   }
 

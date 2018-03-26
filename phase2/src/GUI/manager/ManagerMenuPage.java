@@ -1,8 +1,5 @@
 package GUI.manager;
 
-import GUI.admin.EmployeeAdminPage;
-import GUI.admin.IngredientAdminPage;
-import GUI.admin.MenuAdminPage;
 import GUI.elements.CustomButton;
 import GUI.elements.CustomGridPane;
 import GUI.elements.CustomLabel;

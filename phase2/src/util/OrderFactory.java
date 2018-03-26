@@ -24,7 +24,6 @@ public class OrderFactory {
    * @param ingredientChanges the map of ingredient name to change from the default menu item.
    * @return the order created.
    */
-  
   public static Order createOrder(
       int employeeNumber,
       int tableNumber,
@@ -47,8 +46,8 @@ public class OrderFactory {
 
       for (String ingredientString : ingredientChanges.keySet()) {
         ingredients.put(
-                restaurant.getInventory().getIngredient(ingredientString),
-                ingredientChanges.get(ingredientString));
+            restaurant.getInventory().getIngredient(ingredientString),
+            ingredientChanges.get(ingredientString));
       }
 
       return new Order(employeeNumber, tableNumber, customerIndex, menu, menuItem, ingredients);

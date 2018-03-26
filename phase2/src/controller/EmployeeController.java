@@ -2,9 +2,7 @@ package controller;
 
 import model.Employee;
 import model.EmployeeType;
-import util.Serializer;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 

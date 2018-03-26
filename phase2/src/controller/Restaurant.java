@@ -5,9 +5,6 @@ import model.Ingredient;
 import model.Menu;
 import util.Serializer;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-
 /** Main controller of the system, only contains hooks to sub-controllers. */
 public final class Restaurant {
   // Singleton instance of the restaurant
@@ -89,7 +86,8 @@ public final class Restaurant {
 
   /** Retrieves found data from file and stores it in the respective controllers. */
   public void retrieveModel() {
-    Employee[] employees = Serializer.deserialize(Employee[].class, employeeController.getName() + ".ser");
+    Employee[] employees =
+        Serializer.deserialize(Employee[].class, employeeController.getName() + ".ser");
     if (employees != null) {
       employeeController.setContents(employees);
     }
@@ -99,7 +97,8 @@ public final class Restaurant {
       menuController.setContents(menus);
     }
 
-    Ingredient[] ingredients = Serializer.deserialize(Ingredient[].class, inventory.getName() + ".ser");
+    Ingredient[] ingredients =
+        Serializer.deserialize(Ingredient[].class, inventory.getName() + ".ser");
     if (ingredients != null) {
       inventory.setContents(ingredients);
     }

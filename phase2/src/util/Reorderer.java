@@ -34,7 +34,7 @@ public class Reorderer {
     }
   }
 
-  public static String getReorders(){
+  public static String getReorders() {
     StringBuilder out = new StringBuilder();
 
     File file = new File(REORDER_REQUEST_FILE);
@@ -44,7 +44,7 @@ public class Reorderer {
       BufferedReader in = getReader();
       String line = (in != null ? in.readLine() : null);
 
-      while(line != null){
+      while (line != null) {
         out.append(line);
         line = in.readLine();
       }
@@ -61,8 +61,7 @@ public class Reorderer {
 
     try {
       // Attempt to create the file and notify if it was created now
-      if (file.createNewFile()) {
-      }
+      if (file.createNewFile()) {}
 
       // Return the reader of the file whether or not we just created it
       return new BufferedReader(new FileReader(file));
@@ -73,26 +72,29 @@ public class Reorderer {
 
   /**
    * Sends an email to reorder ingredients
+   *
    * @param host the host sending the email
    * @param to the email's recipient
    * @param from the email's sender
    * @param content the content of the email
    */
-  public static void sendEmail(String host, String to, String from, String content){
+  public static void sendEmail(String host, String to, String from, String content) {
     Properties properties = System.getProperties();
     properties.put("mail.smtp.auth", "true");
     properties.put("mail.smtp.starttls.enable", "true");
     properties.put("mail.smtp.host", "smtp.gmail.com");
     properties.put("mail.smtp.port", "587");
 
-    Session session = Session.getDefaultInstance(properties,
+    Session session =
+        Session.getDefaultInstance(
+            properties,
             new javax.mail.Authenticator() {
               protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(from,"+<E;d^Jk+,c:[8`m");
+                return new PasswordAuthentication(from, "+<E;d^Jk+,c:[8`m");
               }
             });
 
-    try{
+    try {
       MimeMessage email = new MimeMessage(session);
       email.setFrom(new InternetAddress(from));
       email.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
@@ -101,7 +103,7 @@ public class Reorderer {
 
       Transport.send(email);
       // TODO add logging
-    } catch (MessagingException e){
+    } catch (MessagingException e) {
       // TODO add logging
       e.printStackTrace();
     }

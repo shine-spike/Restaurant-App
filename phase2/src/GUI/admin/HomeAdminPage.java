@@ -39,7 +39,6 @@ public class HomeAdminPage extends CustomPage {
     manageIngredientsButton.setOnAction(e -> new IngredientAdminPage().populateTab(tab, grid));
     grid.add(manageIngredientsButton, 1, 5);
 
-
     tab.setContent(grid);
   }
 

@@ -1,30 +1,18 @@
 package model;
 
-
 import java.util.ArrayList;
 
-/**
- * Represents a table in a restaurant. Stores the bill for this table.
- */
+/** Represents a table in a restaurant. Stores the bill for this table. */
 public class Table {
-  
-  private Bill currentBill = new Bill();
-  
-  private ArrayList<Bill> customerBills = new ArrayList<>();
 
   private final ArrayList<Bill> billHistory = new ArrayList<>();
+  private Bill currentBill = new Bill();
+  private ArrayList<Bill> customerBills = new ArrayList<>();
 
+  /** Create a table with an empty bill and no bill history. */
+  public Table() {}
 
-  /**
-   * Create a table with an empty bill and no bill history.
-   */
-  public Table() {
-
-  }
-
-  /**
-   * Clears this tables bill and adds it to the bill history.
-   */
+  /** Clears this tables bill and adds it to the bill history. */
   public void clearBill() {
     billHistory.add(currentBill);
 
@@ -37,7 +25,7 @@ public class Table {
    *
    * @param order the order to add to the bill.
    */
-  public void addToBill( Order order) {
+  public void addToBill(Order order) {
     currentBill.addOrder(order);
 
     if (customerBills.size() > order.getCustomerIndex()) {
@@ -53,8 +41,7 @@ public class Table {
    *
    * @return the total bill of this table.
    */
-  
-  public Bill getCurrentBill(){
+  public Bill getCurrentBill() {
     return currentBill;
   }
 
@@ -63,7 +50,6 @@ public class Table {
    *
    * @return the formatted bill string.
    */
-  
   public String getBillString() {
     return currentBill.getBillString();
   }
@@ -74,7 +60,6 @@ public class Table {
    * @param customerIndex the index of the customer.
    * @return the string representation of the customer's bill.
    */
-  
   public String getBillString(int customerIndex) {
     return customerBills.get(customerIndex).getBillString();
   }

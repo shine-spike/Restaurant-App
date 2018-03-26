@@ -5,16 +5,9 @@ import GUI.elements.CustomLabel;
 import GUI.elements.CustomTab;
 import controller.Inventory;
 import controller.Restaurant;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import util.Localizer;
 
 import java.util.ArrayList;
@@ -41,10 +34,13 @@ public class ReceiverTab extends CustomTab {
     // Ingredient Name
     CustomLabel nameLabel = new CustomLabel("Ingredient Name");
     TextField nameField = new TextField();
-    nameField.textProperty().addListener(((observable, oldValue, newValue) -> {
-      ingredientsList = inventory.search(newValue);
-      updateTab();
-    }));
+    nameField
+        .textProperty()
+        .addListener(
+            ((observable, oldValue, newValue) -> {
+              ingredientsList = inventory.search(newValue);
+              updateTab();
+            }));
 
     // Number of Ingredients
     Label amountLabel = new Label("Amount");
@@ -68,25 +64,26 @@ public class ReceiverTab extends CustomTab {
     // Add Ingredients Button
     Button button = new Button("Enter");
     button.setMaxWidth(Double.MAX_VALUE);
-    button.setOnAction(e -> {
-      warningString.setText("");
-      int amount = amountSpinner.getValue();
-      int ingredientIndex = ingredientsListView.getSelectionModel().getSelectedIndex();
+    button.setOnAction(
+        e -> {
+          warningString.setText("");
+          int amount = amountSpinner.getValue();
+          int ingredientIndex = ingredientsListView.getSelectionModel().getSelectedIndex();
 
-      if (ingredientIndex != -1) {
-        String ingredient = ingredientsList.get(ingredientIndex);
-        inventory.restockIngredient(ingredient, amount);
+          if (ingredientIndex != -1) {
+            String ingredient = ingredientsList.get(ingredientIndex);
+            inventory.restockIngredient(ingredient, amount);
 
-        warningString.setInfo();
-        warningString.setText(
+            warningString.setInfo();
+            warningString.setText(
                 amount + " " + Localizer.localize(ingredient) + "(s) added to inventory");
-        amountSpinner.getValueFactory().setValue(1);
-        nameField.setText("");
-      } else {
-        warningString.setWarning();
-        warningString.setText("No ingredient selected");
-      }
-    });
+            amountSpinner.getValueFactory().setValue(1);
+            nameField.setText("");
+          } else {
+            warningString.setWarning();
+            warningString.setText("No ingredient selected");
+          }
+        });
 
     grid.add(nameLabel, 0, 0);
     grid.add(nameField, 0, 1);
@@ -101,6 +98,7 @@ public class ReceiverTab extends CustomTab {
 
   /** Updates all the nodes of this tab with the appropriate new information */
   public void updateTab() {
-    ingredientsListView.setItems(FXCollections.observableArrayList(Localizer.localize(ingredientsList)));
+    ingredientsListView.setItems(
+        FXCollections.observableArrayList(Localizer.localize(ingredientsList)));
   }
 }

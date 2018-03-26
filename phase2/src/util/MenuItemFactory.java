@@ -19,8 +19,8 @@ public class MenuItemFactory {
    * @param ingredientAmounts the map of ingredient names to amounts in the item.
    * @return the menu item created.
    */
-  
-  public static MenuItem createMenuItem(String name, int price, HashMap<String, Integer> ingredientAmounts) {
+  public static MenuItem createMenuItem(
+      String name, int price, HashMap<String, Integer> ingredientAmounts) {
     HashMap<Ingredient, Integer> ingredients = new HashMap<>();
     for (String ingredientName : ingredientAmounts.keySet()) {
       Ingredient ingredient = Restaurant.getInstance().getInventory().getIngredient(ingredientName);

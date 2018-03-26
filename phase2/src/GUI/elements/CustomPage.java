@@ -1,24 +1,20 @@
 package GUI.elements;
 
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 
-/**
- * Simple abstract class that guarantees basic functionality of all the pages in the gui.
- */
+/** Simple abstract class that guarantees basic functionality of all the pages in the gui. */
 public abstract class CustomPage {
   /**
-   * Populates the given tab with the contents of this page and references the last contents of the tab.
+   * Populates the given tab with the contents of this page and references the last contents of the
+   * tab.
    *
    * @param tab the tab to populate.
    * @param previous the previous contents of the tab.
    */
   public abstract void populateTab(Tab tab, Node previous);
 
-  /**
-   * Updates this page to the most recent contents.
-   */
+  /** Updates this page to the most recent contents. */
   public abstract void update();
 
   /**
@@ -32,9 +28,10 @@ public abstract class CustomPage {
     if (previous != null) {
       CustomButton backButton = new CustomButton("Back");
       backButton.maximize();
-      backButton.setOnAction(e -> {
-        tab.setContent(previous);
-      });
+      backButton.setOnAction(
+          e -> {
+            tab.setContent(previous);
+          });
       return backButton;
     }
 

@@ -44,7 +44,8 @@ public class IngredientAdminPage extends CustomPage {
         .addListener(
             e -> {
               ingredientList = inventory.search(searchBarField.getText());
-              ingredientListView.setItems(FXCollections.observableArrayList(Localizer.localize(ingredientList)));
+              ingredientListView.setItems(
+                  FXCollections.observableArrayList(Localizer.localize(ingredientList)));
             });
     grid.add(searchBarLabel, 0, 1);
     grid.add(searchBarField, 1, 1);
@@ -65,6 +66,7 @@ public class IngredientAdminPage extends CustomPage {
 
   @Override
   public void update() {
-    ingredientListView.setItems(FXCollections.observableArrayList(inventory.getIngredientStrings()));
+    ingredientListView.setItems(
+        FXCollections.observableArrayList(inventory.getIngredientStrings()));
   }
 }

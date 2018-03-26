@@ -37,7 +37,8 @@ public class Serializer {
   }
 
   /**
-   * Deserialize and returns an array of serializable objects of the given type from the file with the given name.
+   * Deserialize and returns an array of serializable objects of the given type from the file with
+   * the given name.
    *
    * @param tClass the type of the array of serializable objects.
    * @param name the name of the file.

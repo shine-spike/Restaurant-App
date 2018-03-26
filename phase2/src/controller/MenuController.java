@@ -3,9 +3,7 @@ package controller;
 import model.Ingredient;
 import model.Menu;
 import model.MenuItem;
-import util.Serializer;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
