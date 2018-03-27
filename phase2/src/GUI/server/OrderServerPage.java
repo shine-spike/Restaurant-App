@@ -6,6 +6,7 @@ import controller.OrderController;
 import controller.Restaurant;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Spinner;
 import util.Localizer;
 
@@ -35,14 +36,14 @@ public class OrderServerPage extends CustomPage {
   public void populateTab(CustomTab tab) {
     CustomGridPane grid = new CustomGridPane(50);
     grid.setHgap(25);
-    grid.setPercentageColumns(25, 25, 25, 25);
+    grid.setPercentageColumns(50, 50);
     grid.setEvenRows(24);
 
     CustomLabel menuListLabel = new CustomLabel("Menu List");
     menuListLabel.setFontSize(20);
     menuListLabel.setBold();
     menuListLabel.center();
-    grid.add(menuListLabel, 0, 0, 2, 1);
+    grid.add(menuListLabel, 0, 0);
 
     menuListView
         .getSelectionModel()
@@ -58,14 +59,19 @@ public class OrderServerPage extends CustomPage {
                     FXCollections.observableArrayList(Localizer.localize(menuItemList)));
               }
             });
-    grid.add(menuListView, 0, 1, 2, 5);
+    grid.add(menuListView, 0, 1, 1, 5);
 
     CustomLabel menuItemListLabel = new CustomLabel("Menu Item List");
     menuItemListLabel.setFontSize(20);
     menuItemListLabel.setBold();
     menuItemListLabel.center();
-    grid.add(menuItemListLabel, 2, 0, 2, 1);
+    grid.add(menuItemListLabel, 1, 0, 1, 1);
 
+    ScrollPane ingredientsPane = new ScrollPane();
+    ingredientsPane.setFitToWidth(true);
+    grid.add(ingredientsPane, 0, 7, 2, 13);
+
+    HashMap<String, Integer> ingredientAmountChanges = new HashMap<>();
     menuItemListView
         .getSelectionModel()
         .selectedIndexProperty()
@@ -77,23 +83,53 @@ public class OrderServerPage extends CustomPage {
               if (selectionIndex != -1 && selectedMenuIndex != -1) {
                 String menuItem = menuItemList.get(selectionIndex);
                 String menu = menuList.get(selectedMenuIndex);
+
+                CustomGridPane ingredientsGrid = new CustomGridPane(10);
+                ingredientsGrid.setHgap(10);
+                ingredientsGrid.setVgap(10);
+                ingredientsGrid.setPercentageColumns(5, 20, 5, 20, 5, 20, 5, 20);
+                int numColumns = 8;
+                int counter = 0;
+
+                HashMap<String, Integer> ingredientAmounts =
+                    menuController.getIngredientStrings(menu, menuItem);
+                for (String ingredient : ingredientAmounts.keySet()) {
+                  int initialAmount = ingredientAmounts.get(ingredient);
+
+                  Spinner<Integer> ingredientAmountSpinner =
+                      new Spinner<>(0, 10, initialAmount);
+                  ingredientAmountSpinner
+                      .valueProperty()
+                      .addListener(
+                          (observable, oldValue, newValue) -> {
+                            ingredientAmountChanges.put(ingredient, newValue - initialAmount);
+                          });
+
+                  CustomLabel ingredientName = new CustomLabel(Localizer.localize(ingredient));
+
+                  int column = counter % numColumns;
+                  int row = counter / numColumns;
+                  ingredientsGrid.add(ingredientAmountSpinner, column, row);
+                  ingredientsGrid.add(ingredientName, column + 1, row);
+
+                  counter += 2;
+                }
+
+                ingredientsPane.setContent(ingredientsGrid);
               }
             });
-    grid.add(menuItemListView, 2, 1, 2, 5);
-
-    HashMap<String, Integer> ingredientChangeAmounts = new HashMap<>();
-    Spinner<Integer> ingredientAmountSpinner = new Spinner<>(0, 10, 0);
+    grid.add(menuItemListView, 1, 1, 1, 5);
 
     CustomLabel placeOrderLabel = new CustomLabel();
     placeOrderLabel.setWarning();
     placeOrderLabel.setBold();
     placeOrderLabel.center();
-    grid.add(placeOrderLabel, 0, 23, 4, 1);
+    grid.add(placeOrderLabel, 0, 24, 2, 1);
 
     CustomButton discardOrderButton = new CustomButton("Discard");
     discardOrderButton.maximize();
     discardOrderButton.setOnAction(e -> tab.goBack());
-    grid.add(discardOrderButton, 0, 20, 2, 2);
+    grid.add(discardOrderButton, 0, 21, 1, 2);
 
     CustomButton createOrderButton = new CustomButton("Create");
     createOrderButton.maximize();
@@ -112,14 +148,14 @@ public class OrderServerPage extends CustomPage {
                 customerIndex,
                 menu,
                 menuItem,
-                ingredientChangeAmounts)) {
+                ingredientAmountChanges)) {
               placeOrderLabel.setText("Order cannot be satisfied.");
             } else {
               tab.goBack();
             }
           }
         });
-    grid.add(createOrderButton, 2, 20, 2, 2);
+    grid.add(createOrderButton, 1, 21, 1, 2);
 
     tab.setCurrentPage(this, grid);
   }
