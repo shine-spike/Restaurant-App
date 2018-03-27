@@ -13,7 +13,7 @@ public class EmployeeController implements SerializableContents<Employee> {
 
   /** Creates an employee controller with only the administrator account. */
   EmployeeController() {
-    employees.add(new Employee("Admin", "account", "adminaccount", EmployeeType.ADMIN));
+    employees.add(new Employee(employees.size(),"Admin", "account", "adminaccount", EmployeeType.ADMIN));
   }
 
   /**
@@ -27,7 +27,7 @@ public class EmployeeController implements SerializableContents<Employee> {
   public void registerEmployee(
       String firstName, String lastName, String password, String employeeType) {
     employees.add(
-        new Employee(firstName, lastName, password, EmployeeType.getEmployeeType(employeeType)));
+        new Employee(employees.size(), firstName, lastName, password, EmployeeType.getEmployeeType(employeeType)));
   }
 
   /**

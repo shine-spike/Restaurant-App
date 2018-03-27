@@ -3,8 +3,6 @@ package model;
 import java.io.Serializable;
 
 public class Employee implements Serializable {
-  private static int currentEmployeeNumber = 0;
-
   private int employeeNumber;
   private EmployeeType employeeType;
 
@@ -12,9 +10,8 @@ public class Employee implements Serializable {
   private String lastName;
   private int passwordHashCode;
 
-  public Employee(String firstName, String lastName, String password, EmployeeType employeeType) {
-    this.employeeNumber = currentEmployeeNumber;
-    currentEmployeeNumber++;
+  public Employee(int employeeNumber, String firstName, String lastName, String password, EmployeeType employeeType) {
+    this.employeeNumber = employeeNumber;
     this.employeeType = employeeType;
 
     this.firstName = firstName;
