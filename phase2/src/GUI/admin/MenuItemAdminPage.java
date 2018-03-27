@@ -1,16 +1,11 @@
 package GUI.admin;
 
-import GUI.elements.CustomButton;
-import GUI.elements.CustomGridPane;
-import GUI.elements.CustomLabel;
-import GUI.elements.CustomPage;
+import GUI.elements.*;
 import controller.Inventory;
 import controller.MenuController;
 import controller.Restaurant;
 import javafx.collections.FXCollections;
-import javafx.scene.Node;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import util.Localizer;
 import util.MenuItemFactory;
@@ -35,7 +30,8 @@ public class MenuItemAdminPage extends CustomPage {
     this.menuItem = menuItem;
 
     if (menuController.getIngredientStrings(menu, menuItem).size() == 0) {
-      menuController.addMenuItem(menu, MenuItemFactory.createMenuItem(menuItem, price, menuItemIngredientAmounts));
+      menuController.addMenuItem(
+          menu, MenuItemFactory.createMenuItem(menuItem, price, menuItemIngredientAmounts));
     } else {
       menuController.setMenuItemPrice(menu, menuItem, price);
     }
@@ -44,7 +40,7 @@ public class MenuItemAdminPage extends CustomPage {
   }
 
   @Override
-  public void populateTab(Tab tab, Node previous) {
+  public void populateTab(CustomTab tab) {
     CustomGridPane grid = new CustomGridPane(50);
     grid.setHgap(25);
     grid.setPercentageColumns(10, 10, 10, 10, 10, 10, 10, 10, 10, 10);
@@ -94,7 +90,8 @@ public class MenuItemAdminPage extends CustomPage {
             update();
           } else {
             newIngredientLabel.setWarning();
-            newIngredientLabel.setText("Please select an item and input a number in the amount field.");
+            newIngredientLabel.setText(
+                "Please select an item and input a number in the amount field.");
           }
         });
     grid.add(newIngredientButton, 0, 18, 5, 1);
@@ -167,7 +164,8 @@ public class MenuItemAdminPage extends CustomPage {
             update();
           } else {
             ingredientLabel.setWarning();
-            ingredientLabel.setText("Please select an item and input a number in the amount field.");
+            ingredientLabel.setText(
+                "Please select an item and input a number in the amount field.");
           }
         });
     grid.add(modifyIngredientButton, 5, 18, 5, 1);
@@ -216,11 +214,11 @@ public class MenuItemAdminPage extends CustomPage {
             });
     grid.add(menuItemIngredientListView, 5, 2, 5, 10);
 
-    if (previous != null) {
-      grid.add(getBackButton(tab, previous), 0, 22, 10, 2);
+    if (tab.canGoBack()) {
+      grid.add(getBackButton(tab), 0, 22, 10, 2);
     }
 
-    tab.setContent(grid);
+    tab.setCurrentPage(this, grid);
   }
 
   @Override

@@ -1,11 +1,12 @@
 package GUI;
 
-import GUI.admin.AdminTab;
-import GUI.cook.CookTab;
+import GUI.admin.HomeAdminPage;
+import GUI.cook.HomeCookPage;
 import GUI.elements.CustomGridPane;
-import GUI.manager.ManagerTab;
-import GUI.receiver.ReceiverTab;
-import GUI.server.ServerTab;
+import GUI.elements.CustomTab;
+import GUI.manager.HomeManagerPage;
+import GUI.receiver.HomeReceiverPage;
+import GUI.server.HomeServerPage;
 import controller.Restaurant;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -41,19 +42,25 @@ public class RestaurantScene {
     boolean[] permissions =
         Restaurant.getInstance().getEmployeeController().getEmployeePermissions(employeeNumber);
     if (permissions[0]) {
-      restaurantTabPane.getTabs().add(new AdminTab(employeeNumber).getTab());
+      restaurantTabPane.getTabs().add(new CustomTab("Admin", employeeNumber, new HomeAdminPage()));
     }
     if (permissions[1]) {
-      restaurantTabPane.getTabs().add(new ManagerTab(employeeNumber).getTab());
+      restaurantTabPane
+          .getTabs()
+          .add(new CustomTab("Manager", employeeNumber, new HomeManagerPage()));
     }
     if (permissions[2]) {
-      restaurantTabPane.getTabs().add(new ServerTab(employeeNumber).getTab());
+      restaurantTabPane
+          .getTabs()
+          .add(new CustomTab("Server", employeeNumber, new HomeServerPage()));
     }
     if (permissions[3]) {
-      restaurantTabPane.getTabs().add(new CookTab(employeeNumber).getTab());
+      restaurantTabPane.getTabs().add(new CustomTab("Cook", employeeNumber, new HomeCookPage()));
     }
     if (permissions[4]) {
-      restaurantTabPane.getTabs().add(new ReceiverTab(employeeNumber).getTab());
+      restaurantTabPane
+          .getTabs()
+          .add(new CustomTab("Receiver", employeeNumber, new HomeReceiverPage()));
     }
     grid.add(restaurantTabPane, 0, 1);
 

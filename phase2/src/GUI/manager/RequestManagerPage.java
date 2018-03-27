@@ -3,6 +3,7 @@ package GUI.manager;
 import GUI.elements.CustomButton;
 import GUI.elements.CustomGridPane;
 import GUI.elements.CustomPage;
+import GUI.elements.CustomTab;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
@@ -11,7 +12,7 @@ import util.Reorderer;
 
 public class RequestManagerPage extends CustomPage {
   @Override
-  public void populateTab(Tab tab, Node previous) {
+  public void populateTab(CustomTab tab) {
     CustomGridPane grid = new CustomGridPane(50);
     grid.setAlignment(Pos.CENTER);
     grid.setHgap(10);
@@ -22,7 +23,7 @@ public class RequestManagerPage extends CustomPage {
     grid.add(email, 0, 0, 2, 1);
 
     // Buttons
-    CustomButton backButton = getBackButton(tab, previous);
+    CustomButton backButton = getBackButton(tab);
     grid.add(backButton, 1, 1);
 
     CustomButton sendButton = new CustomButton("Send");
@@ -35,7 +36,7 @@ public class RequestManagerPage extends CustomPage {
                 email.getText()));
     grid.add(sendButton, 0, 1);
 
-    tab.setContent(grid);
+    tab.setCurrentPage(this, grid);
   }
 
   @Override

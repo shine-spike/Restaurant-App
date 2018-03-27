@@ -1,9 +1,6 @@
 package GUI.admin;
 
-import GUI.elements.CustomButton;
-import GUI.elements.CustomGridPane;
-import GUI.elements.CustomLabel;
-import GUI.elements.CustomPage;
+import GUI.elements.*;
 import controller.Inventory;
 import controller.Restaurant;
 import javafx.collections.FXCollections;
@@ -26,7 +23,7 @@ public class IngredientAdminPage extends CustomPage {
   }
 
   @Override
-  public void populateTab(Tab tab, Node previous) {
+  public void populateTab(CustomTab tab) {
     CustomGridPane grid = new CustomGridPane(50);
     grid.setHgap(25);
     grid.setPercentageColumns(10, 40, 20, 10, 20);
@@ -178,11 +175,11 @@ public class IngredientAdminPage extends CustomPage {
             });
     grid.add(ingredientListView, 0, 2, 2, 19);
 
-    if (previous != null) {
-      grid.add(getBackButton(tab, previous), 0, 22, 5, 2);
+    if (tab.canGoBack()) {
+      grid.add(getBackButton(tab), 0, 22, 5, 2);
     }
 
-    tab.setContent(grid);
+    tab.setCurrentPage(this, grid);
   }
 
   @Override

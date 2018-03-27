@@ -31,16 +31,13 @@ public class OrderController {
    * Gets the order information of the orders with the given order numbers.
    *
    * @param orderNumbers the numbers of the orders to get.
-   * @return an array of order information.
+   * @return a list of order information.
    */
-  public String[][] getOrderInformationFromNumbers(Integer... orderNumbers) {
-    int numOrders = orderNumbers.length;
-    String[][] orderInformation = new String[numOrders][];
-
-    for (int i = 0; i < numOrders; i++) {
-      orderInformation[i] = getOrderInformationFromNumber(orderNumbers[i]);
+  public ArrayList<String[]> getOrderInformationFromNumbers(Integer... orderNumbers) {
+    ArrayList<String[]> orderInformation = new ArrayList<>();
+    for (int orderNumber : orderNumbers) {
+      orderInformation.add(getOrderInformationFromNumber(orderNumber));
     }
-
     return orderInformation;
   }
 
@@ -82,12 +79,28 @@ public class OrderController {
   }
 
   /**
+   * Gets the numbers of all ready orders.
+   *
+   * @return the list order numbers of all ready orders.
+   */
+  public ArrayList<Integer> getReadyOrderNumbers() {
+    ArrayList<Integer> orderNumbers = new ArrayList<>();
+
+    for (Order order : getOrdersFromStatus(OrderStatus.READY)) {
+      orderNumbers.add(order.getOrderNumber());
+    }
+
+    return orderNumbers;
+  }
+
+  /**
    * Registers a given order in the controller.
    *
    * @param order the order to register.
    */
   public void registerOrder(Order order) {
     orders.add(order);
+    Restaurant.getInstance().getTableController().addToTable(order);
   }
 
   /**

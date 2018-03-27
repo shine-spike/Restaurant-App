@@ -1,9 +1,6 @@
 package GUI.admin;
 
-import GUI.elements.CustomButton;
-import GUI.elements.CustomGridPane;
-import GUI.elements.CustomLabel;
-import GUI.elements.CustomPage;
+import GUI.elements.*;
 import controller.EmployeeController;
 import controller.Restaurant;
 import javafx.collections.FXCollections;
@@ -24,7 +21,7 @@ public class EmployeeAdminPage extends CustomPage {
   }
 
   @Override
-  public void populateTab(Tab tab, Node previous) {
+  public void populateTab(CustomTab tab) {
     CustomGridPane grid = new CustomGridPane(50);
     grid.setHgap(25);
     grid.setPercentageColumns(50, 10, 10, 10, 10, 10);
@@ -178,11 +175,11 @@ public class EmployeeAdminPage extends CustomPage {
             });
     grid.add(employeeListView, 0, 1, 1, 20);
 
-    if (previous != null) {
-      grid.add(getBackButton(tab, previous), 0, 22, 6, 2);
+    if (tab.canGoBack()) {
+      grid.add(getBackButton(tab), 0, 22, 6, 2);
     }
 
-    tab.setContent(grid);
+    tab.setCurrentPage(this, grid);
   }
 
   @Override

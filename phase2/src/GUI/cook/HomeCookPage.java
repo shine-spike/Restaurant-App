@@ -1,9 +1,6 @@
 package GUI.cook;
 
-import GUI.elements.CustomButton;
-import GUI.elements.CustomGridPane;
-import GUI.elements.CustomLabel;
-import GUI.elements.CustomTab;
+import GUI.elements.*;
 import controller.OrderController;
 import controller.Restaurant;
 import javafx.collections.FXCollections;
@@ -19,8 +16,8 @@ import util.OrderFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class CookTab extends CustomTab {
-  private static OrderController orderController = Restaurant.getInstance().getOrderController();
+public class HomeCookPage extends CustomPage {
+  private OrderController orderController = Restaurant.getInstance().getOrderController();
 
   private ArrayList<Integer> orderNumbers;
   private ListView<String> orderListView;
@@ -28,14 +25,8 @@ public class CookTab extends CustomTab {
   private CustomLabel warningText;
   private CustomButton readyButton, seenButton, cancelButton;
 
-  /** Constructs a CookTab for the employee with the id employeeNumber */
-  public CookTab(int employeeNumber) {
-    super("Cook", employeeNumber);
-    updateTab();
-  }
-
-  /** Initializes this CookTab's JavaFX tab */
-  public void populateTab() {
+  @Override
+  public void populateTab(CustomTab tab) {
     CustomGridPane grid = new CustomGridPane(25);
     grid.setAlignment(Pos.CENTER);
     grid.setHgap(10);
@@ -73,7 +64,7 @@ public class CookTab extends CustomTab {
     orderController.registerOrder(
         OrderFactory.createOrder(1, 1, 1, "lunch", "burger", new HashMap<>()));
     orderController.placeOrder(0);
-    updateTab();
+    update();
 
     CustomLabel activeOrderLabel = new CustomLabel("Current Order");
     activeOrderLabel.setFontSize(20);
@@ -111,11 +102,11 @@ public class CookTab extends CustomTab {
     warningText.center();
     grid.add(warningText, 1, 3, 5, 1);
 
-    getTab().setContent(grid);
+    tab.setCurrentPage(this, grid);
   }
 
-  /** Updates all the nodes of this tab with the appropriate new information */
-  public void updateTab() {
+  @Override
+  public void update() {
     orderNumbers = orderController.getCookOrderNumbers();
     Integer[] ordersArray = new Integer[orderNumbers.size()];
     orderNumbers.toArray(ordersArray);
@@ -131,7 +122,7 @@ public class CookTab extends CustomTab {
    * @param orders The ArrayList of Orders to be formatted
    * @return an ArrayList of formatted Strings for the active orders list
    */
-  private ArrayList<String> activeOrdersFormat(String[][] orders) {
+  private ArrayList<String> activeOrdersFormat(ArrayList<String[]> orders) {
     ArrayList<String> out = new ArrayList<>();
     for (String[] order : orders) {
       out.add(activeOrdersFormat(order));
@@ -213,7 +204,7 @@ public class CookTab extends CustomTab {
         warningText.setText("No Order Selected");
       }
 
-      updateTab();
+      update();
     }
   }
 }

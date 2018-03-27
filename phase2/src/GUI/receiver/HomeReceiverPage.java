@@ -1,9 +1,6 @@
 package GUI.receiver;
 
-import GUI.elements.CustomButton;
-import GUI.elements.CustomGridPane;
-import GUI.elements.CustomLabel;
-import GUI.elements.CustomTab;
+import GUI.elements.*;
 import controller.Inventory;
 import controller.Restaurant;
 import javafx.collections.FXCollections;
@@ -16,19 +13,14 @@ import util.Localizer;
 
 import java.util.ArrayList;
 
-public class ReceiverTab extends CustomTab {
-  private static final Inventory inventory = Restaurant.getInstance().getInventory();
+public class HomeReceiverPage extends CustomPage {
+  private final Inventory inventory = Restaurant.getInstance().getInventory();
 
   private ArrayList<String> ingredientsList;
   private ListView<String> ingredientsListView;
 
-  /** Constructs a ReceiverTab for the employee with the id employeeNumber */
-  public ReceiverTab(int employeeNumber) {
-    super("Receiver", employeeNumber);
-  }
-
-  /** Initializes this ReceiverTab's JavaFX tab */
-  public void populateTab() {
+  @Override
+  public void populateTab(CustomTab tab) {
     CustomGridPane grid = new CustomGridPane(25);
     grid.setPercentageColumns(15, 60, 10, 15);
     grid.setAlignment(Pos.CENTER);
@@ -43,7 +35,7 @@ public class ReceiverTab extends CustomTab {
         .addListener(
             ((observable, oldValue, newValue) -> {
               ingredientsList = inventory.search(newValue);
-              updateTab();
+              update();
             }));
 
     // Number of Ingredients
@@ -58,7 +50,7 @@ public class ReceiverTab extends CustomTab {
     ingredientsListView = new ListView<>();
     ingredientsList = inventory.search(nameField.getText());
     ingredientsListView.setMaxHeight(Double.MAX_VALUE);
-    updateTab();
+    update();
 
     // Warning String
     CustomLabel warningString = new CustomLabel();
@@ -97,11 +89,11 @@ public class ReceiverTab extends CustomTab {
     grid.add(button, 1, 4, 2, 1);
     grid.add(warningString, 1, 9, 2, 1);
 
-    getTab().setContent(grid);
+    tab.setCurrentPage(this, grid);
   }
 
-  /** Updates all the nodes of this tab with the appropriate new information */
-  public void updateTab() {
+  @Override
+  public void update() {
     ingredientsListView.setItems(
         FXCollections.observableArrayList(Localizer.localize(ingredientsList)));
   }

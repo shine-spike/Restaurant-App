@@ -1,15 +1,10 @@
 package GUI.admin;
 
-import GUI.elements.CustomButton;
-import GUI.elements.CustomGridPane;
-import GUI.elements.CustomLabel;
-import GUI.elements.CustomPage;
+import GUI.elements.*;
 import controller.MenuController;
 import controller.Restaurant;
 import javafx.collections.FXCollections;
-import javafx.scene.Node;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import util.Localizer;
 
@@ -28,7 +23,7 @@ public class MenuAdminPage extends CustomPage {
   }
 
   @Override
-  public void populateTab(Tab tab, Node previous) {
+  public void populateTab(CustomTab tab) {
     CustomGridPane grid = new CustomGridPane(50);
     grid.setHgap(25);
     grid.setPercentageColumns(10, 10, 10, 10, 10, 10, 10, 10, 10, 10);
@@ -216,8 +211,7 @@ public class MenuAdminPage extends CustomPage {
             update();
           } else {
             itemModificationLabel.setWarning();
-            itemModificationLabel.setText(
-                "Menu or menu item not selected.");
+            itemModificationLabel.setText("Menu or menu item not selected.");
           }
         });
     grid.add(deleteMenuItemButton, 5, 12, 2, 1);
@@ -238,7 +232,7 @@ public class MenuAdminPage extends CustomPage {
             String menu = menuList.get(selectedMenuIndex);
             String menuItem = menuItemList.get(selectedIndex);
 
-            new MenuItemAdminPage(menu, menuItem, Integer.parseInt(price)).populateTab(tab, grid);
+            new MenuItemAdminPage(menu, menuItem, Integer.parseInt(price)).populateTab(tab);
             Localizer.register(menuItem, itemName);
 
             itemModificationLabel.setInfo();
@@ -294,7 +288,7 @@ public class MenuAdminPage extends CustomPage {
             String menu = menuList.get(selectedMenuIndex);
             Localizer.register(menuItem, itemName);
 
-            new MenuItemAdminPage(menu, menuItem, Integer.parseInt(price)).populateTab(tab, grid);
+            new MenuItemAdminPage(menu, menuItem, Integer.parseInt(price)).populateTab(tab);
 
             newMenuItemLabel.setInfo();
             newMenuItemLabel.setText("Menu item has been created.");
@@ -328,11 +322,11 @@ public class MenuAdminPage extends CustomPage {
 
     grid.add(menuItemListView, 5, 1, 5, 6);
 
-    if (previous != null) {
-      grid.add(getBackButton(tab, previous), 0, 22, 10, 2);
+    if (tab.canGoBack()) {
+      grid.add(getBackButton(tab), 0, 22, 10, 2);
     }
 
-    tab.setContent(grid);
+    tab.setCurrentPage(this, grid);
   }
 
   @Override

@@ -22,6 +22,15 @@ public class TableController {
   }
 
   /**
+   * Gets the number of tables under this controller.
+   *
+   * @return the number of tables.
+   */
+  public int getNumberTables() {
+    return tables.length;
+  }
+
+  /**
    * Gets the order information of all orders in the current bill of the given table.
    *
    * @param tableNumber the number of the table.
@@ -31,7 +40,7 @@ public class TableController {
     Table table = getTable(tableNumber);
     ArrayList<String[]> orderStrings = new ArrayList<>();
 
-    for (Order order : table.getCurrentBill().getOrders()) {
+    for (Order order : table.getCurrentOrders()) {
       if (order != null) {
         orderStrings.add(order.getOrderInformation());
       }
@@ -77,7 +86,16 @@ public class TableController {
    * @param order the order to add to bill.
    */
   void addToBill(Order order) {
-    tables[order.getTableNumber()].addToBill(order);
+    tables[order.getTableNumber()].addToBill(order.getOrderNumber());
+  }
+
+  /**
+   * Adds a given order to the correct table.
+   *
+   * @param order the order to add.
+   */
+  void addToTable(Order order) {
+    tables[order.getTableNumber()].addToTable(order);
   }
 
   /**
