@@ -129,4 +129,44 @@ public class Inventory {
       }
     }
   }
+
+  /**
+   * Sets the given ingredients threshold to reorder
+   *
+   * @param ingredientName the name of the ingredientName to set
+   * @param threshold the new threshold
+   */
+  public void setThreshold(String ingredientName, int threshold){
+    getIngredient(ingredientName).setThreshold(threshold);
+  }
+
+  /**
+   * Gets ingredients unlocalized namne
+   *
+   * @param ingredientName the name of the ingredient
+   * @return the unlocalized name of the ingredient
+   */
+  public String getUnlocalizedName(String ingredientName){
+    for(Ingredient i: ingredients){
+      if(ingredientName.equals(Localizer.localize(i.getName()))){
+        return i.getName();
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Gets the threshold for the given ingredient
+   *
+   * @param ingredientName the name of the ingredient
+   * @return the threshold of the ingredient
+   */
+  public int getThreshold(String ingredientName){
+    for(Ingredient i: ingredients){
+      if(ingredientName.equals(Localizer.localize(i.getName()))){
+        return i.getThreshold();
+      }
+    }
+    return -1;
+  }
 }

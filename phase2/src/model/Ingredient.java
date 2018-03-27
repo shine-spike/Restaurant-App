@@ -7,7 +7,7 @@ import util.Localizer;
  */
 public class Ingredient {
   private final String name;
-  private final int threshold;
+  private int threshold;
   private int quantity;
 
   /**
@@ -57,6 +57,23 @@ public class Ingredient {
    */
   public void modifyQuantity(int deltaQuantity) {
     this.quantity += deltaQuantity;
+  }
+
+  /**
+   * Modifies the threshold of this ingredient.
+   *
+   * @param threshold the new threshold
+   */
+  public void setThreshold(int threshold){
+    this.threshold = threshold;
+  }
+
+  /**
+   * Returns this ingredients threshold
+   * @return the threshold of this ingredient
+   */
+  public int getThreshold(){
+    return threshold;
   }
 
   @Override
