@@ -25,19 +25,19 @@ public class HomeAdminPage extends CustomPage {
     manageEmployeesButton.maximize();
     manageEmployeesButton.setFontSize(20);
     manageEmployeesButton.setOnAction(e -> new EmployeeAdminPage().populateTab(tab, grid));
-    grid.add(manageEmployeesButton, 1, 3);
+    grid.add(manageEmployeesButton, 1, 3, 1, 2);
 
     CustomButton manageMenusButton = new CustomButton("Manage Menus");
     manageMenusButton.maximize();
     manageMenusButton.setFontSize(20);
     manageMenusButton.setOnAction(e -> new MenuAdminPage().populateTab(tab, grid));
-    grid.add(manageMenusButton, 1, 4);
+    grid.add(manageMenusButton, 1, 5, 1, 2);
 
     CustomButton manageIngredientsButton = new CustomButton("Manage Ingredients");
     manageIngredientsButton.maximize();
     manageIngredientsButton.setFontSize(20);
     manageIngredientsButton.setOnAction(e -> new IngredientAdminPage().populateTab(tab, grid));
-    grid.add(manageIngredientsButton, 1, 5);
+    grid.add(manageIngredientsButton, 1, 7, 1, 2);
 
     tab.setContent(grid);
   }

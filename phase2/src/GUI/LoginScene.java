@@ -1,5 +1,6 @@
 package GUI;
 
+import GUI.elements.CustomButton;
 import controller.Restaurant;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -49,10 +50,23 @@ public class LoginScene {
     grid.add(passwordField, 1, 11);
 
     // Login button
-    Button loginButton = new Button("Login");
-    loginButton.setMinWidth(grid.getMinWidth());
-    loginButton.setOnAction(e -> loginButtonPressed());
-    grid.add(loginButton, 0, 18, 2, 1);
+    CustomButton loginButton = new CustomButton("Login");
+    loginButton.maximize();
+    loginButton.setOnAction(
+        e -> {
+          int employeeNumber =
+              Restaurant.getInstance()
+                  .getEmployeeController()
+                  .login(userTextField.getText(), passwordField.getText());
+
+          if (employeeNumber != -1) {
+            application.setEmployeeNumber(employeeNumber);
+            application.startRestaurantScene();
+          } else {
+            incorrectPassword.setText("Incorrect Username or Password");
+          }
+        });
+    grid.add(loginButton, 0, 18, 2, 5);
 
     // Incorrect password warning
     incorrectPassword = new Label();
@@ -63,19 +77,5 @@ public class LoginScene {
     grid.add(incorrectPassword, 0, 24, 2, 1);
 
     return grid;
-  }
-
-  private void loginButtonPressed() {
-    int employeeNumber =
-        Restaurant.getInstance()
-            .getEmployeeController()
-            .login(userTextField.getText(), passwordField.getText());
-
-    if (employeeNumber != -1) {
-      application.setEmployeeNumber(employeeNumber);
-      application.startRestaurantScene();
-    } else {
-      incorrectPassword.setText("Incorrect Username or Password");
-    }
   }
 }

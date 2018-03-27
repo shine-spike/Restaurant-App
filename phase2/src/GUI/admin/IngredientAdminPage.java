@@ -168,7 +168,8 @@ public class IngredientAdminPage extends CustomPage {
 
                 ingredientNameField.setText(Localizer.localize(ingredient));
                 ingredientUnlocalizedNameField.setText(ingredient);
-                thresholdField.setText(Integer.toString(inventory.getIngredientThreshold(ingredient)));
+                thresholdField.setText(
+                    Integer.toString(inventory.getIngredientThreshold(ingredient)));
               } else {
                 ingredientNameField.setText("");
                 ingredientUnlocalizedNameField.setText("");

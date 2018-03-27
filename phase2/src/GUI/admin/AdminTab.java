@@ -7,9 +7,11 @@ public class AdminTab extends CustomTab {
     super("Admin", employeeNumber);
   }
 
+  @Override
   public void populateTab() {
     new HomeAdminPage().populateTab(getTab(), null);
   }
 
+  @Override
   public void updateTab() {}
 }

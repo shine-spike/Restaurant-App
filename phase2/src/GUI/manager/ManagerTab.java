@@ -4,16 +4,15 @@ import GUI.elements.CustomTab;
 
 public class ManagerTab extends CustomTab {
 
-  /** Constructs a ManagerTab for the employee with the id employeeNumber */
   public ManagerTab(int employeeNumber) {
     super("Manager", employeeNumber);
   }
 
-  /** Initializes this ManagerTab's JavaFX tab */
+  @Override
   public void populateTab() {
-    new ManagerMenuPage().populateTab(getTab(), null);
+    new HomeManagerPage().populateTab(getTab(), null);
   }
 
-  /** Updates all the nodes of this tab with the appropriate new information */
+  @Override
   public void updateTab() {}
 }
