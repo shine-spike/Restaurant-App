@@ -96,15 +96,12 @@ public class OrderServerPage extends CustomPage {
                 for (String ingredient : ingredientAmounts.keySet()) {
                   int initialAmount = ingredientAmounts.get(ingredient);
 
-                  Spinner<Integer> ingredientAmountSpinner =
-                      new Spinner<>(0, 10, initialAmount);
+                  Spinner<Integer> ingredientAmountSpinner = new Spinner<>(0, 10, initialAmount);
                   ingredientAmountSpinner
                       .valueProperty()
                       .addListener(
-                          (observable, oldValue, newValue) -> {
-                            ingredientAmountChanges.put(ingredient, newValue - initialAmount);
-                          });
-
+                          (observable, oldValue, newValue) ->
+                              ingredientAmountChanges.put(ingredient, newValue - initialAmount));
                   CustomLabel ingredientName = new CustomLabel(Localizer.localize(ingredient));
 
                   int column = counter % numColumns;

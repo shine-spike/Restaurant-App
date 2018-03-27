@@ -69,6 +69,7 @@ public class HomeServerPage extends CustomPage {
     grid.add(orderListView, 0, 3, 2, 10);
 
     CustomLabel orderMessageLabel = new CustomLabel();
+    orderMessageLabel.setWarning();
     orderMessageLabel.center();
     orderMessageLabel.setBold();
     grid.add(orderMessageLabel, 0, 23, 2, 1);
@@ -96,10 +97,11 @@ public class HomeServerPage extends CustomPage {
           int selectedIndex = orderListView.getSelectionModel().getSelectedIndex();
           if (selectedIndex != -1) {
             int orderNumber = orderNumberList.get(selectedIndex);
-            orderController.acceptOrder(orderNumber);
+            if (!orderController.acceptOrder(orderNumber)) {
+              orderMessageLabel.setText("Order cannot be accepted.");
+            }
             update();
           } else {
-            orderMessageLabel.setWarning();
             orderMessageLabel.setText("Select an order to accept.");
           }
         });
@@ -112,10 +114,11 @@ public class HomeServerPage extends CustomPage {
           int selectedIndex = orderListView.getSelectionModel().getSelectedIndex();
           if (selectedIndex != -1) {
             int orderNumber = orderNumberList.get(selectedIndex);
-            orderController.cancelOrder(orderNumber);
+            if (!orderController.cancelOrder(orderNumber)) {
+              orderMessageLabel.setText("Order cannot be cancelled.");
+            }
             update();
           } else {
-            orderMessageLabel.setWarning();
             orderMessageLabel.setText("Select an order to cancel.");
           }
         });
@@ -128,7 +131,9 @@ public class HomeServerPage extends CustomPage {
           int selectedIndex = orderListView.getSelectionModel().getSelectedIndex();
           if (selectedIndex != -1) {
             int orderNumber = orderNumberList.get(selectedIndex);
-            orderController.rejectOrder(orderNumber, reasonArea.getText());
+            if (!orderController.rejectOrder(orderNumber, reasonArea.getText())) {
+              orderMessageLabel.setText("Order cannot be rejected.");
+            }
             update();
           } else {
             orderMessageLabel.setWarning();
@@ -145,13 +150,12 @@ public class HomeServerPage extends CustomPage {
           if (selectedIndex != -1) {
             int orderNumber = orderNumberList.get(selectedIndex);
             if (!orderController.redoOrder(orderNumber, reasonArea.getText())) {
-              orderMessageLabel.setWarning();
-              orderMessageLabel.setText("Not enough ingredients to redo order.");
+              orderMessageLabel.setText("Order cannot be requested for redo.");
             }
             update();
           } else {
             orderMessageLabel.setWarning();
-            orderMessageLabel.setText("Select an order to redo.");
+            orderMessageLabel.setText("Select an order to request for redo.");
           }
         });
     grid.add(redoOrderButton, 0, 21);

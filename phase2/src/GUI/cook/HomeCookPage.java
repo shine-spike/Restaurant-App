@@ -11,7 +11,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Font;
 import util.Localizer;
-import util.OrderFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,12 +58,6 @@ public class HomeCookPage extends CustomPage {
               }
             });
     grid.add(orderListView, 0, 1, 1, 3);
-
-    // TODO Remove, this is just for testing
-    orderController.registerOrder(
-        OrderFactory.createOrder(1, 1, 1, "lunch", "burger", new HashMap<>()));
-    orderController.placeOrder(0);
-    update();
 
     CustomLabel activeOrderLabel = new CustomLabel("Current Order");
     activeOrderLabel.setFontSize(20);

@@ -7,6 +7,7 @@ import util.Logger;
 import util.OrderFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class OrderController {
@@ -112,10 +113,147 @@ public class OrderController {
       String menuName,
       String menuItemName,
       HashMap<String, Integer> ingredientChanges) {
-    Order order = OrderFactory.createOrder(employeeNumber, tableNumber, customerIndex, menuName, menuItemName, ingredientChanges);
-    if (order != null && Restaurant.getInstance().getInventory().confirmOrder(order)) {
-      registerOrder(order);
-      placeOrder(order.getOrderNumber());
+    Order order =
+        OrderFactory.createOrder(
+            employeeNumber, tableNumber, customerIndex, menuName, menuItemName, ingredientChanges);
+    if (order != null) {
+      if (Restaurant.getInstance().getInventory().confirmOrder(order)) {
+        Logger.orderLog(
+            order.getOrderNumber(), "PLACE", "placed by table " + order.getTableNumber());
+        order.setStatus(OrderStatus.PLACED);
+
+        registerOrder(order);
+        return true;
+      } else {
+        Logger.orderLog(
+            order.getOrderNumber(),
+            "UNSATISFIABLE",
+            "discarded because there are not enough ingredients to create it");
+        order.setStatus(OrderStatus.UNSATISFIABLE);
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Cancels the order with the given order number if it can be cancelled.
+   *
+   * @param orderNumber the number of the order to cancel.
+   * @return whether or not this order has been cancelled.
+   */
+  public boolean cancelOrder(int orderNumber) {
+    OrderStatus[] cancelableStatuses = {
+      OrderStatus.PLACED, OrderStatus.SEEN, OrderStatus.READY, OrderStatus.REDO
+    };
+
+    Order order = getOrderFromNumber(orderNumber);
+    if (order != null && Arrays.asList(cancelableStatuses).contains(order.getStatus())) {
+      Logger.orderLog(order.getOrderNumber(), "CANCEL", "cancelled");
+      order.setStatus(OrderStatus.CANCELLED);
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Sees the order with the given order number if it can be seen.
+   *
+   * @param orderNumber the number of the order to see.
+   * @return whether or not this order has been seen.
+   */
+  public boolean seeOrder(int orderNumber) {
+    OrderStatus[] seeableStatuses = {OrderStatus.PLACED, OrderStatus.REDO};
+    Order order = getOrderFromNumber(orderNumber);
+
+    if (order != null && Arrays.asList(seeableStatuses).contains(order.getStatus())) {
+      Logger.orderLog(order.getOrderNumber(), "SEE", "seen");
+      order.setStatus(OrderStatus.SEEN);
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Readies the order with the given order number if it can be readied, which means that the
+   * ingredients constituting the order should be consumed.
+   *
+   * @param orderNumber the number of the order to ready.
+   * @return whether or not this order has been be readied.
+   */
+  public boolean readyOrder(int orderNumber) {
+    OrderStatus[] readiableStatuses = {OrderStatus.PLACED, OrderStatus.REDO, OrderStatus.SEEN};
+    Order order = getOrderFromNumber(orderNumber);
+
+    if (order != null && Arrays.asList(readiableStatuses).contains(order.getStatus())) {
+      Logger.orderLog(order.getOrderNumber(), "READY", "prepared");
+      Restaurant.getInstance().getInventory().consumeIngredients(order);
+      order.setStatus(OrderStatus.READY);
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Accepts the order with the given order number if it can be accepted, which means it will be
+   * added to the bill of its table.
+   *
+   * @param orderNumber the number of the order to accept.
+   * @return whether or not this order has been be accepted.
+   */
+  public boolean acceptOrder(int orderNumber) {
+    OrderStatus[] acceptableStatuses = {OrderStatus.READY};
+    Order order = getOrderFromNumber(orderNumber);
+
+    if (order != null && Arrays.asList(acceptableStatuses).contains(order.getStatus())) {
+      Logger.orderLog(
+          order.getOrderNumber(), "ACCEPT", "accepted by table " + order.getTableNumber());
+      Restaurant.getInstance().getTableController().addToBill(order);
+      order.setStatus(OrderStatus.ACCEPTED);
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Rejects the order with the given order number with a given reason.
+   *
+   * @param orderNumber the number of the order to reject.
+   * @param reason the reason of rejection.
+   * @return whether or not this order has been be rejected.
+   */
+  public boolean rejectOrder(int orderNumber, String reason) {
+    OrderStatus[] rejectableStatuses = {OrderStatus.READY};
+    Order order = getOrderFromNumber(orderNumber);
+
+    if (order != null && Arrays.asList(rejectableStatuses).contains(order.getStatus())) {
+      Logger.orderLog(
+          order.getOrderNumber(),
+          "REJECT",
+          "rejected by table " + order.getTableNumber() + " for reason " + reason);
+      order.setStatus(OrderStatus.REJECTED);
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Requests for redo of the order with the given order number with a given reason, which means it
+   * will be sent back to the kitchen to be fixed.
+   *
+   * @param orderNumber the number of the order to redo.
+   * @param reason the reason of redoing.
+   * @return whether or not this order has been requested for redo.
+   */
+  public boolean redoOrder(int orderNumber, String reason) {
+    OrderStatus[] redoableStatuses = {OrderStatus.READY};
+    Order order = getOrderFromNumber(orderNumber);
+
+    if (order != null && Arrays.asList(redoableStatuses).contains(order.getStatus())) {
+      Logger.orderLog(
+          order.getOrderNumber(),
+          "REDO",
+          "requested for redo by table " + order.getTableNumber() + " for reason " + reason);
+      order.setStatus(OrderStatus.REDO);
       return true;
     }
     return false;
@@ -126,154 +264,9 @@ public class OrderController {
    *
    * @param order the order to register.
    */
-  public void registerOrder(Order order) {
+  private void registerOrder(Order order) {
     orders.add(order);
     Restaurant.getInstance().getTableController().addToTable(order);
-  }
-
-  /**
-   * Registers a given order to be placed and changes its status accordingly.
-   *
-   * @param orderNumber the number of the order to register.
-   * @return whether or not the order has been successfully registered. This can fail if there are
-   *     not enough ingredients in the inventory to satisfy the order.
-   */
-  public boolean placeOrder(int orderNumber) {
-    Order order = getOrderFromNumber(orderNumber);
-
-    if (order != null) {
-      if (Restaurant.getInstance().getInventory().confirmOrder(order)) {
-        Logger.orderLog(
-            order.getOrderNumber(), "PLACE", "placed by table " + order.getTableNumber());
-        order.setStatus(OrderStatus.PLACED);
-        return true;
-      }
-
-      Logger.orderLog(
-          order.getOrderNumber(),
-          "UNSATISFIABLE",
-          "discarded because there are not enough ingredients to create it");
-      order.setStatus(OrderStatus.UNSATISFIABLE);
-    }
-
-    return false;
-  }
-
-  /**
-   * Cancels a given order.
-   *
-   * @param orderNumber the number of the order to cancel.
-   */
-  public void cancelOrder(int orderNumber) {
-    Order order = getOrderFromNumber(orderNumber);
-
-    if (order != null) {
-      Logger.orderLog(order.getOrderNumber(), "CANCEL", "cancelled");
-      order.setStatus(OrderStatus.CANCELLED);
-    }
-  }
-
-  /**
-   * Sees a given order.
-   *
-   * @param orderNumber the number of the order to see.
-   */
-  public void seeOrder(int orderNumber) {
-    Order order = getOrderFromNumber(orderNumber);
-
-    if (order != null) {
-      Logger.orderLog(order.getOrderNumber(), "SEE", "seen");
-      order.setStatus(OrderStatus.SEEN);
-    }
-  }
-
-  /**
-   * Ready a given order, which means that the ingredients constituting the order should be
-   * consumed.
-   *
-   * @param orderNumber the number of the order to ready.
-   */
-  public void readyOrder(int orderNumber) {
-    Order order = getOrderFromNumber(orderNumber);
-
-    if (order != null) {
-      Logger.orderLog(order.getOrderNumber(), "READY", "prepared");
-      Restaurant.getInstance().getInventory().consumeIngredients(order);
-      order.setStatus(OrderStatus.READY);
-    }
-  }
-
-  /**
-   * Accept a given order, which means it will be added to the of its table.
-   *
-   * @param orderNumber the number of the order to accept.
-   */
-  public void acceptOrder(int orderNumber) {
-    Order order = getOrderFromNumber(orderNumber);
-
-    if (order != null) {
-      Logger.orderLog(
-          order.getOrderNumber(), "ACCEPT", "accepted by table " + order.getTableNumber());
-      Restaurant.getInstance().getTableController().addToBill(order);
-      order.setStatus(OrderStatus.ACCEPTED);
-    }
-  }
-
-  /**
-   * Rejects a given order with a given reason.
-   *
-   * @param orderNumber the number of the order to reject.
-   * @param reason the reason of rejection.
-   */
-  public void rejectOrder(int orderNumber, String reason) {
-    Order order = getOrderFromNumber(orderNumber);
-
-    if (order != null) {
-      Logger.orderLog(
-          order.getOrderNumber(),
-          "REJECT",
-          "rejected by table " + order.getTableNumber() + " for reason " + reason);
-      order.setStatus(OrderStatus.REJECTED);
-    }
-  }
-
-  /**
-   * Redo a given order with a given reason, which means that the order will be duplicated and put
-   * back into the system.
-   *
-   * @param orderNumber the number of the order to redo.
-   * @param reason the reason of redoing.
-   * @return whether or not the order can be redone. This can fail for any reason placing an order
-   *     can fail.
-   */
-  public boolean redoOrder(int orderNumber, String reason) {
-    Order order = getOrderFromNumber(orderNumber);
-
-    if (order != null) {
-      Logger.orderLog(
-          order.getOrderNumber(),
-          "REDO",
-          "requested for redo by table " + order.getTableNumber() + " for reason " + reason);
-
-      if (Restaurant.getInstance().getInventory().confirmOrder(order)) {
-        Order duplicate = order.duplicate();
-        registerOrder(duplicate);
-        if (placeOrder(duplicate.getOrderNumber())) {
-          Logger.orderLog(
-              duplicate.getOrderNumber(),
-              "REDO",
-              "assigned as a redo for order " + order.getOrderNumber());
-          order.setStatus(OrderStatus.REDO);
-          return true;
-        }
-      } else {
-        Logger.orderLog(
-            order.getOrderNumber(),
-            "REDO",
-            "discarded for redo as there are not enough ingredients to satisfy the order");
-      }
-    }
-    return false;
   }
 
   /**
