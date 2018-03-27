@@ -1,15 +1,14 @@
 package GUI;
 
+import controller.Restaurant;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-
-import model.Employee;
+import util.Localizer;
 import util.Logger;
-import util.Parser;
 
 public class RestaurantApplication extends Application {
   private Stage stage;
@@ -17,9 +16,11 @@ public class RestaurantApplication extends Application {
 
   @Override
   public void start(Stage stage) {
+    Localizer.parseLocale();
+    Restaurant.getInstance().retrieveModel();
+
     System.setProperty("prism.lcdtext", "false");
 
-    Parser.parseConfiguration();
     Logger.startLogger();
 
     this.stage = stage;
@@ -27,6 +28,13 @@ public class RestaurantApplication extends Application {
 
     startLoginScene();
     stage.show();
+  }
+
+  @Override
+  public void stop() throws Exception {
+    Restaurant.getInstance().storeModel();
+    Localizer.storeLocale();
+    super.stop();
   }
 
   public Stage getStage() {

@@ -88,10 +88,7 @@ public class Order {
 
   public String[] getOrderInformation() {
     return new String[] {
-            Integer.toString(orderNumber),
-            status.toString(),
-            menu.getName(),
-            menuItem.getName()
+      Integer.toString(orderNumber), status.toString(), menu.getName(), menuItem.getName()
     };
   }
 

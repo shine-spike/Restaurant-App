@@ -5,12 +5,13 @@ import model.Menu;
 import model.MenuItem;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
  * Controls all aspects of all the menus in a restaurant. Main interface for interaction with menus.
  */
-public class MenuController {
+public class MenuController implements SerializableContents<Menu> {
   private final ArrayList<Menu> menus = new ArrayList<>();
 
   /**
@@ -30,12 +31,9 @@ public class MenuController {
    */
   public void addMenuItem(String menuName, MenuItem menuItem) {
     Menu menu = getMenu(menuName);
-    if (menu == null) {
-      // TODO: remove print
-      System.out.println("Given menu could not be found. Skipping.");
-      return;
+    if (menu != null) {
+      menu.addMenuItem(menuItem);
     }
-    menu.addMenuItem(menuItem);
   }
 
   /**
@@ -50,7 +48,7 @@ public class MenuController {
     }
     return menuStrings;
   }
-  
+
   /**
    * Gets the menu items from the menu with the given name.
    *
@@ -114,11 +112,27 @@ public class MenuController {
    */
   private MenuItem getMenuItem(String menuName, String menuItemName) {
     Menu menu = getMenu(menuName);
-    if (menu == null) {
-      // TODO: remove print
-      System.out.println("Given menu could not be found. Skipping.");
-      return null;
+    if (menu != null) {
+      return menu.getMenuItem(menuItemName);
     }
-    return menu.getMenuItem(menuItemName);
+    return null;
+  }
+
+  @Override
+  public Menu[] getContents() {
+    Menu[] menuArray = new Menu[menus.size()];
+    menus.toArray(menuArray);
+    return menuArray;
+  }
+
+  @Override
+  public void setContents(Menu[] contents) {
+    menus.clear();
+    menus.addAll(Arrays.asList(contents));
+  }
+
+  @Override
+  public String getName() {
+    return "menus";
   }
 }

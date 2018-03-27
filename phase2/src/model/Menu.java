@@ -2,13 +2,11 @@ package model;
 
 import util.Localizer;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 
-/**
- * A menu in the restaurant. Stores and manages menu items.
- */
-public class Menu {
+/** A menu in the restaurant. Stores and manages menu items. */
+public class Menu implements Serializable {
   private final String name;
   private final ArrayList<MenuItem> menuItems = new ArrayList<>();
 
@@ -34,9 +32,7 @@ public class Menu {
     return menuItems;
   }
 
-  /**
-   * Adds the given menu item to the menu.
-   */
+  /** Adds the given menu item to the menu. */
   public void addMenuItem(MenuItem menuItem) {
     menuItems.add(menuItem);
   }
@@ -45,7 +41,8 @@ public class Menu {
    * Gets a menu item from this menu
    *
    * @param itemName the name of the menu item.
-   * @return the menu item in this menu with the given name, or {@code null} if the item with the name does not exist.
+   * @return the menu item in this menu with the given name, or {@code null} if the item with the
+   *     name does not exist.
    */
   public MenuItem getMenuItem(String itemName) {
     for (MenuItem item : menuItems) {

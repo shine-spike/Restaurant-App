@@ -1,8 +1,11 @@
 package controller;
 
-/**
- * Main controller of the system, only contains hooks to sub-controllers.
- */
+import model.Employee;
+import model.Ingredient;
+import model.Menu;
+import util.Serializer;
+
+/** Main controller of the system, only contains hooks to sub-controllers. */
 public final class Restaurant {
   // Singleton instance of the restaurant
   private static final Restaurant INSTANCE = new Restaurant();
@@ -25,7 +28,6 @@ public final class Restaurant {
    *
    * @return the instance of the restaurant.
    */
-  
   public static Restaurant getInstance() {
     return INSTANCE;
   }
@@ -35,7 +37,6 @@ public final class Restaurant {
    *
    * @return the table controller of the restaurant.
    */
-  
   public TableController getTableController() {
     return tableController;
   }
@@ -45,7 +46,6 @@ public final class Restaurant {
    *
    * @return the employee controller of the restaurant.
    */
-  
   public EmployeeController getEmployeeController() {
     return employeeController;
   }
@@ -55,7 +55,6 @@ public final class Restaurant {
    *
    * @return the menu controller of the restaurant.
    */
-  
   public MenuController getMenuController() {
     return menuController;
   }
@@ -65,7 +64,6 @@ public final class Restaurant {
    *
    * @return the order controller of the restaurant.
    */
-  
   public OrderController getOrderController() {
     return orderController;
   }
@@ -75,8 +73,34 @@ public final class Restaurant {
    *
    * @return the inventory of the restaurant.
    */
-  
   public Inventory getInventory() {
     return inventory;
+  }
+
+  /** Stores all the data in the required controllers to file. */
+  public void storeModel() {
+    Serializer.serialize(employeeController.getContents(), employeeController.getName() + ".ser");
+    Serializer.serialize(menuController.getContents(), menuController.getName() + ".ser");
+    Serializer.serialize(inventory.getContents(), inventory.getName() + ".ser");
+  }
+
+  /** Retrieves found data from file and stores it in the respective controllers. */
+  public void retrieveModel() {
+    Employee[] employees =
+        Serializer.deserialize(Employee[].class, employeeController.getName() + ".ser");
+    if (employees != null) {
+      employeeController.setContents(employees);
+    }
+
+    Menu[] menus = Serializer.deserialize(Menu[].class, menuController.getName() + ".ser");
+    if (menus != null) {
+      menuController.setContents(menus);
+    }
+
+    Ingredient[] ingredients =
+        Serializer.deserialize(Ingredient[].class, inventory.getName() + ".ser");
+    if (ingredients != null) {
+      inventory.setContents(ingredients);
+    }
   }
 }

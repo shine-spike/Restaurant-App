@@ -6,8 +6,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 
 /**
- * Custom grid pane to allow for more consistent segmentation of the screen. Contains methods
- * to easily segment the screen into grids of the desired size.
+ * Custom grid pane to allow for more consistent segmentation of the screen. Contains methods to
+ * easily segment the screen into grids of the desired size.
  */
 public class CustomGridPane extends GridPane {
   /** Constructs a default grid pane with no padding. */

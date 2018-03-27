@@ -20,7 +20,6 @@ public class LoginScene {
     this.application = application;
   }
 
-  
   public Parent getRoot() {
     GridPane grid = new GridPane();
     grid.setAlignment(Pos.CENTER);

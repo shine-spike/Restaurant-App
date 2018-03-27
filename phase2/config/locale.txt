@@ -1,36 +1,17 @@
-% Lines starting with a percentage sign are not read.
-% The format of a localization entry is as follows:
-% <UNLOCALIZED_NAME> <LOCALIZED_NAME>
-
-
-% === Ingredients ===
-% Bread
-burger_bun Burger Bun
-hot_dog_bun Hot Dog Bun
-
-% Meat
-hot_dog_wiener Hot Dog Wiener
-veggie_dog_wiener Veggie Dog Wiener
-burger_patty Burger Patty
-veggie_burger_patty Veggie Burger Patty
-
-% Sauces
-ketchup Ketchup
-mustard Mustard
 mayonnaise Mayonnaise
-
-% Toppings
-pickles Pickles
-onions Onions
-tomatoes Tomatoes
-
-
-% === Menus ===
 lunch Lunch
-
-
-% === Menu Items ===
-burger Burger
-veggie_burger Veggie Burger
+veggie_dog_wiener Veggie Dog Wiener
+onions Onions
+hot_dog_bun Hot Dog Bun
+veggie_burger_patty Veggie Burger Patty
+burger_bun Burger Bun
+hot_dog_wiener Hot Dog Wiener
+burger_patty Burger Patty
 hot_dog Hot Dog
+veggie_burger Veggie Burger
+tomatoes Tomatoes
+mustard Mustard
+burger Burger
+pickles Pickles
 veggie_dog Veggie Dog
+ketchup Ketchup

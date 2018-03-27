@@ -10,7 +10,8 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.text.Font;
 import util.Localizer;
 import util.OrderFactory;
@@ -48,25 +49,24 @@ public class CookTab extends CustomTab {
     ingredientListLabel.center();
     grid.add(ingredientListLabel, 0, 0);
 
-
     orderNumbers = new ArrayList<>();
     orderListView = new ListView<>();
 
     orderListView.setStyle("-fx-font-size: 20px");
     orderListView
-            .getSelectionModel()
-            .selectedIndexProperty()
-            .addListener(
-                    (obs, oldSelection, newSelection) -> {
-                      int selectedOrder = newSelection.intValue();
-                      if (selectedOrder != -1) {
-                        String[] order =
-                                orderController.getOrderInformationFromNumber(orderNumbers.get(selectedOrder));
-                        activeOrderInfo.setText(selectedOrdersFormat(order));
-                      } else {
-                        activeOrderInfo.setText("");
-                      }
-                    });
+        .getSelectionModel()
+        .selectedIndexProperty()
+        .addListener(
+            (obs, oldSelection, newSelection) -> {
+              int selectedOrder = newSelection.intValue();
+              if (selectedOrder != -1) {
+                String[] order =
+                    orderController.getOrderInformationFromNumber(orderNumbers.get(selectedOrder));
+                activeOrderInfo.setText(selectedOrdersFormat(order));
+              } else {
+                activeOrderInfo.setText("");
+              }
+            });
     grid.add(orderListView, 0, 1, 1, 3);
 
     // TODO Remove, this is just for testing
@@ -74,7 +74,6 @@ public class CookTab extends CustomTab {
         OrderFactory.createOrder(1, 1, 1, "lunch", "burger", new HashMap<>()));
     orderController.placeOrder(0);
     updateTab();
-
 
     CustomLabel activeOrderLabel = new CustomLabel("Current Order");
     activeOrderLabel.setFontSize(20);
@@ -126,34 +125,6 @@ public class CookTab extends CustomTab {
             activeOrdersFormat(orderController.getOrderInformationFromNumbers(ordersArray))));
   }
 
-  private class CookTabButtonHandler implements EventHandler<ActionEvent> {
-    @Override
-    public void handle(ActionEvent e) {
-      warningText.setText("");
-
-      int orderIndex = orderListView.getSelectionModel().getSelectedIndex();
-      if (orderIndex != -1) {
-        int selectedOrderNumber = orderNumbers.get(orderIndex);
-
-        if (e.getSource() == seenButton) {
-          orderController.seeOrder(selectedOrderNumber);
-        } else if (true) { // TODO: implement checking for seen
-          if (e.getSource() == readyButton) {
-            orderController.readyOrder(selectedOrderNumber);
-          } else if (e.getSource() == cancelButton) {
-            orderController.cancelOrder(selectedOrderNumber);
-          }
-        } else {
-          warningText.setText("Acknowledge all orders first");
-        }
-      } else {
-        warningText.setText("No Order Selected");
-      }
-
-      updateTab();
-    }
-  }
-
   /**
    * Formats all the Orders in an ArrayList for the active ordersList
    *
@@ -195,7 +166,13 @@ public class CookTab extends CustomTab {
   private String selectedOrdersFormat(String[] order) {
     StringBuilder out =
         new StringBuilder(
-            "[" + order[0] + "]" + " " + Localizer.localize(order[2]) + " " + Localizer.localize(order[3]));
+            "["
+                + order[0]
+                + "]"
+                + " "
+                + Localizer.localize(order[2])
+                + " "
+                + Localizer.localize(order[3]));
 
     HashMap<String, Integer> ingredients =
         orderController.getOrderIngredientStrings(Integer.parseInt(order[0]));
@@ -210,5 +187,33 @@ public class CookTab extends CustomTab {
     }
 
     return out.toString();
+  }
+
+  private class CookTabButtonHandler implements EventHandler<ActionEvent> {
+    @Override
+    public void handle(ActionEvent e) {
+      warningText.setText("");
+
+      int orderIndex = orderListView.getSelectionModel().getSelectedIndex();
+      if (orderIndex != -1) {
+        int selectedOrderNumber = orderNumbers.get(orderIndex);
+
+        if (e.getSource() == seenButton) {
+          orderController.seeOrder(selectedOrderNumber);
+        } else if (true) { // TODO: implement checking for seen
+          if (e.getSource() == readyButton) {
+            orderController.readyOrder(selectedOrderNumber);
+          } else if (e.getSource() == cancelButton) {
+            orderController.cancelOrder(selectedOrderNumber);
+          }
+        } else {
+          warningText.setText("Acknowledge all orders first");
+        }
+      } else {
+        warningText.setText("No Order Selected");
+      }
+
+      updateTab();
+    }
   }
 }

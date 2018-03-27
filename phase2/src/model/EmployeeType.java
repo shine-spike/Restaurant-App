@@ -13,7 +13,6 @@ public enum EmployeeType {
     this.keyword = keyword;
   }
 
-  
   public static EmployeeType getEmployeeType(String keyword) {
     for (EmployeeType type : EmployeeType.values()) {
       if (type.keyword.equals(keyword)) {

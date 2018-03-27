@@ -18,7 +18,7 @@ import static java.lang.Integer.parseInt;
 
 public class ServerTab extends CustomTab {
   private Restaurant restaurant = Restaurant.getInstance();
-  
+
   private MenuController menuController = restaurant.getMenuController();
 
   private TextField tableNumField;
@@ -177,6 +177,18 @@ public class ServerTab extends CustomTab {
   /** Updates all the nodes of this tab with the appropriate new information */
   public void updateTab() {}
 
+  private ArrayList<String> orderListFormat(ArrayList<String[]> orders) {
+    ArrayList<String> orderStrings = new ArrayList<>();
+    for (String[] order : orders) {
+      orderStrings.add(orderListFormat(order));
+    }
+    return orderStrings;
+  }
+
+  private String orderListFormat(String[] order) {
+    return order[0] + order[1] + order[2] + order[3];
+  }
+
   private class ServerTabHandler implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent e) {
@@ -203,17 +215,5 @@ public class ServerTab extends CustomTab {
 
     // Populates the orders list
     // table.getCurrentBill().getOrders()
-  }
-
-  private ArrayList<String> orderListFormat(ArrayList<String[]> orders) {
-    ArrayList<String> orderStrings = new ArrayList<>();
-    for (String[] order : orders) {
-      orderStrings.add(orderListFormat(order));
-    }
-    return orderStrings;
-  }
-
-  private String orderListFormat(String[] order) {
-    return order[0] + order[1] + order[2] + order[3];
   }
 }

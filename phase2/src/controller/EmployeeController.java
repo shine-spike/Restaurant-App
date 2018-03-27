@@ -4,9 +4,10 @@ import model.Employee;
 import model.EmployeeType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /** Controls all aspects of employees in the restaurant. */
-public class EmployeeController {
+public class EmployeeController implements SerializableContents<Employee> {
   private final ArrayList<Employee> employees = new ArrayList<>();
 
   /** Creates an employee controller with only the administrator account. */
@@ -24,7 +25,8 @@ public class EmployeeController {
    */
   public void registerEmployee(
       String firstName, String lastName, String password, String employeeType) {
-    employees.add(new Employee(firstName, lastName, password, EmployeeType.getEmployeeType(employeeType)));
+    employees.add(
+        new Employee(firstName, lastName, password, EmployeeType.getEmployeeType(employeeType)));
   }
 
   /**
@@ -32,8 +34,8 @@ public class EmployeeController {
    *
    * @param name the name of the employee to login.
    * @param password the password of the employee to login.
-   * @return the number of the employee with the given login information, or {@code -1} if the username-password
-   *     combination does not exist in the controller.
+   * @return the number of the employee with the given login information, or {@code -1} if the
+   *     username-password combination does not exist in the controller.
    */
   public int login(String name, String password) {
     Employee employee = getEmployee(name);
@@ -55,7 +57,8 @@ public class EmployeeController {
   }
 
   /**
-   * Updates an employees password or does nothing if the employee with the given number does not exist.
+   * Updates an employees password or does nothing if the employee with the given number does not
+   * exist.
    *
    * @param employeeNumber the number of the employee.
    * @param password the employee's new password.
@@ -125,7 +128,7 @@ public class EmployeeController {
       return employee.getPermissions();
     }
 
-    return new boolean[]{};
+    return new boolean[] {};
   }
 
   /**
@@ -165,5 +168,23 @@ public class EmployeeController {
       }
     }
     return null;
+  }
+
+  @Override
+  public Employee[] getContents() {
+    Employee[] employeeArray = new Employee[employees.size()];
+    employees.toArray(employeeArray);
+    return employeeArray;
+  }
+
+  @Override
+  public void setContents(Employee[] contents) {
+    employees.clear();
+    employees.addAll(Arrays.asList(contents));
+  }
+
+  @Override
+  public String getName() {
+    return "employees";
   }
 }

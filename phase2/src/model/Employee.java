@@ -1,6 +1,8 @@
 package model;
 
-public class Employee {
+import java.io.Serializable;
+
+public class Employee implements Serializable {
   private static int currentEmployeeNumber = 0;
 
   private int employeeNumber;
@@ -28,9 +30,8 @@ public class Employee {
     return firstName + " " + lastName;
   }
 
-  
   public String[] getName() {
-    return new String[]{firstName, lastName};
+    return new String[] {firstName, lastName};
   }
 
   public void setName(String firstName, String lastName) {
@@ -42,11 +43,7 @@ public class Employee {
     passwordHashCode = password.hashCode();
   }
 
-  public void setEmployeeType(EmployeeType employeeType) {
-    this.employeeType = employeeType;
-  }
-
-  public boolean checkPassword( String password) {
+  public boolean checkPassword(String password) {
     return passwordHashCode == password.hashCode();
   }
 
@@ -54,13 +51,17 @@ public class Employee {
     return employeeType;
   }
 
+  public void setEmployeeType(EmployeeType employeeType) {
+    this.employeeType = employeeType;
+  }
+
   public boolean[] getPermissions() {
     return new boolean[] {
-            hasAdminPermissions(),
-            hasManagerPermissions(),
-            hasServerPermissions(),
-            hasCookPermissions(),
-            hasReceiverPermissions()
+      hasAdminPermissions(),
+      hasManagerPermissions(),
+      hasServerPermissions(),
+      hasCookPermissions(),
+      hasReceiverPermissions()
     };
   }
 
