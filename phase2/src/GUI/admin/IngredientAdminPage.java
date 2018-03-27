@@ -29,8 +29,8 @@ public class IngredientAdminPage extends CustomPage {
   public void populateTab(Tab tab, Node previous) {
     CustomGridPane grid = new CustomGridPane(50);
     grid.setHgap(25);
-    grid.setPercentageColumns(25, 25, 20, 10, 20);
-    grid.setEvenRows(20);
+    grid.setPercentageColumns(10, 40, 20, 10, 20);
+    grid.setEvenRows(24);
 
     CustomLabel employeeInformationLabel = new CustomLabel("Ingredient Information");
     employeeInformationLabel.setFontSize(20);
@@ -138,11 +138,11 @@ public class IngredientAdminPage extends CustomPage {
         });
     grid.add(addButton, 2, 14, 3, 2);
 
-    CustomLabel ingredientListLabel = new CustomLabel("Ingredients");
+    CustomLabel ingredientListLabel = new CustomLabel("Ingredient List");
     ingredientListLabel.setFontSize(20);
     ingredientListLabel.setBold();
     ingredientListLabel.center();
-    grid.add(ingredientListLabel, 0, 0, 1, 1);
+    grid.add(ingredientListLabel, 0, 0, 2, 1);
 
     CustomLabel searchBarLabel = new CustomLabel("Search Ingredients");
     TextField searchBarField = new TextField();
@@ -175,10 +175,10 @@ public class IngredientAdminPage extends CustomPage {
                 thresholdField.setText("");
               }
             });
-    grid.add(ingredientListView, 0, 2, 2, 14);
+    grid.add(ingredientListView, 0, 2, 2, 19);
 
     if (previous != null) {
-      grid.add(getBackButton(tab, previous), 0, 17, 5, 2);
+      grid.add(getBackButton(tab, previous), 0, 22, 5, 2);
     }
 
     tab.setContent(grid);
