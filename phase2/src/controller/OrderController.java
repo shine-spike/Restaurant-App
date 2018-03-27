@@ -4,6 +4,7 @@ import model.Ingredient;
 import model.Order;
 import model.OrderStatus;
 import util.Logger;
+import util.OrderFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -91,6 +92,33 @@ public class OrderController {
     }
 
     return orderNumbers;
+  }
+
+  /**
+   * Creates an order with the given parameters, registers it, and places it.
+   *
+   * @param employeeNumber the number of the employee who placed this order.
+   * @param tableNumber the number of the table this order was placed for.
+   * @param customerIndex the index of the customer this order is for.
+   * @param menuName the name of the menu the menu item of this order is from.
+   * @param menuItemName the name of the menu item for this order.
+   * @param ingredientChanges the map of ingredient name to change from the default menu item.
+   * @return whether or not the order can be satisfied.
+   */
+  public boolean createOrder(
+      int employeeNumber,
+      int tableNumber,
+      int customerIndex,
+      String menuName,
+      String menuItemName,
+      HashMap<String, Integer> ingredientChanges) {
+    Order order = OrderFactory.createOrder(employeeNumber, tableNumber, customerIndex, menuName, menuItemName, ingredientChanges);
+    if (order != null && Restaurant.getInstance().getInventory().confirmOrder(order)) {
+      registerOrder(order);
+      placeOrder(order.getOrderNumber());
+      return true;
+    }
+    return false;
   }
 
   /**
@@ -232,17 +260,17 @@ public class OrderController {
         registerOrder(duplicate);
         if (placeOrder(duplicate.getOrderNumber())) {
           Logger.orderLog(
-                  duplicate.getOrderNumber(),
-                  "REDO",
-                  "assigned as a redo for order " + order.getOrderNumber());
+              duplicate.getOrderNumber(),
+              "REDO",
+              "assigned as a redo for order " + order.getOrderNumber());
           order.setStatus(OrderStatus.REDO);
           return true;
         }
       } else {
         Logger.orderLog(
-                order.getOrderNumber(),
-                "REDO",
-                "discarded for redo as there are not enough ingredients to satisfy the order");
+            order.getOrderNumber(),
+            "REDO",
+            "discarded for redo as there are not enough ingredients to satisfy the order");
       }
     }
     return false;

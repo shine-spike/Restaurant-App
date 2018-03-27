@@ -1,12 +1,13 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /** Represents a table in a restaurant. Stores the bill for this table. */
 public class Table {
   private final ArrayList<Order> currentOrders = new ArrayList<>();
   private Bill currentBill = new Bill();
-  private final ArrayList<Bill> customerBills = new ArrayList<>();
+  private final HashMap<Integer, Bill> customerBills = new HashMap<>();
 
   /** Create a table with an empty bill and no bill history. */
   public Table() {}
@@ -28,12 +29,14 @@ public class Table {
     if (order != null) {
       currentBill.addOrder(order);
 
-      if (customerBills.size() > order.getCustomerIndex()) {
-        customerBills.get(order.getCustomerIndex()).addOrder(order);
+      int customerIndex = order.getCustomerIndex();
+      if (customerBills.containsKey(customerIndex)) {
+        customerBills.get(customerIndex).addOrder(order);
+      } else {
+        Bill customerBill = new Bill();
+        customerBill.addOrder(order);
+        customerBills.put(customerIndex, customerBill);
       }
-      Bill customerBill = new Bill();
-      customerBill.addOrder(order);
-      customerBills.add(customerBill);
     }
   }
 

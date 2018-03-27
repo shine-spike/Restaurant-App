@@ -16,12 +16,15 @@ public class HomeServerPage extends CustomPage {
   private OrderController orderController = Restaurant.getInstance().getOrderController();
   private TableController tableController = Restaurant.getInstance().getTableController();
 
-  private int tableNumber = 0;
+  private int tableNumber;
+  private int customerIndex;
   private ArrayList<Integer> orderNumberList = new ArrayList<>();
   private ListView<String> orderListView = new ListView<>();
   private ListView<String> readyOrderListView = new ListView<>();
 
   public HomeServerPage() {
+    this.tableNumber = 0;
+    this.customerIndex = -1;
     update();
   }
 
@@ -49,6 +52,7 @@ public class HomeServerPage extends CustomPage {
 
     CustomLabel customerIndexLabel = new CustomLabel("Customer Index");
     Spinner<Integer> customerIndexSpinner = new Spinner<>(-1, 25, -1);
+    customerIndexSpinner.valueProperty().addListener((observable, oldValue, newValue) -> customerIndex = newValue);
     grid.add(customerIndexLabel, 2, 0);
     grid.add(customerIndexSpinner, 3, 0);
 
@@ -79,73 +83,77 @@ public class HomeServerPage extends CustomPage {
 
     CustomButton addOrderButton = new CustomButton("Add Order");
     addOrderButton.maximize();
-    addOrderButton.setOnAction(
-        e -> {
-          // TODO: show order addition screen
-        });
+    addOrderButton.setOnAction(e -> {
+      new OrderServerPage(tableNumber, customerIndex).populateTab(tab);
+      update();
+    });
     grid.add(addOrderButton, 0, 15, 2, 1);
 
     CustomButton acceptOrderButton = new CustomButton("Accept Order");
     acceptOrderButton.maximize();
-    acceptOrderButton.setOnAction(e -> {
-      int selectedIndex = orderListView.getSelectionModel().getSelectedIndex();
-      if (selectedIndex != -1) {
-        int orderNumber = orderNumberList.get(selectedIndex);
-        orderController.acceptOrder(orderNumber);
-        update();
-      } else {
-        orderMessageLabel.setWarning();
-        orderMessageLabel.setText("Select an order to accept.");
-      }
-    });
+    acceptOrderButton.setOnAction(
+        e -> {
+          int selectedIndex = orderListView.getSelectionModel().getSelectedIndex();
+          if (selectedIndex != -1) {
+            int orderNumber = orderNumberList.get(selectedIndex);
+            orderController.acceptOrder(orderNumber);
+            update();
+          } else {
+            orderMessageLabel.setWarning();
+            orderMessageLabel.setText("Select an order to accept.");
+          }
+        });
     grid.add(acceptOrderButton, 0, 17);
 
     CustomButton cancelOrderButton = new CustomButton("Cancel Order");
     cancelOrderButton.maximize();
-    cancelOrderButton.setOnAction(e -> {
-      int selectedIndex = orderListView.getSelectionModel().getSelectedIndex();
-      if (selectedIndex != -1) {
-        int orderNumber = orderNumberList.get(selectedIndex);
-        orderController.cancelOrder(orderNumber);
-        update();
-      } else {
-        orderMessageLabel.setWarning();
-        orderMessageLabel.setText("Select an order to cancel.");
-      }
-    });
+    cancelOrderButton.setOnAction(
+        e -> {
+          int selectedIndex = orderListView.getSelectionModel().getSelectedIndex();
+          if (selectedIndex != -1) {
+            int orderNumber = orderNumberList.get(selectedIndex);
+            orderController.cancelOrder(orderNumber);
+            update();
+          } else {
+            orderMessageLabel.setWarning();
+            orderMessageLabel.setText("Select an order to cancel.");
+          }
+        });
     grid.add(cancelOrderButton, 1, 17);
 
     CustomButton rejectOrderButton = new CustomButton("Reject Order");
     rejectOrderButton.maximize();
-    rejectOrderButton.setOnAction(e -> {
-      int selectedIndex = orderListView.getSelectionModel().getSelectedIndex();
-      if (selectedIndex != -1) {
-        int orderNumber = orderNumberList.get(selectedIndex);
-        orderController.rejectOrder(orderNumber, reasonArea.getText());
-        update();
-      } else {
-        orderMessageLabel.setWarning();
-        orderMessageLabel.setText("Select an order to reject.");
-      }
-    });
+    rejectOrderButton.setOnAction(
+        e -> {
+          int selectedIndex = orderListView.getSelectionModel().getSelectedIndex();
+          if (selectedIndex != -1) {
+            int orderNumber = orderNumberList.get(selectedIndex);
+            orderController.rejectOrder(orderNumber, reasonArea.getText());
+            update();
+          } else {
+            orderMessageLabel.setWarning();
+            orderMessageLabel.setText("Select an order to reject.");
+          }
+        });
     grid.add(rejectOrderButton, 0, 19);
 
     CustomButton redoOrderButton = new CustomButton("Redo Order");
     redoOrderButton.maximize();
-    redoOrderButton.setOnAction(e -> {
-      int selectedIndex = orderListView.getSelectionModel().getSelectedIndex();
-      if (selectedIndex != -1) {
-        int orderNumber = orderNumberList.get(selectedIndex);
-        if (!orderController.redoOrder(orderNumber, reasonArea.getText())) {
-          orderMessageLabel.setWarning();
-          orderMessageLabel.setText("Not enough ingredients to redo order.");
-        }
-        update();
-      } else {
-        orderMessageLabel.setWarning();
-        orderMessageLabel.setText("Select an order to redo.");
-      }
-    });
+    redoOrderButton.setOnAction(
+        e -> {
+          int selectedIndex = orderListView.getSelectionModel().getSelectedIndex();
+          if (selectedIndex != -1) {
+            int orderNumber = orderNumberList.get(selectedIndex);
+            if (!orderController.redoOrder(orderNumber, reasonArea.getText())) {
+              orderMessageLabel.setWarning();
+              orderMessageLabel.setText("Not enough ingredients to redo order.");
+            }
+            update();
+          } else {
+            orderMessageLabel.setWarning();
+            orderMessageLabel.setText("Select an order to redo.");
+          }
+        });
     grid.add(redoOrderButton, 0, 21);
 
     CustomLabel billListLabel = new CustomLabel("Bill");

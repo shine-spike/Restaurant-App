@@ -39,6 +39,7 @@ public class CustomTab extends Tab {
     previousPages.push(currentPage);
     currentPage = page;
     setContent(content);
+    currentPage.update();
   }
 
   public void goBack() {

@@ -19,8 +19,8 @@ public class OrderFactory {
    * @param employeeNumber the number of the employee who placed this order.
    * @param tableNumber the number of the table this order was placed for.
    * @param customerIndex the index of the customer this order is for.
-   * @param menuNameString the name of the menu the menu item of this order is from.
-   * @param menuItemString the name of the menu item for this order.
+   * @param menuName the name of the menu the menu item of this order is from.
+   * @param menuItemName the name of the menu item for this order.
    * @param ingredientChanges the map of ingredient name to change from the default menu item.
    * @return the order created.
    */
@@ -28,15 +28,15 @@ public class OrderFactory {
       int employeeNumber,
       int tableNumber,
       int customerIndex,
-      String menuNameString,
-      String menuItemString,
+      String menuName,
+      String menuItemName,
       HashMap<String, Integer> ingredientChanges) {
     Restaurant restaurant = Restaurant.getInstance();
-    Menu menu = restaurant.getMenuController().getMenu(menuNameString);
+    Menu menu = restaurant.getMenuController().getMenu(menuName);
 
     MenuItem menuItem;
     if (menu != null) {
-      menuItem = menu.getMenuItem(menuItemString);
+      menuItem = menu.getMenuItem(menuItemName);
     } else {
       return null;
     }
