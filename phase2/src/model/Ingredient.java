@@ -83,6 +83,11 @@ public class Ingredient implements Serializable {
   }
 
   @Override
+  public boolean equals(Object obj) {
+    return obj instanceof Ingredient && ((Ingredient) obj).name.equals(name);
+  }
+
+  @Override
   public String toString() {
     return Localizer.localize(name);
   }

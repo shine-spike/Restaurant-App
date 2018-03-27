@@ -3,6 +3,7 @@ package controller;
 import model.Ingredient;
 import model.Menu;
 import model.MenuItem;
+import util.SerializableContents;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,6 +25,18 @@ public class MenuController implements SerializableContents<Menu> {
   }
 
   /**
+   * Removes the menu with the given name.
+   *
+   * @param menuName the name of the menu to remove.
+   */
+  public void removeMenu(String menuName) {
+    Menu menu = getMenu(menuName);
+    if (menu != null) {
+      menus.remove(menu);
+    }
+  }
+
+  /**
    * Adds the given menu item to the menu with the given name.
    *
    * @param menuName the name of the menu to add the item to.
@@ -33,6 +46,22 @@ public class MenuController implements SerializableContents<Menu> {
     Menu menu = getMenu(menuName);
     if (menu != null) {
       menu.addMenuItem(menuItem);
+    }
+  }
+
+  /**
+   * Removes the menu item with the given name from the menu with the given name.
+   *
+   * @param menuName the name of the menu to remove from.
+   * @param menuItemName the name of the menu item to remove.
+   */
+  public void removeMenuItem(String menuName, String menuItemName) {
+    Menu menu = getMenu(menuName);
+    if (menu != null) {
+      MenuItem menuItem = menu.getMenuItem(menuItemName);
+      if (menuItem != null) {
+        menu.getMenuItems().remove(menuItem);
+      }
     }
   }
 
@@ -69,10 +98,11 @@ public class MenuController implements SerializableContents<Menu> {
   }
 
   /**
-   * Gets the menu items from the menu with the given name.
+   * Gets the ingredients of a menu item with a given name from the menu with the given name.
    *
    * @param menuName the name of the menu.
-   * @return a list of strings representing the menu items.
+   * @param menuItemName the name of the menu item.
+   * @return a list of strings representing the ingredients.
    */
   public HashMap<String, Integer> getIngredientStrings(String menuName, String menuItemName) {
     MenuItem menuItem = getMenuItem(menuName, menuItemName);
@@ -80,11 +110,70 @@ public class MenuController implements SerializableContents<Menu> {
 
     if (menuItem != null) {
       for (Ingredient ingredient : menuItem.getIngredients().keySet()) {
-        ingredientStrings.put(menuItem.getName(), menuItem.getIngredients().get(ingredient));
+        ingredientStrings.put(ingredient.getName(), menuItem.getIngredients().get(ingredient));
       }
     }
 
     return ingredientStrings;
+  }
+
+  /**
+   * Modifies the ingredients of a menu item with the given name. If the ingredient already exists
+   * in the menu item, sets its quantity to the new value, otherwise adds the ingredient to the menu
+   * item. If the quantity is {@code -1}, removes the item.
+   *
+   * @param menuName the name of the menu.
+   * @param menuItemName the name of the menu item.
+   * @param ingredientName the name of the ingredient.
+   * @param quantity the amount of the ingredient.
+   */
+  public void modifyMenuItemIngredients(
+      String menuName, String menuItemName, String ingredientName, int quantity) {
+    MenuItem menuItem = getMenuItem(menuName, menuItemName);
+    Ingredient ingredient = Restaurant.getInstance().getInventory().getIngredient(ingredientName);
+
+    if (menuItem != null) {
+      if (quantity == -1) {
+        menuItem.getIngredients().remove(ingredient);
+      } else {
+        menuItem.getIngredients().put(ingredient, quantity);
+      }
+    }
+  }
+
+  /**
+   * Gets the price of a menu item with a given name from a menu with a given name.
+   *
+   * @param menuName the name of the menu.
+   * @param menuItemName the name of the menu item.
+   * @return the price of the menu item or {@code -1} if such an item does not exist.
+   */
+  public int getMenuItemPrice(String menuName, String menuItemName) {
+    Menu menu = getMenu(menuName);
+    if (menu != null) {
+      MenuItem menuItem = menu.getMenuItem(menuItemName);
+      if (menuItem != null) {
+        return menuItem.getPrice();
+      }
+    }
+    return -1;
+  }
+
+  /**
+   * Sets the price of a menu item with a given name from a menu with a given name.
+   *
+   * @param menuName the name of the menu.
+   * @param menuItemName the name of the menu item.
+   * @param price the new price of the menu item.
+   */
+  public void setMenuItemPrice(String menuName, String menuItemName, int price) {
+    Menu menu = getMenu(menuName);
+    if (menu != null) {
+      MenuItem menuItem = menu.getMenuItem(menuItemName);
+      if (menuItem != null) {
+        menuItem.setPrice(price);
+      }
+    }
   }
 
   /**

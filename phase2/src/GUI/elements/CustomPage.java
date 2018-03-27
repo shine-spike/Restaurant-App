@@ -24,14 +24,11 @@ public abstract class CustomPage {
    * @param previous the previous content to go back to.
    * @return the back button or {@code null} if there is no previous page.
    */
-  public CustomButton getBackButton(Tab tab, Node previous) {
+  protected CustomButton getBackButton(Tab tab, Node previous) {
     if (previous != null) {
       CustomButton backButton = new CustomButton("Back");
       backButton.maximize();
-      backButton.setOnAction(
-          e -> {
-            tab.setContent(previous);
-          });
+      backButton.setOnAction(e -> tab.setContent(previous));
       return backButton;
     }
 

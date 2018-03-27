@@ -5,6 +5,7 @@ import model.Order;
 import util.Localizer;
 import util.Logger;
 import util.Reorderer;
+import util.SerializableContents;
 
 import java.util.ArrayList;
 import java.util.Arrays;

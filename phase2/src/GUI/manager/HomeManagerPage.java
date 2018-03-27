@@ -21,17 +21,23 @@ public class HomeManagerPage extends CustomPage {
     headerLabel.setBold();
     grid.add(headerLabel, 1, 1);
 
-    CustomButton manageEmployeesButton = new CustomButton("View Inventory");
-    manageEmployeesButton.maximize();
-    manageEmployeesButton.setFontSize(20);
-    manageEmployeesButton.setOnAction(e -> new InventoryManagerPage().populateTab(tab, grid));
-    grid.add(manageEmployeesButton, 1, 3, 1, 2);
+    CustomButton viewInventoryButton = new CustomButton("View Inventory");
+    viewInventoryButton.maximize();
+    viewInventoryButton.setFontSize(20);
+    viewInventoryButton.setOnAction(e -> new InventoryManagerPage().populateTab(tab, grid));
+    grid.add(viewInventoryButton, 1, 3, 1, 2);
 
-    CustomButton manageMenusButton = new CustomButton("Request Inventory");
-    manageMenusButton.maximize();
-    manageMenusButton.setFontSize(20);
-    manageMenusButton.setOnAction(e -> new RequestManagerPage().populateTab(tab, grid));
-    grid.add(manageMenusButton, 1, 5, 1, 2);
+    CustomButton requestInventoryButton = new CustomButton("Request Inventory");
+    requestInventoryButton.maximize();
+    requestInventoryButton.setFontSize(20);
+    requestInventoryButton.setOnAction(e -> new RequestManagerPage().populateTab(tab, grid));
+    grid.add(requestInventoryButton, 1, 5, 1, 2);
+
+    CustomButton seeOrdersButton = new CustomButton("View Pending Orders");
+    seeOrdersButton.maximize();
+    seeOrdersButton.setFontSize(20);
+    seeOrdersButton.setOnAction(e -> new OrderManagerPage().populateTab(tab, grid));
+    grid.add(seeOrdersButton, 1, 7, 1, 2);
 
     tab.setContent(grid);
   }

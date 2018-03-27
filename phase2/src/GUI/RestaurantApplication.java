@@ -16,9 +16,10 @@ public class RestaurantApplication extends Application {
 
   @Override
   public void start(Stage stage) {
+    Logger.startLogger();
+
     Localizer.parseLocale();
     Restaurant.getInstance().retrieveModel();
-    Logger.startLogger();
 
     System.setProperty("prism.lcdtext", "false");
 

@@ -4,14 +4,18 @@ veggie_dog_wiener Veggie Dog Wiener
 onions Onions
 hot_dog_bun Hot Dog Bun
 veggie_burger_patty Veggie Burger Patty
+drinks Drinks
 burger_bun Burger Bun
 hot_dog_wiener Hot Dog Wiener
 burger_patty Burger Patty
 hot_dog Hot Dog
+lemonade Lemonade
 veggie_burger Veggie Burger
 tomatoes Tomatoes
 mustard Mustard
+lemon Lemon
 burger Burger
 pickles Pickles
 veggie_dog Veggie Dog
+sugar Sugar
 ketchup Ketchup

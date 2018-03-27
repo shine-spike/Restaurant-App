@@ -7,7 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
 
-public class InventoryManagerPage extends CustomPage {
+public class OrderManagerPage extends CustomPage {
   @Override
   public void populateTab(Tab tab, Node previous) {
     CustomGridPane grid = new CustomGridPane(50);
@@ -15,11 +15,7 @@ public class InventoryManagerPage extends CustomPage {
     grid.setHgap(10);
     grid.setVgap(10);
 
-    CustomButton sendButton = new CustomButton("Send");
-    grid.add(sendButton, 0, 0);
 
-    CustomButton backButton = getBackButton(tab, previous);
-    grid.add(backButton, 1, 1);
 
     tab.setContent(grid);
   }

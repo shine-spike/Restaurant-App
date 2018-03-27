@@ -10,7 +10,7 @@ import java.util.HashMap;
  * price.
  */
 public class MenuItem implements Serializable {
-  private final int price;
+  private int price;
   private final String name;
 
   private final HashMap<Ingredient, Integer> ingredients;
@@ -34,6 +34,15 @@ public class MenuItem implements Serializable {
    */
   public int getPrice() {
     return price;
+  }
+
+  /**
+   * Sets the price of this menu item.
+   *
+   * @param price the new price of the menu item.
+   */
+  public void setPrice(int price) {
+    this.price = price;
   }
 
   /**

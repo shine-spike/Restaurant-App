@@ -12,7 +12,7 @@ import util.Reorderer;
 public class RequestManagerPage extends CustomPage {
   @Override
   public void populateTab(Tab tab, Node previous) {
-    CustomGridPane grid = new CustomGridPane(25);
+    CustomGridPane grid = new CustomGridPane(50);
     grid.setAlignment(Pos.CENTER);
     grid.setHgap(10);
     grid.setVgap(10);

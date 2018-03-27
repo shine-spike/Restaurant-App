@@ -190,5 +190,7 @@ public class IngredientAdminPage extends CustomPage {
     ingredientList = inventory.getIngredientStrings();
     ingredientListView.setItems(
         FXCollections.observableArrayList(Localizer.localize(ingredientList)));
+
+    ingredientListView.refresh();
   }
 }
