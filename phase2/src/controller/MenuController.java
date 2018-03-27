@@ -31,12 +31,9 @@ public class MenuController implements SerializableContents<Menu> {
    */
   public void addMenuItem(String menuName, MenuItem menuItem) {
     Menu menu = getMenu(menuName);
-    if (menu == null) {
-      // TODO: remove print
-      System.out.println("Given menu could not be found. Skipping.");
-      return;
+    if (menu != null) {
+      menu.addMenuItem(menuItem);
     }
-    menu.addMenuItem(menuItem);
   }
 
   /**
@@ -115,12 +112,10 @@ public class MenuController implements SerializableContents<Menu> {
    */
   private MenuItem getMenuItem(String menuName, String menuItemName) {
     Menu menu = getMenu(menuName);
-    if (menu == null) {
-      // TODO: remove print
-      System.out.println("Given menu could not be found. Skipping.");
-      return null;
+    if (menu != null) {
+      return menu.getMenuItem(menuItemName);
     }
-    return menu.getMenuItem(menuItemName);
+    return null;
   }
 
   @Override

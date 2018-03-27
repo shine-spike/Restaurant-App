@@ -21,6 +21,7 @@ public class Logger {
       "[INVENTORY : %1$s] %2$d of ingredient %3$s have been %4$s.";
   private static final String REQUEST_LOG_MESSAGE_FORMAT =
       "[REQUEST] Ingredient %1$s has been requested for reorder.";
+  private static final String INTERNAL_LOG_MESSAGE_FORMAT = "[INTERNAL : %1$s] %2$s";
 
   private static final java.util.logging.Logger logger =
       java.util.logging.Logger.getLogger(LOGGER_NAME);
@@ -38,7 +39,6 @@ public class Logger {
       SimpleFormatter formatter = new SimpleFormatter();
       fileHandler.setFormatter(formatter);
     } catch (IOException e) {
-      // TODO: remove print
       System.out.println("Logging system could not be started.");
     }
   }
@@ -94,5 +94,15 @@ public class Logger {
    */
   public static void reorderLog(String ingredientName) {
     log(String.format(REQUEST_LOG_MESSAGE_FORMAT, ingredientName));
+  }
+
+  /**
+   * Logs an internal event in the given category.
+   *
+   * @param category the category of this internal event.
+   * @param message the message to log.
+   */
+  public static void internalLog(String category, String message) {
+    log(String.format(INTERNAL_LOG_MESSAGE_FORMAT, category, message));
   }
 }

@@ -58,8 +58,7 @@ public class Localizer {
   public static void parseLocale() {
     File file = new File(LOCALE_LOCATION + LOCALE_NAME);
     if (!file.exists()) {
-      // TODO: remove print
-      System.out.println("No localization file found.");
+      Logger.internalLog("LOCALIZER", "No localization file found to parse.");
       return;
     }
 
@@ -67,18 +66,14 @@ public class Localizer {
     try {
       reader = new BufferedReader(new FileReader(file));
     } catch (IOException e) {
-      // TODO: remove print
-      System.out.println("Something went wrong.");
+      Logger.internalLog("LOCALIZER", "Could not start reader for localization file.");
       return;
     }
 
     String[] symbols;
     while ((symbols = preParse(reader)).length != 0) {
       if (symbols.length < 2) {
-        System.out.println(
-            "Line in localization file should have at least two entries, "
-                + symbols.length
-                + " were given. Skipping.");
+        Logger.internalLog("LOCALIZER", "Line in localization file has incorrect syntax.");
         continue;
       }
 
@@ -89,28 +84,29 @@ public class Localizer {
         localizedName.append(symbols[i]);
       }
 
-      if (Localizer.register(unlocalizedName, localizedName.toString()) != null) {
-        System.out.println(
-            "Unlocalized name \'" + unlocalizedName + "\' was previously declared. Skipping.");
+      String prevLocalization = Localizer.register(unlocalizedName, localizedName.toString());
+      if (prevLocalization != null) {
+        Logger.internalLog(
+            "LOCALIZER",
+            "Unlocalized name was previously localized to \'"
+                + prevLocalization
+                + "\'. Overwriting.");
       }
     }
   }
 
-  /**
-   * Writes the current registered localization to the locale file.
-   */
+  /** Writes the current registered localization to the locale file. */
   public static void storeLocale() {
     File file = new File(LOCALE_LOCATION + LOCALE_NAME);
     if (!file.delete()) {
-      System.out.println("No localization file found, creating.");
+      Logger.internalLog("LOCALIZER", "No localization file found, creating.");
     }
 
     BufferedWriter writer;
     try {
       writer = new BufferedWriter(new FileWriter(file));
     } catch (IOException e) {
-      // TODO: remove print
-      System.out.println("Something went wrong.");
+      Logger.internalLog("LOCALIZER", "Could not start writer to localization file.");
       return;
     }
 
@@ -120,8 +116,7 @@ public class Localizer {
       }
       writer.close();
     } catch (IOException e) {
-      // TODO: remove print
-      System.out.println("Something went wrong.");
+      Logger.internalLog("LOCALIZER", "Could not write to localization file.");
     }
   }
 
@@ -142,8 +137,7 @@ public class Localizer {
       try {
         line = reader.readLine();
       } catch (IOException e) {
-        // TODO: remove print
-        System.out.println("Reading a line failed.");
+        Logger.internalLog("LOCALIZER", "Could not read a line.");
       }
 
       // If we read a line then try to split the line into usable information

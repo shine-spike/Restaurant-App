@@ -21,7 +21,7 @@ public class Reorderer {
     try {
       // Attempt to create the file and notify if it was created now
       if (file.createNewFile()) {
-        System.out.println(file.getName() + " not found. Created a new one.");
+        Logger.internalLog("REORDERER", "Requests file not found, creating.");
       }
 
       // Write out to the file
@@ -29,45 +29,37 @@ public class Reorderer {
       out.println("Reorder request for " + amount + " of " + ingredientName + ".");
       out.close();
     } catch (IOException e) {
-      // TODO: remove print
-      System.out.println(file.getName() + " not found and could not be created.");
+      Logger.internalLog("REORDERER", "Requests file not found and could not be created.");
     }
   }
 
   public static String getReorders() {
     StringBuilder out = new StringBuilder();
 
-    File file = new File(REORDER_REQUEST_FILE);
-
     try {
+      // Find the file we want to get the reader for
+      File file = new File(REORDER_REQUEST_FILE);
+
+      // Attempt to create the file and notify if it was created now
+      if (file.createNewFile()) {
+        Logger.internalLog("REORDERER", "Requests file not found, creating.");
+      }
+
+      // Return the reader of the file whether or not we just created it
+      BufferedReader in = new BufferedReader(new FileReader(file));
+
       // Write out to the file
-      BufferedReader in = getReader();
-      String line = (in != null ? in.readLine() : null);
+      String line = in.readLine();
 
       while (line != null) {
         out.append(line);
         line = in.readLine();
       }
     } catch (IOException e) {
-
+      Logger.internalLog("REORDERER", "Could not read requests file.");
     }
 
     return out.toString();
-  }
-
-  private static BufferedReader getReader() {
-    // Find the file we want to get the reader for
-    File file = new File(REORDER_REQUEST_FILE);
-
-    try {
-      // Attempt to create the file and notify if it was created now
-      if (file.createNewFile()) {}
-
-      // Return the reader of the file whether or not we just created it
-      return new BufferedReader(new FileReader(file));
-    } catch (IOException e) {
-      return null;
-    }
   }
 
   /**
@@ -102,10 +94,9 @@ public class Reorderer {
       email.setText(content);
 
       Transport.send(email);
-      // TODO add logging
+      Logger.internalLog("REORDERER", "Sent an email to " + to + " with reorder requests.");
     } catch (MessagingException e) {
-      // TODO add logging
-      e.printStackTrace();
+      Logger.internalLog("REORDERER", "Email to " + to + " could not be sent.");
     }
   }
 }

@@ -15,16 +15,13 @@ public class Serializer {
     try {
       File file = new File(BASE_DIRECTORY + name);
       if (new File(BASE_DIRECTORY).mkdirs()) {
-        // TODO: remove print
-        System.out.println("Created data directory.");
+        Logger.internalLog("SERIALIZER", "Created data directory.");
       }
 
       if (file.delete()) {
-        // TODO: remove print
-        System.out.println("Overwrote previous data.");
+        Logger.internalLog("SERIALIZER", "Overwrote previous data.");
       } else {
-        // TODO: remove print
-        System.out.println("Writing new data.");
+        Logger.internalLog("SERIALIZER", "Writing new data.");
       }
 
       FileOutputStream fileOutputStream = new FileOutputStream(file);
@@ -54,11 +51,9 @@ public class Serializer {
       result = tClass.cast(objectInputStream.readObject());
       objectInputStream.close();
     } catch (IOException e) {
-      // TODO: remove print
-      System.out.println("Could not find previous data.");
+      Logger.internalLog("SERIALIZER", "Could not find previous data.");
     } catch (ClassNotFoundException e) {
-      // TODO: remove print
-      System.out.println("Something went wrong.");
+      Logger.internalLog("SERIALIZER", "Something went wrong.");
     }
 
     return result;
