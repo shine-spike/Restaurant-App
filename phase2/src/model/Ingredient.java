@@ -62,17 +62,18 @@ public class Ingredient implements Serializable {
   /**
    * Modifies the threshold of this ingredient.
    *
-   * @param threshold the new threshold
+   * @param threshold the new threshold.
    */
-  public void setThreshold(int threshold){
+  public void setThreshold(int threshold) {
     this.threshold = threshold;
   }
 
   /**
-   * Returns this ingredients threshold
-   * @return the threshold of this ingredient
+   * Returns this ingredients threshold.
+   *
+   * @return the threshold of this ingredient.
    */
-  public int getThreshold(){
+  public int getThreshold() {
     return threshold;
   }
 

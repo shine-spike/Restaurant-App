@@ -24,7 +24,7 @@ public class Localizer {
    *     it was not previously localized.
    */
   public static String register(String unlocalizedName, String localizedName) {
-    return localization.putIfAbsent(unlocalizedName, localizedName);
+    return localization.put(unlocalizedName, localizedName);
   }
 
   /**

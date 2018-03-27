@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /** Controls all aspects of inventory management and reordering of ingredients. */
-public class Inventory implements SerializableContents<Ingredient>{
+public class Inventory implements SerializableContents<Ingredient> {
   private static final int DEFAULT_REORDER_AMOUNT = 20;
 
   private final ArrayList<Ingredient> ingredients = new ArrayList<>();
@@ -48,14 +48,12 @@ public class Inventory implements SerializableContents<Ingredient>{
    * @param ingredientName the name of the ingredient to restock.
    * @param quantity the quantity of the ingredient to add.
    */
-  public boolean restockIngredient(String ingredientName, int quantity) {
+  public void restockIngredient(String ingredientName, int quantity) {
     Ingredient ingredient = getIngredient(ingredientName);
     if (ingredient != null) {
       Logger.inventoryLog("RESTOCK", quantity, ingredientName, "restocked");
       ingredient.modifyQuantity(quantity);
-      return true;
     }
-    return false;
   }
 
   /**
@@ -72,7 +70,7 @@ public class Inventory implements SerializableContents<Ingredient>{
 
       // Search both the regular name and the respective localized name
       if (ingredientName.contains(searchTerm)
-              || Localizer.localize(ingredientName).contains(searchTerm)) {
+          || Localizer.localize(ingredientName).contains(searchTerm)) {
         foundIngredients.add(ingredient.getName());
       }
     }
@@ -92,6 +90,33 @@ public class Inventory implements SerializableContents<Ingredient>{
       }
     }
     return null;
+  }
+
+  /**
+   * Sets the threshold for the ingredient with the given ingredient name.
+   *
+   * @param ingredientName the name of the ingredient.
+   * @param threshold the new threshold.
+   */
+  public void setIngredientThreshold(String ingredientName, int threshold) {
+    Ingredient ingredient = getIngredient(ingredientName);
+    if (ingredient != null) {
+      ingredient.setThreshold(threshold);
+    }
+  }
+
+  /**
+   * Gets the threshold for the ingredient with the given ingredient name.
+   *
+   * @param ingredientName the name of the ingredient.
+   * @return the threshold of the ingredient.
+   */
+  public int getIngredientThreshold(String ingredientName) {
+    Ingredient ingredient = getIngredient(ingredientName);
+    if (ingredient != null) {
+      return ingredient.getThreshold();
+    }
+    return -1;
   }
 
   /**
@@ -129,46 +154,6 @@ public class Inventory implements SerializableContents<Ingredient>{
         Reorderer.reorder(ingredient.getName(), DEFAULT_REORDER_AMOUNT);
       }
     }
-  }
-
-  /**
-   * Sets the given ingredients threshold to reorder
-   *
-   * @param ingredientName the name of the ingredientName to set
-   * @param threshold the new threshold
-   */
-  public void setThreshold(String ingredientName, int threshold){
-    getIngredient(ingredientName).setThreshold(threshold);
-  }
-
-  /**
-   * Gets ingredients unlocalized namne
-   *
-   * @param ingredientName the name of the ingredient
-   * @return the unlocalized name of the ingredient
-   */
-  public String getUnlocalizedName(String ingredientName){
-    for(Ingredient i: ingredients){
-      if(ingredientName.equals(Localizer.localize(i.getName()))){
-        return i.getName();
-      }
-    }
-    return null;
-  }
-
-  /**
-   * Gets the threshold for the given ingredient
-   *
-   * @param ingredientName the name of the ingredient
-   * @return the threshold of the ingredient
-   */
-  public int getThreshold(String ingredientName){
-    for(Ingredient i: ingredients){
-      if(ingredientName.equals(Localizer.localize(i.getName()))){
-        return i.getThreshold();
-      }
-    }
-    return -1;
   }
 
   @Override
