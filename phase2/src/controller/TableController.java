@@ -2,11 +2,13 @@ package controller;
 
 import model.Order;
 import model.Table;
+import util.Logger;
 
 import java.util.ArrayList;
 
 /** Controls all tables in this restaurant. Manages all interactions with tables or bills. */
 public class TableController {
+  private final ArrayList<Integer> payments = new ArrayList<>();
   private final Table[] tables;
 
   /**
@@ -86,7 +88,11 @@ public class TableController {
    * @param tableNumber the number of the table for which to clear the bill.
    */
   public void clearBill(int tableNumber) {
+    int total = tables[tableNumber].getTotalBill();
+    payments.add(total);
     tables[tableNumber].clearBill();
+
+    Logger.billLog(tableNumber, "PAID", "paid off with a cent-value of " + Integer.toString(total));
   }
 
   /**

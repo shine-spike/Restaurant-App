@@ -98,6 +98,16 @@ public class Table {
   }
 
   /**
+   * Gets the total of this tables current bill.
+   *
+   * @return the total price of the tables current bill.
+   */
+  public int getTotalBill() {
+    return currentBill.getTotal();
+  }
+
+
+  /**
    * Gets the order with the given order number on this table.
    *
    * @param orderNumber the number of the order.
