@@ -7,9 +7,10 @@ import util.Logger;
 import util.Reorderer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /** Controls all aspects of inventory management and reordering of ingredients. */
-public class Inventory {
+public class Inventory implements SerializableContents<Ingredient>{
   private static final int DEFAULT_REORDER_AMOUNT = 20;
 
   private final ArrayList<Ingredient> ingredients = new ArrayList<>();
@@ -168,5 +169,23 @@ public class Inventory {
       }
     }
     return -1;
+  }
+
+  @Override
+  public Ingredient[] getContents() {
+    Ingredient[] ingredientArray = new Ingredient[ingredients.size()];
+    ingredients.toArray(ingredientArray);
+    return ingredientArray;
+  }
+
+  @Override
+  public void setContents(Ingredient[] contents) {
+    ingredients.clear();
+    ingredients.addAll(Arrays.asList(contents));
+  }
+
+  @Override
+  public String getName() {
+    return "ingredients";
   }
 }
