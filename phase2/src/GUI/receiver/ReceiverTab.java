@@ -1,5 +1,6 @@
 package GUI.receiver;
 
+import GUI.elements.CustomButton;
 import GUI.elements.CustomGridPane;
 import GUI.elements.CustomLabel;
 import GUI.elements.CustomTab;
@@ -7,7 +8,10 @@ import controller.Inventory;
 import controller.Restaurant;
 import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.TextField;
 import util.Localizer;
 
 import java.util.ArrayList;
@@ -26,7 +30,7 @@ public class ReceiverTab extends CustomTab {
   /** Initializes this ReceiverTab's JavaFX tab */
   public void populateTab() {
     CustomGridPane grid = new CustomGridPane(25);
-    grid.setPercentageColumns(75, 25);
+    grid.setPercentageColumns(15, 60, 10, 15);
     grid.setAlignment(Pos.CENTER);
     grid.setHgap(10);
     grid.setVgap(10);
@@ -62,8 +66,8 @@ public class ReceiverTab extends CustomTab {
     warningString.center();
 
     // Add Ingredients Button
-    Button button = new Button("Enter");
-    button.setMaxWidth(Double.MAX_VALUE);
+    CustomButton button = new CustomButton("Enter");
+    button.maximize();
     button.setOnAction(
         e -> {
           warningString.setText("");
@@ -76,7 +80,7 @@ public class ReceiverTab extends CustomTab {
 
             warningString.setInfo();
             warningString.setText(
-                amount + " " + Localizer.localize(ingredient) + "(s) added to inventory");
+                amount + " " + Localizer.localize(ingredient) + " added to inventory");
             amountSpinner.getValueFactory().setValue(1);
             nameField.setText("");
           } else {
@@ -85,13 +89,13 @@ public class ReceiverTab extends CustomTab {
           }
         });
 
-    grid.add(nameLabel, 0, 0);
-    grid.add(nameField, 0, 1);
-    grid.add(amountLabel, 1, 0);
-    grid.add(amountSpinner, 1, 1);
-    grid.add(ingredientsListView, 0, 2, 2, 1);
-    grid.add(button, 0, 4, 2, 1);
-    grid.add(warningString, 0, 5, 2, 1);
+    grid.add(nameLabel, 1, 0);
+    grid.add(nameField, 1, 1);
+    grid.add(amountLabel, 2, 0);
+    grid.add(amountSpinner, 2, 1);
+    grid.add(ingredientsListView, 1, 2, 2, 1);
+    grid.add(button, 1, 4, 2, 1);
+    grid.add(warningString, 1, 9, 2, 1);
 
     getTab().setContent(grid);
   }
