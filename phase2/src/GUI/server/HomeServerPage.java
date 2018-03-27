@@ -18,13 +18,18 @@ public class HomeServerPage extends CustomPage {
 
   private int tableNumber;
   private int customerIndex;
+
+  private Spinner<Integer> tableNumberSpinner;
+  private Spinner<Integer> customerIndexSpinner;
   private ArrayList<Integer> orderNumberList = new ArrayList<>();
   private ListView<String> orderListView = new ListView<>();
   private ListView<String> readyOrderListView = new ListView<>();
 
   public HomeServerPage() {
     this.tableNumber = 0;
-    this.customerIndex = -1;
+    this.customerIndex = 0;
+    tableNumberSpinner = new Spinner<>(0, tableController.getNumberTables() - 1, 0);
+    customerIndexSpinner = new Spinner<>(0, 25, 0);
     update();
   }
 
@@ -36,8 +41,6 @@ public class HomeServerPage extends CustomPage {
     grid.setEvenRows(24);
 
     CustomLabel tableNumberLabel = new CustomLabel("Table Number");
-    Spinner<Integer> tableNumberSpinner =
-        new Spinner<>(0, tableController.getNumberTables() - 1, -1);
     tableNumberSpinner
         .valueProperty()
         .addListener(
@@ -51,8 +54,9 @@ public class HomeServerPage extends CustomPage {
     grid.add(tableNumberSpinner, 1, 0);
 
     CustomLabel customerIndexLabel = new CustomLabel("Customer Index");
-    Spinner<Integer> customerIndexSpinner = new Spinner<>(-1, 25, -1);
-    customerIndexSpinner.valueProperty().addListener((observable, oldValue, newValue) -> customerIndex = newValue);
+    customerIndexSpinner
+        .valueProperty()
+        .addListener((observable, oldValue, newValue) -> customerIndex = newValue);
     grid.add(customerIndexLabel, 2, 0);
     grid.add(customerIndexSpinner, 3, 0);
 
@@ -84,10 +88,11 @@ public class HomeServerPage extends CustomPage {
 
     CustomButton addOrderButton = new CustomButton("Add Order");
     addOrderButton.maximize();
-    addOrderButton.setOnAction(e -> {
-      new OrderServerPage(tableNumber, customerIndex).populateTab(tab);
-      update();
-    });
+    addOrderButton.setOnAction(
+        e -> {
+          new OrderServerPage(tableNumber, customerIndex).populateTab(tab);
+          update();
+        });
     grid.add(addOrderButton, 0, 15, 2, 1);
 
     CustomButton acceptOrderButton = new CustomButton("Accept Order");
@@ -176,18 +181,30 @@ public class HomeServerPage extends CustomPage {
 
     CustomButton printTableBillButton = new CustomButton("Print Table Bill");
     printTableBillButton.maximize();
-    printTableBillButton.setOnAction(e -> {});
+    printTableBillButton.setOnAction(
+        e -> billTextArea.setText(tableController.getBillString(tableNumber)));
     grid.add(printTableBillButton, 2, 15);
 
     CustomButton printCustomerBillButton = new CustomButton("Print Customer Bill");
     printCustomerBillButton.maximize();
-    printCustomerBillButton.setOnAction(e -> {});
+    printCustomerBillButton.setOnAction(
+        e -> billTextArea.setText(tableController.getBillString(tableNumber, customerIndex)));
     grid.add(printCustomerBillButton, 2, 17);
+
+    CustomButton printAllCustomerBillButton = new CustomButton("Print All Customer Bills");
+    printAllCustomerBillButton.maximize();
+    printAllCustomerBillButton.setOnAction(
+        e -> billTextArea.setText(tableController.getBillString(tableNumber, -1)));
+    grid.add(printAllCustomerBillButton, 2, 19);
 
     CustomButton paidBillButton = new CustomButton("Bill Paid");
     paidBillButton.maximize();
-    paidBillButton.setOnAction(e -> {});
-    grid.add(paidBillButton, 2, 19);
+    paidBillButton.setOnAction(e -> {
+      tableController.clearBill(tableNumber);
+      billTextArea.setText("");
+      update();
+    });
+    grid.add(paidBillButton, 2, 21);
 
     CustomLabel readyOrderLabel = new CustomLabel("Ready Orders");
     readyOrderLabel.setFontSize(20);
@@ -212,6 +229,9 @@ public class HomeServerPage extends CustomPage {
         FXCollections.observableArrayList(
             formatReadyOrder(
                 orderController.getOrderInformationFromNumbers(readyOrderNumberList))));
+
+    tableNumberSpinner.getValueFactory().setValue(tableNumber);
+    customerIndexSpinner.getValueFactory().setValue(customerIndex);
 
     orderListView.refresh();
     readyOrderListView.refresh();

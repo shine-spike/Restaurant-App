@@ -61,14 +61,23 @@ public class TableController {
 
   /**
    * Gets the formatted string representation of the bill for the customer with the given index on
-   * the table with the given table number
+   * the table with the given table number. If {@code -1} is passed as the customer index, prints
+   * all bills.
    *
    * @param tableNumber the number of the table.
    * @param customerIndex the index of the customer.
    * @return the string representation of the bill.
    */
   public String getBillString(int tableNumber, int customerIndex) {
-    return tables[tableNumber].getBillString(customerIndex);
+    if (customerIndex != -1) {
+      return tables[tableNumber].getBillString(customerIndex);
+    } else {
+      StringBuilder stringBuilder = new StringBuilder();
+      for (String billString : tables[tableNumber].getBillStrings()) {
+        stringBuilder.append(billString).append("\n\n");
+      }
+      return stringBuilder.toString();
+    }
   }
 
   /**

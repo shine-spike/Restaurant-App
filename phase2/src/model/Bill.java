@@ -1,15 +1,17 @@
 package model;
 
+import util.Localizer;
+
 import java.util.ArrayList;
 
 /** Bill for a customer or table. */
 public class Bill {
   private static final double TAX_PERCENT = 0.13;
   private static final double GRATUITY_PERCENT = 0.15;
-  private static final int NUM_REQUIRED_FOR_GRATUITY = 8;
 
   private final ArrayList<Order> orders = new ArrayList<>();
   private int runningBasePrice = 0;
+  private boolean hasGratuity = false;
 
   /**
    * Adds the given order to the bill.
@@ -30,6 +32,10 @@ public class Bill {
     return orders;
   }
 
+  public void setGratuity(boolean hasGratuity) {
+    this.hasGratuity = hasGratuity;
+  }
+
   /**
    * Returns a formatted string representation of the bill in the following format.
    *
@@ -38,12 +44,23 @@ public class Bill {
   public String getBillString() {
     StringBuilder str = new StringBuilder();
 
-    str.append("\n=== BILL ===\n");
+    str.append("=== BILL ===\n");
     for (Order order : orders) {
-      str.append(order.toString()).append("\n\n");
+      str.append(String.format("$%.2f", order.getPrice() / 100.0))
+          .append(" ")
+          .append(Localizer.localize(order.getMenuItem().getName()))
+          .append("\n");
     }
+    str.append("\n");
 
-    str.append("TOTAL: ").append(runningBasePrice);
+    int price = runningBasePrice;
+    str.append("TAX:      ").append(TAX_PERCENT * 100).append("%").append("\n");
+    price *= 1 + TAX_PERCENT;
+    if (hasGratuity) {
+      str.append("GRATUITY: ").append(GRATUITY_PERCENT * 100).append("%").append("\n");
+      price *= 1 + GRATUITY_PERCENT;
+    }
+    str.append("TOTAL:    ").append(String.format("$%.2f", price / 100.0)).append("\n");
     return str.toString();
   }
 }

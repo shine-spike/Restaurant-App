@@ -1,10 +1,13 @@
 package model;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 /** Represents a table in a restaurant. Stores the bill for this table. */
 public class Table {
+  private static final int NUM_REQUIRED_FOR_GRATUITY = 8;
+
   private final ArrayList<Order> currentOrders = new ArrayList<>();
   private Bill currentBill = new Bill();
   private final HashMap<Integer, Bill> customerBills = new HashMap<>();
@@ -36,6 +39,7 @@ public class Table {
         Bill customerBill = new Bill();
         customerBill.addOrder(order);
         customerBills.put(customerIndex, customerBill);
+        checkGratuity();
       }
     }
   }
@@ -74,7 +78,23 @@ public class Table {
    * @return the string representation of the customer's bill.
    */
   public String getBillString(int customerIndex) {
-    return customerBills.get(customerIndex).getBillString();
+    if (customerBills.containsKey(customerIndex)) {
+      return customerBills.get(customerIndex).getBillString();
+    }
+    return "";
+  }
+
+  /**
+   * Gets all the formatted bill strings of this table.
+   *
+   * @return a list of formatted bill strings.
+   */
+  public ArrayList<String> getBillStrings() {
+    ArrayList<String> billStrings = new ArrayList<>();
+    for (Bill bill : customerBills.values()) {
+        billStrings.add(bill.getBillString());
+    }
+    return billStrings;
   }
 
   /**
@@ -90,5 +110,15 @@ public class Table {
       }
     }
     return null;
+  }
+
+  /** Checks if automatic gratuity applies to the current table, and applies it if so. */
+  private void checkGratuity() {
+    if (customerBills.size() >= NUM_REQUIRED_FOR_GRATUITY) {
+      currentBill.setGratuity(true);
+      for (Bill bill : customerBills.values()) {
+        bill.setGratuity(true);
+      }
+    }
   }
 }
