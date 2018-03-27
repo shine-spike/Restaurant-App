@@ -108,12 +108,9 @@ public class HomeCookPage extends CustomPage {
   @Override
   public void update() {
     orderNumbers = orderController.getCookOrderNumbers();
-    Integer[] ordersArray = new Integer[orderNumbers.size()];
-    orderNumbers.toArray(ordersArray);
-
     orderListView.setItems(
         FXCollections.observableArrayList(
-            activeOrdersFormat(orderController.getOrderInformationFromNumbers(ordersArray))));
+            activeOrdersFormat(orderController.getOrderInformationFromNumbers(orderNumbers))));
   }
 
   /**

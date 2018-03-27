@@ -31,22 +31,22 @@ public class TableController {
   }
 
   /**
-   * Gets the order information of all orders in the current bill of the given table.
+   * Gets the order numbers of all orders for the table with the given number.
    *
    * @param tableNumber the number of the table.
-   * @return an array of order information.
+   * @return an array of order numbers.
    */
-  public ArrayList<String[]> getTableOrderInformation(int tableNumber) {
+  public ArrayList<Integer> getTableOrderNumbers(int tableNumber) {
     Table table = getTable(tableNumber);
-    ArrayList<String[]> orderStrings = new ArrayList<>();
+    ArrayList<Integer> orderNumbers = new ArrayList<>();
 
     for (Order order : table.getCurrentOrders()) {
       if (order != null) {
-        orderStrings.add(order.getOrderInformation());
+        orderNumbers.add(order.getOrderNumber());
       }
     }
 
-    return orderStrings;
+    return orderNumbers;
   }
 
   /**

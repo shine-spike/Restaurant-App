@@ -33,7 +33,7 @@ public class OrderController {
    * @param orderNumbers the numbers of the orders to get.
    * @return a list of order information.
    */
-  public ArrayList<String[]> getOrderInformationFromNumbers(Integer... orderNumbers) {
+  public ArrayList<String[]> getOrderInformationFromNumbers(ArrayList<Integer> orderNumbers) {
     ArrayList<String[]> orderInformation = new ArrayList<>();
     for (int orderNumber : orderNumbers) {
       orderInformation.add(getOrderInformationFromNumber(orderNumber));
@@ -227,14 +227,22 @@ public class OrderController {
           "REDO",
           "requested for redo by table " + order.getTableNumber() + " for reason " + reason);
 
-      Order duplicate = order.duplicate();
-      if (placeOrder(order.getOrderNumber())) {
+      if (Restaurant.getInstance().getInventory().confirmOrder(order)) {
+        Order duplicate = order.duplicate();
+        registerOrder(duplicate);
+        if (placeOrder(duplicate.getOrderNumber())) {
+          Logger.orderLog(
+                  duplicate.getOrderNumber(),
+                  "REDO",
+                  "assigned as a redo for order " + order.getOrderNumber());
+          order.setStatus(OrderStatus.REDO);
+          return true;
+        }
+      } else {
         Logger.orderLog(
-            duplicate.getOrderNumber(),
-            "REDO",
-            "assigned as a redo for order " + order.getOrderNumber());
-        order.setStatus(OrderStatus.REDO);
-        return true;
+                order.getOrderNumber(),
+                "REDO",
+                "discarded for redo as there are not enough ingredients to satisfy the order");
       }
     }
     return false;

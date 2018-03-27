@@ -5,10 +5,8 @@ import controller.OrderController;
 import controller.Restaurant;
 import controller.TableController;
 import javafx.collections.FXCollections;
-import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import util.Localizer;
 
@@ -18,7 +16,8 @@ public class HomeServerPage extends CustomPage {
   private OrderController orderController = Restaurant.getInstance().getOrderController();
   private TableController tableController = Restaurant.getInstance().getTableController();
 
-  private ArrayList<String[]> orderList = new ArrayList<>();
+  private int tableNumber = 0;
+  private ArrayList<Integer> orderNumberList = new ArrayList<>();
   private ListView<String> orderListView = new ListView<>();
   private ListView<String> readyOrderListView = new ListView<>();
 
@@ -41,7 +40,7 @@ public class HomeServerPage extends CustomPage {
         .addListener(
             (observable, oldValue, newValue) -> {
               if (newValue != -1) {
-                orderList = tableController.getTableOrderInformation(newValue);
+                tableNumber = newValue;
                 update();
               }
             });
@@ -65,6 +64,90 @@ public class HomeServerPage extends CustomPage {
         .addListener((observable, oldValue, newValue) -> {});
     grid.add(orderListView, 0, 3, 2, 10);
 
+    CustomLabel orderMessageLabel = new CustomLabel();
+    orderMessageLabel.center();
+    orderMessageLabel.setBold();
+    grid.add(orderMessageLabel, 0, 23, 2, 1);
+
+    CustomLabel reasonAreaLabel = new CustomLabel("Reason for Reorder/Rejection");
+    reasonAreaLabel.center();
+    reasonAreaLabel.setBold();
+    grid.add(reasonAreaLabel, 1, 19);
+
+    TextArea reasonArea = new TextArea();
+    grid.add(reasonArea, 1, 20, 1, 2);
+
+    CustomButton addOrderButton = new CustomButton("Add Order");
+    addOrderButton.maximize();
+    addOrderButton.setOnAction(
+        e -> {
+          // TODO: show order addition screen
+        });
+    grid.add(addOrderButton, 0, 15, 2, 1);
+
+    CustomButton acceptOrderButton = new CustomButton("Accept Order");
+    acceptOrderButton.maximize();
+    acceptOrderButton.setOnAction(e -> {
+      int selectedIndex = orderListView.getSelectionModel().getSelectedIndex();
+      if (selectedIndex != -1) {
+        int orderNumber = orderNumberList.get(selectedIndex);
+        orderController.acceptOrder(orderNumber);
+        update();
+      } else {
+        orderMessageLabel.setWarning();
+        orderMessageLabel.setText("Select an order to accept.");
+      }
+    });
+    grid.add(acceptOrderButton, 0, 17);
+
+    CustomButton cancelOrderButton = new CustomButton("Cancel Order");
+    cancelOrderButton.maximize();
+    cancelOrderButton.setOnAction(e -> {
+      int selectedIndex = orderListView.getSelectionModel().getSelectedIndex();
+      if (selectedIndex != -1) {
+        int orderNumber = orderNumberList.get(selectedIndex);
+        orderController.cancelOrder(orderNumber);
+        update();
+      } else {
+        orderMessageLabel.setWarning();
+        orderMessageLabel.setText("Select an order to cancel.");
+      }
+    });
+    grid.add(cancelOrderButton, 1, 17);
+
+    CustomButton rejectOrderButton = new CustomButton("Reject Order");
+    rejectOrderButton.maximize();
+    rejectOrderButton.setOnAction(e -> {
+      int selectedIndex = orderListView.getSelectionModel().getSelectedIndex();
+      if (selectedIndex != -1) {
+        int orderNumber = orderNumberList.get(selectedIndex);
+        orderController.rejectOrder(orderNumber, reasonArea.getText());
+        update();
+      } else {
+        orderMessageLabel.setWarning();
+        orderMessageLabel.setText("Select an order to reject.");
+      }
+    });
+    grid.add(rejectOrderButton, 0, 19);
+
+    CustomButton redoOrderButton = new CustomButton("Redo Order");
+    redoOrderButton.maximize();
+    redoOrderButton.setOnAction(e -> {
+      int selectedIndex = orderListView.getSelectionModel().getSelectedIndex();
+      if (selectedIndex != -1) {
+        int orderNumber = orderNumberList.get(selectedIndex);
+        if (!orderController.redoOrder(orderNumber, reasonArea.getText())) {
+          orderMessageLabel.setWarning();
+          orderMessageLabel.setText("Not enough ingredients to redo order.");
+        }
+        update();
+      } else {
+        orderMessageLabel.setWarning();
+        orderMessageLabel.setText("Select an order to redo.");
+      }
+    });
+    grid.add(redoOrderButton, 0, 21);
+
     CustomLabel billListLabel = new CustomLabel("Bill");
     billListLabel.setFontSize(20);
     billListLabel.setBold();
@@ -77,24 +160,21 @@ public class HomeServerPage extends CustomPage {
     CustomLabel billMessageLabel = new CustomLabel();
     billMessageLabel.center();
     billMessageLabel.setBold();
-    grid.add(billMessageLabel, 3, 21, 2, 1);
+    grid.add(billMessageLabel, 3, 23, 2, 1);
 
     CustomButton printTableBillButton = new CustomButton("Print Table Bill");
     printTableBillButton.maximize();
     printTableBillButton.setOnAction(e -> {});
-
     grid.add(printTableBillButton, 2, 15);
 
     CustomButton printCustomerBillButton = new CustomButton("Print Customer Bill");
     printCustomerBillButton.maximize();
     printCustomerBillButton.setOnAction(e -> {});
-
     grid.add(printCustomerBillButton, 2, 17);
 
     CustomButton paidBillButton = new CustomButton("Bill Paid");
     paidBillButton.maximize();
     paidBillButton.setOnAction(e -> {});
-
     grid.add(paidBillButton, 2, 19);
 
     CustomLabel readyOrderLabel = new CustomLabel("Ready Orders");
@@ -110,16 +190,19 @@ public class HomeServerPage extends CustomPage {
 
   @Override
   public void update() {
-    ArrayList<Integer> readyOrderNumberList = orderController.getReadyOrderNumbers();
-    Integer[] readyOrderNumberArray = new Integer[readyOrderNumberList.size()];
-    readyOrderNumberList.toArray(readyOrderNumberArray);
-    ArrayList<String[]> readyOrderList = orderController.getOrderInformationFromNumbers(readyOrderNumberArray);
+    orderNumberList = tableController.getTableOrderNumbers(tableNumber);
+    orderListView.setItems(
+        FXCollections.observableArrayList(
+            formatTableOrder(orderController.getOrderInformationFromNumbers(orderNumberList))));
 
-    orderListView.setItems(FXCollections.observableArrayList(formatTableOrder(orderList)));
+    ArrayList<Integer> readyOrderNumberList = orderController.getReadyOrderNumbers();
     readyOrderListView.setItems(
-        FXCollections.observableArrayList(formatReadyOrder(readyOrderList)));
+        FXCollections.observableArrayList(
+            formatReadyOrder(
+                orderController.getOrderInformationFromNumbers(readyOrderNumberList))));
 
     orderListView.refresh();
+    readyOrderListView.refresh();
   }
 
   private String formatTableOrder(String[] order) {
