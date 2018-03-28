@@ -4,17 +4,16 @@ import GUI.elements.*;
 import controller.EmployeeController;
 import controller.Restaurant;
 import javafx.collections.FXCollections;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 
 import java.util.Arrays;
 
 public class EmployeeAdminPage extends CustomPage {
-  private EmployeeController employeeController = Restaurant.getInstance().getEmployeeController();
+  private final EmployeeController employeeController = Restaurant.getInstance().getEmployeeController();
 
-  private ChoiceBox<String> employeeTypeField = new ChoiceBox<>();
-  private ChoiceBox<String> newEmployeeTypeField = new ChoiceBox<>();
-  private ListView<String> employeeListView = new ListView<>();
+  private final ChoiceBox<String> employeeTypeField = new ChoiceBox<>();
+  private final ChoiceBox<String> newEmployeeTypeField = new ChoiceBox<>();
+  private final ListView<String> employeeListView = new ListView<>();
 
   EmployeeAdminPage() {
     update();

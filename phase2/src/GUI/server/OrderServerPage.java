@@ -14,16 +14,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class OrderServerPage extends CustomPage {
-  private MenuController menuController = Restaurant.getInstance().getMenuController();
-  private OrderController orderController = Restaurant.getInstance().getOrderController();
+  private final MenuController menuController = Restaurant.getInstance().getMenuController();
+  private final OrderController orderController = Restaurant.getInstance().getOrderController();
 
-  private int tableNumber;
-  private int customerIndex;
+  private final int tableNumber;
+  private final int customerIndex;
 
   private ArrayList<String> menuList = new ArrayList<>();
-  private ListView<String> menuListView = new ListView<>();
   private ArrayList<String> menuItemList = new ArrayList<>();
-  private ListView<String> menuItemListView = new ListView<>();
+  private final ListView<String> menuListView = new ListView<>();
+  private final ListView<String> menuItemListView = new ListView<>();
 
   OrderServerPage(int tableNumber, int customerIndex) {
     this.tableNumber = tableNumber;

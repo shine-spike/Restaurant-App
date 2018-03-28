@@ -13,18 +13,18 @@ import util.Localizer;
 import java.util.ArrayList;
 
 public class HomeServerPage extends CustomPage {
-  private OrderController orderController = Restaurant.getInstance().getOrderController();
-  private TableController tableController = Restaurant.getInstance().getTableController();
+  private final OrderController orderController = Restaurant.getInstance().getOrderController();
+  private final TableController tableController = Restaurant.getInstance().getTableController();
 
   private int tableNumber;
   private int customerIndex;
+  private final Spinner<Integer> tableNumberSpinner;
+  private final Spinner<Integer> customerIndexSpinner;
 
-  private Spinner<Integer> tableNumberSpinner;
-  private Spinner<Integer> customerIndexSpinner;
-  private ArrayList<Integer> readyOrderNumberList = new ArrayList<>();
   private ArrayList<Integer> orderNumberList = new ArrayList<>();
-  private ListView<String> orderListView = new ListView<>();
-  private ListView<String> readyOrderListView = new ListView<>();
+  private ArrayList<Integer> readyOrderNumberList = new ArrayList<>();
+  private final ListView<String> orderListView = new ListView<>();
+  private final ListView<String> readyOrderListView = new ListView<>();
 
   public HomeServerPage() {
     this.tableNumber = 0;

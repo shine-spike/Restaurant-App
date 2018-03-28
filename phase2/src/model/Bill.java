@@ -23,15 +23,6 @@ public class Bill {
     runningBasePrice += order.getPrice();
   }
 
-  /**
-   * Returns the bill's ArrayList of orders.
-   *
-   * @return the current ArrayList of orders.
-   */
-  public ArrayList<Order> getOrders() {
-    return orders;
-  }
-
   public void setGratuity(boolean hasGratuity) {
     this.hasGratuity = hasGratuity;
   }

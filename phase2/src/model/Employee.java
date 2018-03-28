@@ -3,14 +3,19 @@ package model;
 import java.io.Serializable;
 
 public class Employee implements Serializable {
-  private int employeeNumber;
-  private EmployeeType employeeType;
+  private final int employeeNumber;
 
+  private EmployeeType employeeType;
   private String firstName;
   private String lastName;
   private int passwordHashCode;
 
-  public Employee(int employeeNumber, String firstName, String lastName, String password, EmployeeType employeeType) {
+  public Employee(
+      int employeeNumber,
+      String firstName,
+      String lastName,
+      String password,
+      EmployeeType employeeType) {
     this.employeeNumber = employeeNumber;
     this.employeeType = employeeType;
 
@@ -54,36 +59,11 @@ public class Employee implements Serializable {
 
   public boolean[] getPermissions() {
     return new boolean[] {
-      hasAdminPermissions(),
-      hasManagerPermissions(),
-      hasServerPermissions(),
-      hasCookPermissions(),
-      hasReceiverPermissions()
+      employeeType == EmployeeType.ADMIN,
+      employeeType == EmployeeType.ADMIN || employeeType == EmployeeType.MANAGER,
+      employeeType == EmployeeType.ADMIN || employeeType == EmployeeType.SERVER,
+      employeeType == EmployeeType.ADMIN || employeeType == EmployeeType.COOK,
+      true
     };
-  }
-
-  private boolean hasAdminPermissions() {
-    return employeeType == EmployeeType.ADMIN;
-  }
-
-  private boolean hasManagerPermissions() {
-    return employeeType == EmployeeType.ADMIN || employeeType == EmployeeType.MANAGER;
-  }
-
-  private boolean hasServerPermissions() {
-    return employeeType == EmployeeType.ADMIN || employeeType == EmployeeType.SERVER;
-  }
-
-  private boolean hasCookPermissions() {
-    return employeeType == EmployeeType.ADMIN || employeeType == EmployeeType.COOK;
-  }
-
-  private boolean hasReceiverPermissions() {
-    return true;
-  }
-
-  @Override
-  public String toString() {
-    return String.format("[%02d] %s %s", employeeNumber, firstName, lastName);
   }
 }

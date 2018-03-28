@@ -1,7 +1,5 @@
 package model;
 
-import util.Localizer;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -51,10 +49,5 @@ public class Menu implements Serializable {
       }
     }
     return null;
-  }
-
-  @Override
-  public String toString() {
-    return Localizer.localize(name);
   }
 }

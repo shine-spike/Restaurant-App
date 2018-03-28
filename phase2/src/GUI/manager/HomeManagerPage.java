@@ -1,8 +1,6 @@
 package GUI.manager;
 
 import GUI.elements.*;
-import javafx.scene.Node;
-import javafx.scene.control.Tab;
 
 public class HomeManagerPage extends CustomPage {
   @Override

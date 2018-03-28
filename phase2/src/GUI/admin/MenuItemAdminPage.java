@@ -8,22 +8,21 @@ import javafx.collections.FXCollections;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import util.Localizer;
-import util.MenuItemFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MenuItemAdminPage extends CustomPage {
-  private Inventory inventory = Restaurant.getInstance().getInventory();
-  private MenuController menuController = Restaurant.getInstance().getMenuController();
-  private String menu;
-  private String menuItem;
+  private final Inventory inventory = Restaurant.getInstance().getInventory();
+  private final MenuController menuController = Restaurant.getInstance().getMenuController();
+  private final String menu;
+  private final String menuItem;
 
   private ArrayList<String> ingredientList = new ArrayList<>();
-  private ListView<String> ingredientListView = new ListView<>();
   private ArrayList<String> menuItemIngredientList = new ArrayList<>();
   private HashMap<String, Integer> menuItemIngredientAmounts = new HashMap<>();
-  private ListView<String> menuItemIngredientListView = new ListView<>();
+  private final ListView<String> ingredientListView = new ListView<>();
+  private final ListView<String> menuItemIngredientListView = new ListView<>();
 
   MenuItemAdminPage(String menu, String menuItem, int price) {
     this.menu = menu;
@@ -31,7 +30,7 @@ public class MenuItemAdminPage extends CustomPage {
 
     if (menuController.getIngredientStrings(menu, menuItem).size() == 0) {
       menuController.addMenuItem(
-          menu, MenuItemFactory.createMenuItem(menuItem, price, menuItemIngredientAmounts));
+          menu, menuItem, price, menuItemIngredientAmounts);
     } else {
       menuController.setMenuItemPrice(menu, menuItem, price);
     }

@@ -3,7 +3,6 @@ package GUI.elements;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
 
-import java.util.ArrayList;
 import java.util.Stack;
 
 /**
@@ -11,9 +10,9 @@ import java.util.Stack;
  * each category of events that can occur with the software.
  */
 public class CustomTab extends Tab {
-  private Stack<CustomPage> previousPages = new Stack<>();
+  private final int employeeNumber;
+  private final Stack<CustomPage> previousPages = new Stack<>();
   private CustomPage currentPage;
-  private int employeeNumber;
 
   /**
    * Constructs a wrapper for a tab in the main restaurant interface.

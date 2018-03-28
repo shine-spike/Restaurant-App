@@ -12,12 +12,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class HomeCookPage extends CustomPage {
-  private OrderController orderController = Restaurant.getInstance().getOrderController();
+  private final OrderController orderController = Restaurant.getInstance().getOrderController();
 
   private ArrayList<Integer> unseenOrderNumbers = new ArrayList<>();
   private ArrayList<Integer> orderNumbers = new ArrayList<>();
-  private ListView<String> unseenOrderListView = new ListView<>();
-  private ListView<String> orderListView = new ListView<>();
+  private final ListView<String> unseenOrderListView = new ListView<>();
+  private final ListView<String> orderListView = new ListView<>();
 
   public HomeCookPage() {
     update();
@@ -60,8 +60,7 @@ public class HomeCookPage extends CustomPage {
             (observable, oldValue, newValue) -> {
               int selectedOrder = newValue.intValue();
               if (selectedOrder == 0) {
-                String[] order =
-                    orderController.getOrderInformation(unseenOrderNumbers.get(0));
+                String[] order = orderController.getOrderInformation(unseenOrderNumbers.get(0));
                 orderInformation.setText(selectedOrdersFormat(order));
               } else {
                 unseenOrderListView.getSelectionModel().clearAndSelect(0);
@@ -170,8 +169,7 @@ public class HomeCookPage extends CustomPage {
     unseenOrderNumbers = orderController.getUnseenOrderNumbers();
     unseenOrderListView.setItems(
         FXCollections.observableArrayList(
-            activeOrdersFormat(
-                orderController.getOrderInformation(unseenOrderNumbers))));
+            activeOrdersFormat(orderController.getOrderInformation(unseenOrderNumbers))));
 
     orderNumbers = orderController.getSeenOrderNumbers();
     orderListView.setItems(

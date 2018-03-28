@@ -4,19 +4,17 @@ import GUI.elements.*;
 import controller.Inventory;
 import controller.Restaurant;
 import javafx.collections.FXCollections;
-import javafx.scene.Node;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import util.Localizer;
 
 import java.util.ArrayList;
 
 public class IngredientAdminPage extends CustomPage {
-  private Inventory inventory = Restaurant.getInstance().getInventory();
+  private final Inventory inventory = Restaurant.getInstance().getInventory();
 
   private ArrayList<String> ingredientList = new ArrayList<>();
-  private ListView<String> ingredientListView = new ListView<>();
+  private final ListView<String> ingredientListView = new ListView<>();
 
   IngredientAdminPage() {
     update();
