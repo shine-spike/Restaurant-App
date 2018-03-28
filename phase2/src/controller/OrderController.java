@@ -63,20 +63,31 @@ public class OrderController {
   }
 
   /**
-   * Gets the numbers of all orders that a cook should see.
+   * Gets the numbers of all orders that have not yet been seen by a cook.
    *
-   * @return the list order numbers of all orders a cook should see.
+   * @return the list of order numbers of all unseen orders.
    */
-  public ArrayList<Integer> getCookOrderNumbers() {
-    OrderStatus[] orderStatuses = {OrderStatus.PLACED, OrderStatus.SEEN, OrderStatus.REDO};
+  public ArrayList<Integer> getUnseenOrderNumbers() {
     ArrayList<Integer> orderNumbers = new ArrayList<>();
-
-    for (OrderStatus orderStatus : orderStatuses) {
-      for (Order order : getOrdersFromStatus(orderStatus)) {
-        orderNumbers.add(order.getOrderNumber());
-      }
+    for (Order order : getOrdersFromStatus(OrderStatus.PLACED)) {
+      orderNumbers.add(order.getOrderNumber());
     }
+    for (Order order : getOrdersFromStatus(OrderStatus.REDO)) {
+      orderNumbers.add(order.getOrderNumber());
+    }
+    return orderNumbers;
+  }
 
+  /**
+   * Gets the numbers of all orders that have been seen by a cook.
+   *
+   * @return the list order numbers of all orders that have been seen.
+   */
+  public ArrayList<Integer> getSeenOrderNumbers() {
+    ArrayList<Integer> orderNumbers = new ArrayList<>();
+    for (Order order : getOrdersFromStatus(OrderStatus.SEEN)) {
+      orderNumbers.add(order.getOrderNumber());
+    }
     return orderNumbers;
   }
 
@@ -87,11 +98,9 @@ public class OrderController {
    */
   public ArrayList<Integer> getReadyOrderNumbers() {
     ArrayList<Integer> orderNumbers = new ArrayList<>();
-
     for (Order order : getOrdersFromStatus(OrderStatus.READY)) {
       orderNumbers.add(order.getOrderNumber());
     }
-
     return orderNumbers;
   }
 

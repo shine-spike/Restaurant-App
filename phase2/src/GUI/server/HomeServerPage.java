@@ -21,6 +21,7 @@ public class HomeServerPage extends CustomPage {
 
   private Spinner<Integer> tableNumberSpinner;
   private Spinner<Integer> customerIndexSpinner;
+  private ArrayList<Integer> readyOrderNumberList = new ArrayList<>();
   private ArrayList<Integer> orderNumberList = new ArrayList<>();
   private ListView<String> orderListView = new ListView<>();
   private ListView<String> readyOrderListView = new ListView<>();
@@ -90,7 +91,11 @@ public class HomeServerPage extends CustomPage {
     addOrderButton.maximize();
     addOrderButton.setOnAction(
         e -> {
-          new OrderServerPage(tableNumber, customerIndex).populateTab(tab);
+          if (readyOrderNumberList.size() == 0) {
+            new OrderServerPage(tableNumber, customerIndex).populateTab(tab);
+          } else {
+            orderMessageLabel.setText("Deliver all orders before adding a new one.");
+          }
           update();
         });
     grid.add(addOrderButton, 0, 15, 2, 1);
@@ -172,6 +177,7 @@ public class HomeServerPage extends CustomPage {
     grid.add(billListLabel, 2, 2, 1, 1);
 
     TextArea billTextArea = new TextArea();
+    billTextArea.setEditable(false);
     grid.add(billTextArea, 2, 3, 1, 10);
 
     CustomLabel billMessageLabel = new CustomLabel();
@@ -199,11 +205,12 @@ public class HomeServerPage extends CustomPage {
 
     CustomButton paidBillButton = new CustomButton("Bill Paid");
     paidBillButton.maximize();
-    paidBillButton.setOnAction(e -> {
-      tableController.clearBill(tableNumber);
-      billTextArea.setText("");
-      update();
-    });
+    paidBillButton.setOnAction(
+        e -> {
+          tableController.clearBill(tableNumber);
+          billTextArea.setText("");
+          update();
+        });
     grid.add(paidBillButton, 2, 21);
 
     CustomLabel readyOrderLabel = new CustomLabel("Ready Orders");
@@ -224,7 +231,7 @@ public class HomeServerPage extends CustomPage {
         FXCollections.observableArrayList(
             formatTableOrder(orderController.getOrderInformationFromNumbers(orderNumberList))));
 
-    ArrayList<Integer> readyOrderNumberList = orderController.getReadyOrderNumbers();
+    readyOrderNumberList = orderController.getReadyOrderNumbers();
     readyOrderListView.setItems(
         FXCollections.observableArrayList(
             formatReadyOrder(
