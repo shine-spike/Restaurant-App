@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+/** Controller for interactions with orders in the restaurant. */
 public class OrderController {
-  // Holder for all orders are in the restaurant
   private final ArrayList<Order> orders = new ArrayList<>();
 
   /**
@@ -21,7 +21,7 @@ public class OrderController {
    * @return the order information of the order that has the given order number or {@code null} if
    *     no such order exists.
    */
-  public String[] getOrderInformationFromNumber(int orderNumber) {
+  public String[] getOrderInformation(int orderNumber) {
     Order order = getOrderFromNumber(orderNumber);
     if (order != null) {
       return order.getOrderInformation();
@@ -35,10 +35,10 @@ public class OrderController {
    * @param orderNumbers the numbers of the orders to get.
    * @return a list of order information.
    */
-  public ArrayList<String[]> getOrderInformationFromNumbers(ArrayList<Integer> orderNumbers) {
+  public ArrayList<String[]> getOrderInformation(ArrayList<Integer> orderNumbers) {
     ArrayList<String[]> orderInformation = new ArrayList<>();
     for (int orderNumber : orderNumbers) {
-      orderInformation.add(getOrderInformationFromNumber(orderNumber));
+      orderInformation.add(getOrderInformation(orderNumber));
     }
     return orderInformation;
   }
@@ -69,10 +69,7 @@ public class OrderController {
    */
   public ArrayList<Integer> getUnseenOrderNumbers() {
     ArrayList<Integer> orderNumbers = new ArrayList<>();
-    for (Order order : getOrdersFromStatus(OrderStatus.PLACED)) {
-      orderNumbers.add(order.getOrderNumber());
-    }
-    for (Order order : getOrdersFromStatus(OrderStatus.REDO)) {
+    for (Order order : getOrdersFromStatus(OrderStatus.PLACED, OrderStatus.REDO)) {
       orderNumbers.add(order.getOrderNumber());
     }
     return orderNumbers;
@@ -105,7 +102,7 @@ public class OrderController {
   }
 
   /**
-   * Creates an order with the given parameters, registers it, and places it.
+   * Creates an order with the given parameters and registers it.
    *
    * @param employeeNumber the number of the employee who placed this order.
    * @param tableNumber the number of the table this order was placed for.
@@ -125,23 +122,8 @@ public class OrderController {
     Order order =
         OrderFactory.createOrder(
             employeeNumber, tableNumber, customerIndex, menuName, menuItemName, ingredientChanges);
-    if (order != null) {
-      if (Restaurant.getInstance().getInventory().confirmOrder(order)) {
-        Logger.orderLog(
-            order.getOrderNumber(), "PLACE", "placed by table " + order.getTableNumber());
-        order.setStatus(OrderStatus.PLACED);
 
-        registerOrder(order);
-        return true;
-      } else {
-        Logger.orderLog(
-            order.getOrderNumber(),
-            "UNSATISFIABLE",
-            "discarded because there are not enough ingredients to create it");
-        order.setStatus(OrderStatus.UNSATISFIABLE);
-      }
-    }
-    return false;
+    return order != null && placeOrder(order);
   }
 
   /**
@@ -272,28 +254,42 @@ public class OrderController {
    * Registers a given order in the controller.
    *
    * @param order the order to register.
+   * @return whether or not this order can be satisfied.
    */
-  private void registerOrder(Order order) {
+  private boolean placeOrder(Order order) {
     orders.add(order);
-    Restaurant.getInstance().getTableController().addToTable(order);
+    if (Restaurant.getInstance().getInventory().confirmOrder(order)) {
+      Logger.orderLog(order.getOrderNumber(), "PLACE", "placed by table " + order.getTableNumber());
+      order.setStatus(OrderStatus.PLACED);
+
+      Restaurant.getInstance().getTableController().addToTable(order);
+      return true;
+    } else {
+      Logger.orderLog(
+          order.getOrderNumber(),
+          "UNSATISFIABLE",
+          "discarded because there are not enough ingredients to create it");
+      order.setStatus(OrderStatus.UNSATISFIABLE);
+      return false;
+    }
   }
 
   /**
-   * Gets all the orders with the given status.
+   * Gets all the orders with the given statuses.
    *
-   * @param orderStatus the status of the orders to get.
-   * @return the list of all orders with the given status.
+   * @param orderStatuses the statuses of the orders to get.
+   * @return the list of all orders with the given statuses.
    */
-  private ArrayList<Order> getOrdersFromStatus(OrderStatus orderStatus) {
-    ArrayList<Order> out = new ArrayList<>();
-
-    for (Order order : orders) {
-      if (order.getStatus().equals(orderStatus)) {
-        out.add(order);
+  private ArrayList<Order> getOrdersFromStatus(OrderStatus... orderStatuses) {
+    ArrayList<Order> orders = new ArrayList<>();
+    for (OrderStatus status : orderStatuses) {
+      for (Order order : orders) {
+        if (order.getStatus().equals(status)) {
+          orders.add(order);
+        }
       }
     }
-
-    return out;
+    return orders;
   }
 
   /**
@@ -303,10 +299,8 @@ public class OrderController {
    * @return the order with the given number or {@code null} if no such order exists.
    */
   private Order getOrderFromNumber(int orderNumber) {
-    for (Order order : orders) {
-      if (order.getOrderNumber() == orderNumber) {
-        return order;
-      }
+    if (orders.size() > orderNumber) {
+      return orders.get(orderNumber);
     }
     return null;
   }

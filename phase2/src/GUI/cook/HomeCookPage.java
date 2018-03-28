@@ -4,8 +4,6 @@ import GUI.elements.*;
 import controller.OrderController;
 import controller.Restaurant;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import util.Localizer;
@@ -62,7 +60,8 @@ public class HomeCookPage extends CustomPage {
             (observable, oldValue, newValue) -> {
               int selectedOrder = newValue.intValue();
               if (selectedOrder == 0) {
-                String[] order = orderController.getOrderInformationFromNumber(unseenOrderNumbers.get(0));
+                String[] order =
+                    orderController.getOrderInformation(unseenOrderNumbers.get(0));
                 orderInformation.setText(selectedOrdersFormat(order));
               } else {
                 unseenOrderListView.getSelectionModel().clearAndSelect(0);
@@ -90,7 +89,7 @@ public class HomeCookPage extends CustomPage {
               int selectedOrder = newValue.intValue();
               if (selectedOrder != -1) {
                 String[] order =
-                    orderController.getOrderInformationFromNumber(orderNumbers.get(selectedOrder));
+                    orderController.getOrderInformation(orderNumbers.get(selectedOrder));
                 orderInformation.setText(selectedOrdersFormat(order));
               } else {
                 orderInformation.setText("");
@@ -107,7 +106,9 @@ public class HomeCookPage extends CustomPage {
           int orderIndex = unseenOrderListView.getSelectionModel().getSelectedIndex();
           if (orderIndex != -1) {
             int selectedOrderNumber = unseenOrderNumbers.get(orderIndex);
-            orderController.seeOrder(selectedOrderNumber);
+            if (!orderController.seeOrder(selectedOrderNumber)) {
+              warningText.setText("Order cannot be seen.");
+            }
           } else {
             warningText.setText("Select an order to see.");
           }
@@ -125,7 +126,10 @@ public class HomeCookPage extends CustomPage {
           int orderIndex = unseenOrderListView.getSelectionModel().getSelectedIndex();
           if (orderIndex != -1) {
             int selectedOrderNumber = unseenOrderNumbers.get(orderIndex);
-            orderController.cancelOrder(selectedOrderNumber);
+            if (!orderController.cancelOrder(selectedOrderNumber)) {
+              warningText.setText("Order cannot be cancelled.");
+            }
+
           } else {
             warningText.setText("Select an order to cancel.");
           }
@@ -147,7 +151,9 @@ public class HomeCookPage extends CustomPage {
           int orderIndex = orderListView.getSelectionModel().getSelectedIndex();
           if (orderIndex != -1) {
             int selectedOrderNumber = orderNumbers.get(orderIndex);
-            orderController.readyOrder(selectedOrderNumber);
+            if (!orderController.readyOrder(selectedOrderNumber)) {
+              warningText.setText("Order cannot be readied.");
+            }
           } else {
             warningText.setText("Select an order to ready.");
           }
@@ -165,12 +171,12 @@ public class HomeCookPage extends CustomPage {
     unseenOrderListView.setItems(
         FXCollections.observableArrayList(
             activeOrdersFormat(
-                orderController.getOrderInformationFromNumbers(unseenOrderNumbers))));
+                orderController.getOrderInformation(unseenOrderNumbers))));
 
     orderNumbers = orderController.getSeenOrderNumbers();
     orderListView.setItems(
         FXCollections.observableArrayList(
-            activeOrdersFormat(orderController.getOrderInformationFromNumbers(orderNumbers))));
+            activeOrdersFormat(orderController.getOrderInformation(orderNumbers))));
   }
 
   /**
@@ -235,10 +241,5 @@ public class HomeCookPage extends CustomPage {
     }
 
     return out.toString();
-  }
-
-  private class CookTabButtonHandler implements EventHandler<ActionEvent> {
-    @Override
-    public void handle(ActionEvent e) {}
   }
 }

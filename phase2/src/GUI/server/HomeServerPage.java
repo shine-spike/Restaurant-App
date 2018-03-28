@@ -229,13 +229,13 @@ public class HomeServerPage extends CustomPage {
     orderNumberList = tableController.getTableOrderNumbers(tableNumber);
     orderListView.setItems(
         FXCollections.observableArrayList(
-            formatTableOrder(orderController.getOrderInformationFromNumbers(orderNumberList))));
+            formatTableOrder(orderController.getOrderInformation(orderNumberList))));
 
     readyOrderNumberList = orderController.getReadyOrderNumbers();
     readyOrderListView.setItems(
         FXCollections.observableArrayList(
             formatReadyOrder(
-                orderController.getOrderInformationFromNumbers(readyOrderNumberList))));
+                orderController.getOrderInformation(readyOrderNumberList))));
 
     tableNumberSpinner.getValueFactory().setValue(tableNumber);
     customerIndexSpinner.getValueFactory().setValue(customerIndex);
