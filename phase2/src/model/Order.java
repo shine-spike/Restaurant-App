@@ -12,24 +12,23 @@ public class Order {
   private final int orderNumber;
   private final int tableNumber;
   private final int customerIndex;
-  private final int employeeNumber;
   private final Menu menu;
   private final MenuItem menuItem;
   private final HashMap<Ingredient, Integer> ingredientChanges;
 
-  // Whether or not this order has been seen and is being prepared
   private OrderStatus status = OrderStatus.CREATED;
 
   /**
-   * Constructs an order consisting of a given menu item at a given table, taken by the employee
-   * with the given number.
+   * Constructs an order consisting of a given menu item at a given table for a given customer
+   * index, with any ingredient changes to the menu item.
    *
-   * @param employeeNumber the number of the employee who took this order.
    * @param tableNumber the number of the table which placed this order.
-   * @param menuItem the MenuItem ordered.
+   * @param customerIndex the index of the customer for which this order is.
+   * @param menu the menu this order was placed on.
+   * @param menuItem the menu item ordered.
+   * @param ingredientChanges the changes to each ingredient from the menu item default
    */
   public Order(
-      int employeeNumber,
       int tableNumber,
       int customerIndex,
       Menu menu,
@@ -39,7 +38,6 @@ public class Order {
     this.tableNumber = tableNumber;
     this.customerIndex = customerIndex;
 
-    this.employeeNumber = employeeNumber;
     this.menu = menu;
     this.menuItem = menuItem;
     this.ingredientChanges = ingredientChanges;
@@ -74,18 +72,38 @@ public class Order {
     return orderNumber;
   }
 
+  /**
+   * Gets the index of the customer for which this order is.
+   *
+   * @return the index of the customer.
+   */
   public int getCustomerIndex() {
     return customerIndex;
   }
 
+  /**
+   * Gets the current status of this order.
+   *
+   * @return the status of this order.
+   */
   public OrderStatus getStatus() {
     return status;
   }
 
+  /**
+   * Sets the status of this order.
+   *
+   * @param status the new status of this order.
+   */
   public void setStatus(OrderStatus status) {
     this.status = status;
   }
 
+  /**
+   * Binds this order's information into an array and returns it.
+   *
+   * @return an array containing order information.
+   */
   public String[] getOrderInformation() {
     return new String[] {
       Integer.toString(orderNumber),

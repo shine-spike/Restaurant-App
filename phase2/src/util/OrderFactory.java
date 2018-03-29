@@ -16,7 +16,6 @@ public class OrderFactory {
   /**
    * Creates an order with the given parameters and returns it.
    *
-   * @param employeeNumber the number of the employee who placed this order.
    * @param tableNumber the number of the table this order was placed for.
    * @param customerIndex the index of the customer this order is for.
    * @param menuName the name of the menu the menu item of this order is from.
@@ -25,7 +24,6 @@ public class OrderFactory {
    * @return the order created.
    */
   public static Order createOrder(
-      int employeeNumber,
       int tableNumber,
       int customerIndex,
       String menuName,
@@ -50,7 +48,7 @@ public class OrderFactory {
             ingredientChanges.get(ingredientString));
       }
 
-      return new Order(employeeNumber, tableNumber, customerIndex, menu, menuItem, ingredients);
+      return new Order(tableNumber, customerIndex, menu, menuItem, ingredients);
     }
 
     return null;

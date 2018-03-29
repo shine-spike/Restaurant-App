@@ -91,14 +91,14 @@ public class EmployeeController implements SerializableContents<Employee> {
   }
 
   /**
-   * Gets the entire catalogue of employees.
+   * Gets the entire catalogue of employee numbers.
    *
-   * @return the list of employees in string format.
+   * @return the list of employee numbers.
    */
-  public ArrayList<String> getEmployeeStrings() {
-    ArrayList<String> employeeStrings = new ArrayList<>();
+  public ArrayList<Integer> getEmployeeNumbers() {
+    ArrayList<Integer> employeeStrings = new ArrayList<>();
     for (Employee employee : employees) {
-      employeeStrings.add(employee.toString());
+      employeeStrings.add(employee.getEmployeeNumber());
     }
     return employeeStrings;
   }
@@ -114,9 +114,10 @@ public class EmployeeController implements SerializableContents<Employee> {
     Employee employee = getEmployee(employeeNumber);
 
     if (employee != null) {
-      info[0] = employee.getName()[0];
-      info[1] = employee.getName()[1];
-      info[2] = employee.getEmployeeType().toString();
+      info[0] = Integer.toString(employee.getEmployeeNumber());
+      info[1] = employee.getName()[0];
+      info[2] = employee.getName()[1];
+      info[3] = employee.getEmployeeType().toString();
     }
 
     return info;
