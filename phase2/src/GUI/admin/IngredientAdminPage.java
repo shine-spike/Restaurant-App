@@ -111,12 +111,12 @@ public class IngredientAdminPage extends CustomPage {
           modificationLabel.setText("");
 
           String name = newIngredientNameField.getText();
-          String localName = newIngredientLocalNameField.getText();
+          String unlocalizedName = newIngredientLocalNameField.getText();
           String threshold = newThresholdField.getText();
 
-          if (name.length() > 0 && localName.matches("[a-z][a-z_]*") && threshold.matches("\\d+")) {
-            inventory.addIngredient(name, 0, Integer.parseInt(threshold));
-            Localizer.register(localName, name);
+          if (name.length() > 0 && unlocalizedName.matches("[a-z][a-z_]*") && threshold.matches("\\d+")) {
+            inventory.addIngredient(unlocalizedName, 0, Integer.parseInt(threshold));
+            Localizer.register(unlocalizedName, name);
 
             additionLabel.setInfo();
             additionLabel.setText("New Ingredient has been registered.");
@@ -183,6 +183,9 @@ public class IngredientAdminPage extends CustomPage {
   @Override
   public void update() {
     ingredientList = inventory.getIngredientStrings();
+    if(ingredientList.size() > 0) {
+      System.out.println(ingredientList.get(0));
+    }
     ingredientListView.setItems(
         FXCollections.observableArrayList(Localizer.localize(ingredientList)));
 
