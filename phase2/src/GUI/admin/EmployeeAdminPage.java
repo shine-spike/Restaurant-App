@@ -4,15 +4,21 @@ import GUI.elements.*;
 import controller.EmployeeController;
 import controller.Restaurant;
 import javafx.collections.FXCollections;
-import javafx.scene.control.*;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ListView;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class EmployeeAdminPage extends CustomPage {
-  private final EmployeeController employeeController = Restaurant.getInstance().getEmployeeController();
+  private final EmployeeController employeeController =
+      Restaurant.getInstance().getEmployeeController();
 
   private final ChoiceBox<String> employeeTypeField = new ChoiceBox<>();
   private final ChoiceBox<String> newEmployeeTypeField = new ChoiceBox<>();
+  private ArrayList<Integer> employeeNumberList = new ArrayList<>();
   private final ListView<String> employeeListView = new ListView<>();
 
   EmployeeAdminPage() {
@@ -156,16 +162,17 @@ public class EmployeeAdminPage extends CustomPage {
         .selectedIndexProperty()
         .addListener(
             (obs, oldSelection, newSelection) -> {
-              if (newSelection.intValue() != -1) {
-                int employeeNumber = newSelection.intValue();
+              int selectionIndex = newSelection.intValue();
+              if (selectionIndex != -1) {
+                int employeeNumber = employeeNumberList.get(selectionIndex);
                 String[] employee = employeeController.getEmployeeInformation(employeeNumber);
 
-                employeeNameField.setText(employee[0] + " " + employee[1]);
+                employeeNameField.setText(employee[1] + " " + employee[2]);
                 employeeNumberField.setText(Integer.toString(employeeNumber));
-                firstNameField.setText(employee[0]);
-                lastNameField.setText(employee[1]);
+                firstNameField.setText(employee[1]);
+                lastNameField.setText(employee[2]);
                 passwordField.setText("");
-                employeeTypeField.setValue(employee[2]);
+                employeeTypeField.setValue(employee[3]);
 
                 if (newSelection.intValue() != oldSelection.intValue()) {
                   modificationLabel.setText("");
@@ -187,9 +194,19 @@ public class EmployeeAdminPage extends CustomPage {
 
     employeeTypeField.setItems(FXCollections.observableList(Arrays.asList(employeeTypeStrings)));
     newEmployeeTypeField.setItems(FXCollections.observableList(Arrays.asList(employeeTypeStrings)));
+    employeeNumberList = employeeController.getEmployeeNumbers();
     employeeListView.setItems(
-        FXCollections.observableArrayList(employeeController.getEmployeeStrings()));
+        FXCollections.observableArrayList(formatEmployees(employeeNumberList)));
 
     employeeListView.refresh();
+  }
+
+  private ArrayList<String> formatEmployees(ArrayList<Integer> employeeNumbers) {
+    ArrayList<String> employeeStrings = new ArrayList<>();
+    for (int employeeNumber : employeeNumbers) {
+      String[] employeeInfo = employeeController.getEmployeeInformation(employeeNumber);
+      employeeStrings.add("[" + employeeInfo[0] + "] " + employeeInfo[1] + " " + employeeInfo[2]);
+    }
+    return employeeStrings;
   }
 }
