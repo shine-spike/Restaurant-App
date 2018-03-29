@@ -183,9 +183,6 @@ public class IngredientAdminPage extends CustomPage {
   @Override
   public void update() {
     ingredientList = inventory.getIngredientStrings();
-    if(ingredientList.size() > 0) {
-      System.out.println(ingredientList.get(0));
-    }
     ingredientListView.setItems(
         FXCollections.observableArrayList(Localizer.localize(ingredientList)));
 

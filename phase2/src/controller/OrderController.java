@@ -71,7 +71,6 @@ public class OrderController {
     ArrayList<Integer> orderNumbers = new ArrayList<>();
     for (Order order : getOrdersFromStatus(OrderStatus.PLACED, OrderStatus.REDO)) {
       orderNumbers.add(order.getOrderNumber());
-      System.out.println("Look");
     }
     return orderNumbers;
   }
@@ -282,15 +281,15 @@ public class OrderController {
    * @return the list of all orders with the given statuses.
    */
   private ArrayList<Order> getOrdersFromStatus(OrderStatus... orderStatuses) {
-    ArrayList<Order> orders = new ArrayList<>();
+    ArrayList<Order> orderList = new ArrayList<>();
     for (OrderStatus status : orderStatuses) {
-      for (Order order : this.orders) {
+      for (Order order : orders) {
         if (order.getStatus().equals(status)) {
-          orders.add(order);
+          orderList.add(order);
         }
       }
     }
-    return orders;
+    return orderList;
   }
 
   /**
