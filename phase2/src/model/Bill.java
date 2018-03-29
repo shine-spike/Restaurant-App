@@ -23,15 +23,6 @@ public class Bill {
     runningBasePrice += order.getPrice();
   }
 
-  /**
-   * Returns the bill's ArrayList of orders.
-   *
-   * @return the current ArrayList of orders.
-   */
-  public ArrayList<Order> getOrders() {
-    return orders;
-  }
-
   public void setGratuity(boolean hasGratuity) {
     this.hasGratuity = hasGratuity;
   }
@@ -53,14 +44,21 @@ public class Bill {
     }
     str.append("\n");
 
-    int price = runningBasePrice;
     str.append("TAX:      ").append(TAX_PERCENT * 100).append("%").append("\n");
-    price *= 1 + TAX_PERCENT;
     if (hasGratuity) {
       str.append("GRATUITY: ").append(GRATUITY_PERCENT * 100).append("%").append("\n");
+    }
+    str.append("TOTAL:    ").append(String.format("$%.2f", getTotal() / 100.0)).append("\n");
+    return str.toString();
+  }
+
+  int getTotal() {
+    int price = runningBasePrice;
+    price *= 1 + TAX_PERCENT;
+    if (hasGratuity) {
       price *= 1 + GRATUITY_PERCENT;
     }
-    str.append("TOTAL:    ").append(String.format("$%.2f", price / 100.0)).append("\n");
-    return str.toString();
+
+    return price;
   }
 }

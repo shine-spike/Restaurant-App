@@ -1,55 +1,51 @@
 package GUI;
 
 import GUI.elements.CustomButton;
+import GUI.elements.CustomGridPane;
+import GUI.elements.CustomLabel;
 import controller.Restaurant;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 
-public class LoginScene {
-  private RestaurantApplication application;
-  private TextField userTextField;
-  private PasswordField passwordField;
-  private Label incorrectPassword;
+class LoginScene {
+  private final RestaurantApplication application;
 
   LoginScene(RestaurantApplication application) {
     this.application = application;
   }
 
   public Parent getRoot() {
-    GridPane grid = new GridPane();
+    CustomGridPane grid = new CustomGridPane();
     grid.setAlignment(Pos.CENTER);
     grid.setHgap(100);
     grid.setVgap(10);
-    grid.setMinWidth(500);
+    grid.setPercentageColumns(15, 35, 35, 15);
 
-    // Top header
-    Label headerLabel = new Label("Employee Login");
-    headerLabel.setMinWidth(grid.getMinWidth());
-    headerLabel.setAlignment(Pos.CENTER);
-    headerLabel.setStyle("-fx-font-size: 30px");
-    grid.add(headerLabel, 0, 0, 2, 2);
+    CustomLabel headerLabel = new CustomLabel("Employee Login");
+    headerLabel.center();
+    headerLabel.setFontSize(30);
+    grid.add(headerLabel, 1, 0, 2, 2);
 
-    // Username area
-    Label userName = new Label("Employee Name");
-    userTextField = new TextField();
+    CustomLabel userName = new CustomLabel("Employee Name");
+    TextField userTextField = new TextField();
     userTextField.setText("Admin account"); // TODO: remove
-    grid.add(userName, 0, 10);
-    grid.add(userTextField, 1, 10);
+    grid.add(userName, 1, 10);
+    grid.add(userTextField, 2, 10);
 
-    // Password area
-    Label password = new Label("Password");
-    passwordField = new PasswordField();
+    CustomLabel password = new CustomLabel("Password");
+    PasswordField passwordField = new PasswordField();
     passwordField.setText("adminaccount"); // TODO: remove
-    grid.add(password, 0, 11);
-    grid.add(passwordField, 1, 11);
+    grid.add(password, 1, 11);
+    grid.add(passwordField, 2, 11);
 
-    // Login button
+    CustomLabel incorrectPassword = new CustomLabel();
+    incorrectPassword.setWarning();
+    incorrectPassword.center();
+    incorrectPassword.setBold();
+    grid.add(incorrectPassword, 1, 24, 2, 1);
+
     CustomButton loginButton = new CustomButton("Login");
     loginButton.maximize();
     loginButton.setOnAction(
@@ -66,15 +62,7 @@ public class LoginScene {
             incorrectPassword.setText("Incorrect Username or Password");
           }
         });
-    grid.add(loginButton, 0, 18, 2, 5);
-
-    // Incorrect password warning
-    incorrectPassword = new Label();
-    incorrectPassword.setMinWidth(grid.getMinWidth());
-    incorrectPassword.setTextFill(Color.FIREBRICK);
-    incorrectPassword.setAlignment(Pos.CENTER);
-    incorrectPassword.setStyle("-fx-font-weight: bold");
-    grid.add(incorrectPassword, 0, 24, 2, 1);
+    grid.add(loginButton, 1, 18, 2, 5);
 
     return grid;
   }

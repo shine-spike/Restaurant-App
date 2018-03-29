@@ -11,12 +11,12 @@ import util.Localizer;
 import java.util.ArrayList;
 
 public class MenuAdminPage extends CustomPage {
-  private MenuController menuController = Restaurant.getInstance().getMenuController();
+  private final MenuController menuController = Restaurant.getInstance().getMenuController();
 
   private ArrayList<String> menuList = new ArrayList<>();
-  private ListView<String> menuListView = new ListView<>();
   private ArrayList<String> menuItemList = new ArrayList<>();
-  private ListView<String> menuItemListView = new ListView<>();
+  private final ListView<String> menuListView = new ListView<>();
+  private final ListView<String> menuItemListView = new ListView<>();
 
   MenuAdminPage() {
     update();

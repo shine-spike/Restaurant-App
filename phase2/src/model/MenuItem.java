@@ -1,7 +1,5 @@
 package model;
 
-import util.Localizer;
-
 import java.io.Serializable;
 import java.util.HashMap;
 
@@ -61,10 +59,5 @@ public class MenuItem implements Serializable {
    */
   public HashMap<Ingredient, Integer> getIngredients() {
     return ingredients;
-  }
-
-  @Override
-  public String toString() {
-    return Localizer.localize(name);
   }
 }

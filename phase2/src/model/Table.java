@@ -1,6 +1,5 @@
 package model;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -96,6 +95,16 @@ public class Table {
     }
     return billStrings;
   }
+
+  /**
+   * Gets the total of this tables current bill.
+   *
+   * @return the total price of the tables current bill.
+   */
+  public int getTotalBill() {
+    return currentBill.getTotal();
+  }
+
 
   /**
    * Gets the order with the given order number on this table.

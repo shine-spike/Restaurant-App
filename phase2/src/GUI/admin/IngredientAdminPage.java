@@ -4,19 +4,17 @@ import GUI.elements.*;
 import controller.Inventory;
 import controller.Restaurant;
 import javafx.collections.FXCollections;
-import javafx.scene.Node;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import util.Localizer;
 
 import java.util.ArrayList;
 
 public class IngredientAdminPage extends CustomPage {
-  private Inventory inventory = Restaurant.getInstance().getInventory();
+  private final Inventory inventory = Restaurant.getInstance().getInventory();
 
   private ArrayList<String> ingredientList = new ArrayList<>();
-  private ListView<String> ingredientListView = new ListView<>();
+  private final ListView<String> ingredientListView = new ListView<>();
 
   IngredientAdminPage() {
     update();
@@ -113,12 +111,12 @@ public class IngredientAdminPage extends CustomPage {
           modificationLabel.setText("");
 
           String name = newIngredientNameField.getText();
-          String localName = newIngredientLocalNameField.getText();
+          String unlocalizedName = newIngredientLocalNameField.getText();
           String threshold = newThresholdField.getText();
 
-          if (name.length() > 0 && localName.matches("[a-z][a-z_]*") && threshold.matches("\\d+")) {
-            inventory.addIngredient(name, 0, Integer.parseInt(threshold));
-            Localizer.register(localName, name);
+          if (name.length() > 0 && unlocalizedName.matches("[a-z][a-z_]*") && threshold.matches("\\d+")) {
+            inventory.addIngredient(unlocalizedName, 0, Integer.parseInt(threshold));
+            Localizer.register(unlocalizedName, name);
 
             additionLabel.setInfo();
             additionLabel.setText("New Ingredient has been registered.");
@@ -185,6 +183,9 @@ public class IngredientAdminPage extends CustomPage {
   @Override
   public void update() {
     ingredientList = inventory.getIngredientStrings();
+    if(ingredientList.size() > 0) {
+      System.out.println(ingredientList.get(0));
+    }
     ingredientListView.setItems(
         FXCollections.observableArrayList(Localizer.localize(ingredientList)));
 

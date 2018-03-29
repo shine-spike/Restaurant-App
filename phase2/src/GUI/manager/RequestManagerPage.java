@@ -5,8 +5,6 @@ import GUI.elements.CustomGridPane;
 import GUI.elements.CustomPage;
 import GUI.elements.CustomTab;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import util.Reorderer;
 

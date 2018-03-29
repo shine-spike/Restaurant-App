@@ -97,15 +97,6 @@ public class Order {
   }
 
   /**
-   * Deeply duplicates this order and returns the copy.
-   *
-   * @return a deep copy of this order.
-   */
-  public Order duplicate() {
-    return new Order(employeeNumber, tableNumber, customerIndex, menu, menuItem, ingredientChanges);
-  }
-
-  /**
    * Returns the list of ingredients needed to make this order including the additions and excluding
    * the subtractions.
    *
@@ -124,11 +115,7 @@ public class Order {
    *
    * @return the menuItem of this Order
    */
-  public MenuItem getMenuItem() {
+  MenuItem getMenuItem() {
     return menuItem;
-  }
-
-  public Menu getMenu() {
-    return menu;
   }
 }

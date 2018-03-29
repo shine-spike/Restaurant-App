@@ -1,0 +1,12 @@
+Matthew Verreault
+- Implemented the Restaurant Application class
+- Implemented the Login Screen, the Receiver's tab, and the Cook's tab
+- Added the ingredient manager functionality to the Admin tab
+- Added the functionality for the manager tab to send emails
+- Created, and implemented the Employee class
+
+Ziyad Edher
+
+Thomas Passaro
+
+Jack McKinney

@@ -3,6 +3,7 @@ package controller;
 import model.Ingredient;
 import model.Menu;
 import model.MenuItem;
+import util.MenuItemFactory;
 import util.SerializableContents;
 
 import java.util.ArrayList;
@@ -37,14 +38,18 @@ public class MenuController implements SerializableContents<Menu> {
   }
 
   /**
-   * Adds the given menu item to the menu with the given name.
+   * Adds the menu item with the given parameters to the menu with the given name.
    *
    * @param menuName the name of the menu to add the item to.
-   * @param menuItem the menu item to add.
+   * @param menuItemName the name of the menu item to add.
+   * @param price the price of the menu item.
+   * @param ingredientAmounts the amount of each name of ingredient.
    */
-  public void addMenuItem(String menuName, MenuItem menuItem) {
+  public void addMenuItem(
+      String menuName, String menuItemName, int price, HashMap<String, Integer> ingredientAmounts) {
     Menu menu = getMenu(menuName);
     if (menu != null) {
+      MenuItem menuItem = MenuItemFactory.createMenuItem(menuItemName, price, ingredientAmounts);
       menu.addMenuItem(menuItem);
     }
   }
