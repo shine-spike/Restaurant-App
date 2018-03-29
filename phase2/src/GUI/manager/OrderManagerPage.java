@@ -14,9 +14,7 @@ import java.util.HashMap;
 public class OrderManagerPage extends CustomPage {
   private final OrderController orderController = Restaurant.getInstance().getOrderController();
 
-  private ArrayList<Integer> unseenOrderNumbers = new ArrayList<>();
   private ArrayList<Integer> orderNumbers = new ArrayList<>();
-  private final ListView<String> unseenOrderListView = new ListView<>();
   private final ListView<String> orderListView = new ListView<>();
 
   OrderManagerPage() {
@@ -30,71 +28,19 @@ public class OrderManagerPage extends CustomPage {
     grid.setPercentageColumns(25, 25, 25, 25);
     grid.setEvenRows(24);
 
-    CustomLabel orderInformationLabel = new CustomLabel("Order Information");
-    orderInformationLabel.setFontSize(20);
-    orderInformationLabel.setBold();
-    orderInformationLabel.center();
-    grid.add(orderInformationLabel, 1, 0, 2, 1);
-
-    TextArea orderInformation = new TextArea();
-    orderInformation.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-    orderInformation.setEditable(false);
-    grid.add(orderInformation, 1, 1, 2, 5);
-
     CustomLabel warningText = new CustomLabel();
     warningText.setBold();
     warningText.setWarning();
     warningText.center();
     grid.add(warningText, 0, 23, 4, 1);
 
-    CustomLabel unseenOrderLabel = new CustomLabel("Unseen Orders");
-    unseenOrderLabel.setFontSize(20);
-    unseenOrderLabel.setBold();
-    unseenOrderLabel.center();
-    grid.add(unseenOrderLabel, 0, 9, 2, 1);
-
-    unseenOrderListView
-            .getSelectionModel()
-            .selectedIndexProperty()
-            .addListener(
-                    (observable, oldValue, newValue) -> {
-                      int selectedOrder = newValue.intValue();
-                      if (selectedOrder == 0) {
-                        String[] order = orderController.getOrderInformation(unseenOrderNumbers.get(0));
-                        orderInformation.setText(selectedOrdersFormat(order));
-                      } else {
-                        unseenOrderListView.getSelectionModel().clearAndSelect(0);
-                      }
-                    });
-    grid.add(unseenOrderListView, 0, 10, 2, 10);
-
-    CustomLabel seenOrderLabel = new CustomLabel("Seen Orders");
+    CustomLabel seenOrderLabel = new CustomLabel("Pending Orders");
     seenOrderLabel.setFontSize(20);
     seenOrderLabel.setBold();
     seenOrderLabel.center();
-    grid.add(seenOrderLabel, 2, 9, 2, 1);
+    grid.add(seenOrderLabel, 1, 6, 2, 1);
 
-    orderListView
-            .getSelectionModel()
-            .selectedIndexProperty()
-            .addListener(
-                    (observable, oldValue, newValue) -> {
-                      if (unseenOrderNumbers.size() != 0) {
-                        warningText.setText("See all unseen orders.");
-                        unseenOrderListView.getSelectionModel().clearAndSelect(0);
-                        return;
-                      }
-
-                      int selectedOrder = newValue.intValue();
-                      if (selectedOrder != -1) {
-                        String[] order =
-                                orderController.getOrderInformation(orderNumbers.get(selectedOrder));
-                        orderInformation.setText(selectedOrdersFormat(order));
-                      } else {
-                        orderInformation.setText("");
-                      }
-                    });
-    grid.add(orderListView, 2, 10, 2, 10);
+    grid.add(orderListView, 1, 7, 2, 14);
 
     // Back Button
     if (tab.canGoBack()) {
@@ -106,12 +52,10 @@ public class OrderManagerPage extends CustomPage {
 
   @Override
   public void update() {
-    unseenOrderNumbers = orderController.getUnseenOrderNumbers();
-    unseenOrderListView.setItems(
-            FXCollections.observableArrayList(
-                    activeOrdersFormat(orderController.getOrderInformation(unseenOrderNumbers))));
 
+    orderNumbers.addAll(orderController.getReadyOrderNumbers());
     orderNumbers = orderController.getSeenOrderNumbers();
+    orderNumbers.addAll(orderController.getUnseenOrderNumbers());
     orderListView.setItems(
             FXCollections.observableArrayList(
                     activeOrdersFormat(orderController.getOrderInformation(orderNumbers))));
@@ -177,7 +121,6 @@ public class OrderManagerPage extends CustomPage {
       out.append(" ");
       out.append(Localizer.localize(ingredient));
     }
-
     return out.toString();
   }
 }
