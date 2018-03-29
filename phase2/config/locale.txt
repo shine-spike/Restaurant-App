@@ -1,0 +1,24 @@
+pesto Pesto
+pepper Ground Black Pepper
+lunch Lunch
+salt Salt
+salad Salad
+onion Onion
+drinks Drinks
+milk Milk
+cream Cream
+tomato Tomato
+lemonade Lemonade
+lettuce Lettuce
+choccy_syrup Chocolate Syrup
+apple_juice Apple Juice
+dinner Dinner
+ice_cream Ice Cream
+cheese Cheese
+milkshake Milkshake
+lemon Lemon
+dessert Dessert
+ravioli Ravioli
+cheesy_pasta Cheesy Pasta
+olive_oil Olive Oil
+pesto_pasta Pesto Pasta
