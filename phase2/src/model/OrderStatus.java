@@ -1,5 +1,6 @@
 package model;
 
+/** Simple enum representing all different statuses our orders can be in. */
 public enum OrderStatus {
   CREATED,
   PLACED,

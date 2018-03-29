@@ -26,6 +26,11 @@ public class Menu implements Serializable {
     return name;
   }
 
+  /**
+   * Gets all menu items in this menu.
+   *
+   * @return a list of menu items.
+   */
   public ArrayList<MenuItem> getMenuItems() {
     return menuItems;
   }

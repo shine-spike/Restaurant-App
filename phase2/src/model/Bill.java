@@ -23,6 +23,11 @@ public class Bill {
     runningBasePrice += order.getPrice();
   }
 
+  /**
+   * Sets whether or not this bill should have gratuity applied to it
+   *
+   * @param hasGratuity whether or not the bill should have gratuity applied.
+   */
   public void setGratuity(boolean hasGratuity) {
     this.hasGratuity = hasGratuity;
   }

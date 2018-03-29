@@ -91,7 +91,7 @@ public class Table {
   public ArrayList<String> getBillStrings() {
     ArrayList<String> billStrings = new ArrayList<>();
     for (Bill bill : customerBills.values()) {
-        billStrings.add(bill.getBillString());
+      billStrings.add(bill.getBillString());
     }
     return billStrings;
   }
@@ -104,7 +104,6 @@ public class Table {
   public int getTotalBill() {
     return currentBill.getTotal();
   }
-
 
   /**
    * Gets the order with the given order number on this table.
