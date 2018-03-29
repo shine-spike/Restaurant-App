@@ -140,7 +140,6 @@ public class OrderServerPage extends CustomPage {
             String menuItem = menuItemList.get(selectedMenuItemIndex);
 
             if (!orderController.createOrder(
-                tab.getEmployeeNumber(),
                 tableNumber,
                 customerIndex,
                 menu,

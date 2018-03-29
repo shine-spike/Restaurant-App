@@ -104,7 +104,6 @@ public class OrderController {
   /**
    * Creates an order with the given parameters and registers it.
    *
-   * @param employeeNumber the number of the employee who placed this order.
    * @param tableNumber the number of the table this order was placed for.
    * @param customerIndex the index of the customer this order is for.
    * @param menuName the name of the menu the menu item of this order is from.
@@ -113,7 +112,6 @@ public class OrderController {
    * @return whether or not the order can be satisfied.
    */
   public boolean createOrder(
-      int employeeNumber,
       int tableNumber,
       int customerIndex,
       String menuName,
@@ -121,7 +119,7 @@ public class OrderController {
       HashMap<String, Integer> ingredientChanges) {
     Order order =
         OrderFactory.createOrder(
-            employeeNumber, tableNumber, customerIndex, menuName, menuItemName, ingredientChanges);
+            tableNumber, customerIndex, menuName, menuItemName, ingredientChanges);
 
     return order != null && placeOrder(order);
   }
