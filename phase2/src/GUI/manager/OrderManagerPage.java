@@ -1,11 +1,13 @@
 package GUI.manager;
 
-import GUI.elements.*;
+import GUI.elements.CustomGridPane;
+import GUI.elements.CustomLabel;
+import GUI.elements.CustomPage;
+import GUI.elements.CustomTab;
 import controller.OrderController;
 import controller.Restaurant;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 import util.Localizer;
 
 import java.util.ArrayList;
@@ -52,13 +54,12 @@ public class OrderManagerPage extends CustomPage {
 
   @Override
   public void update() {
-
-    orderNumbers.addAll(orderController.getReadyOrderNumbers());
     orderNumbers = orderController.getSeenOrderNumbers();
+    orderNumbers.addAll(orderController.getReadyOrderNumbers());
     orderNumbers.addAll(orderController.getUnseenOrderNumbers());
     orderListView.setItems(
-            FXCollections.observableArrayList(
-                    activeOrdersFormat(orderController.getOrderInformation(orderNumbers))));
+        FXCollections.observableArrayList(
+            activeOrdersFormat(orderController.getOrderInformation(orderNumbers))));
   }
 
   /**
@@ -83,44 +84,13 @@ public class OrderManagerPage extends CustomPage {
    */
   private String activeOrdersFormat(String[] order) {
     return "["
-            + order[0]
-            + " : "
-            + order[1]
-            + "]"
-            + " "
-            + Localizer.localize(order[2])
-            + " "
-            + Localizer.localize(order[3]);
-  }
-
-  /**
-   * Returns formatted Order String for selected orders list
-   *
-   * @param order The Order to be formatted
-   * @return a formatted string for this active order
-   */
-  private String selectedOrdersFormat(String[] order) {
-    StringBuilder out =
-            new StringBuilder(
-                    "["
-                            + order[0]
-                            + "]"
-                            + " "
-                            + Localizer.localize(order[2])
-                            + " "
-                            + Localizer.localize(order[3]));
-
-    HashMap<String, Integer> ingredients =
-            orderController.getOrderIngredientStrings(Integer.parseInt(order[0]));
-    for (String ingredient : ingredients.keySet()) {
-      if (ingredients.get(ingredient) == 0) {
-        continue;
-      }
-      out.append("\n - ");
-      out.append(ingredients.get(ingredient));
-      out.append(" ");
-      out.append(Localizer.localize(ingredient));
-    }
-    return out.toString();
+        + order[0]
+        + " : "
+        + order[1]
+        + "]"
+        + " "
+        + Localizer.localize(order[2])
+        + " "
+        + Localizer.localize(order[3]);
   }
 }

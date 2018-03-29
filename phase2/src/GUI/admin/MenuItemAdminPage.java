@@ -28,11 +28,11 @@ public class MenuItemAdminPage extends CustomPage {
     this.menu = menu;
     this.menuItem = menuItem;
 
-    if (menuController.getIngredientStrings(menu, menuItem).size() == 0) {
-      menuController.addMenuItem(
-          menu, menuItem, price, menuItemIngredientAmounts);
-    } else {
+    if (menuController.getMenuItemStrings(menu).contains(menuItem)) {
       menuController.setMenuItemPrice(menu, menuItem, price);
+    } else {
+      menuController.addMenuItem(
+              menu, menuItem, price, menuItemIngredientAmounts);
     }
 
     update();
