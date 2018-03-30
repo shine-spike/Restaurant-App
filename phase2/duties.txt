@@ -6,6 +6,17 @@ Matthew Verreault
 - Created, and implemented the Employee class
 
 Ziyad Edher
+- Implemented GUI creation tools (elements)
+- Implemented home, employee, and menu parts of administration tab
+- Implemented server tab
+- Redesigned cook and receiver tabs and login scene
+- Implemented controller
+- Implemented serialization and saving system
+- General design overview and refactoring
+- Relevant model implementation
+- Implemented logger
+- Implemented localization system
+- Code style and consistency checks
 
 Thomas Passaro
 
