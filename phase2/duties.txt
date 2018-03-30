@@ -19,5 +19,8 @@ Ziyad Edher
 - Code style and consistency checks
 
 Thomas Passaro
+- Outlined and drafted functionality of all GUI tabs
+- Implemented the Server Tab skeleton
+- Tested groupmates' code and outlined missing functionality
 
 Jack McKinney
