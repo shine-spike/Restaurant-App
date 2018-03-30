@@ -24,6 +24,19 @@ public class TableController {
   }
 
   /**
+   * Gets the total amount of money paid to the restaurant.
+   *
+   * @return the total amount of cents paid to the restaurant.
+   */
+  public int getTotalPayments() {
+    int total = 0;
+    for (int payment : payments) {
+        total += payment;
+    }
+    return total;
+  }
+
+  /**
    * Gets the number of tables under this controller.
    *
    * @return the number of tables.
